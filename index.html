@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Thirst — Water Access Action Project</title>
+
+<!--
+=====================================================================
+  BEYOND THIRST — WEBSITE
+  HOW TO EDIT THIS SITE (read this once, then ignore it)
+=====================================================================
+  This is ONE file. There is no build step, no install, no server.
+
+  TO EDIT TEXT:
+    Open this file in any text editor (Notepad, TextEdit, VS Code,
+    even Google Docs' "plain text" mode). Find the section using the
+    big banner comments like the one below, change the words between
+    the tags, save, done.
+
+        <!-- ===== HERO SECTION ===== -->
+
+  TO EDIT COLORS:
+    Scroll to ":root" near the top of the <style> block. Every color
+    on the site is defined once, there, as a named variable. Change
+    the hex code, it updates everywhere.
+
+  TO ADD A REAL PHOTO:
+    Search for "background-image" comments — each one shows exactly
+    where to paste an image URL or a local file path.
+
+  TO PUBLISH IT FOR FREE:
+    Upload this single file to Netlify Drop (netlify.com/drop),
+    GitHub Pages, or Google Sites' "embed HTML" block. No hosting
+    fee needed for a project site like this.
+
+  TO ADD A NEW SECTION:
+    Copy an existing <section>...</section> block, paste it below
+    itself, and edit the copy.
+=====================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ===================================================
+     DESIGN TOKENS — change a value here, it updates
+     everywhere on the site it's used.
+     =================================================== */
+  :root{
+    --ink:        #0B2027;   /* near-black teal, main dark bg */
+    --deep-river: #123B42;   /* secondary dark, gradients */
+    --river:      #2E8B96;   /* primary water teal accent */
+    --river-lt:   #6FBAC2;   /* lighter teal, hovers */
+    --drought:    #C97C3D;   /* cracked-earth clay accent */
+    --drought-dk: #9C5A26;   /* darker clay */
+    --sand:       #E7D9B8;   /* warm neutral */
+    --mist:       #F4F8F7;   /* off-white background */
+    --ink-soft:   #4A5D61;   /* muted body text on light bg */
+
+    --display: 'Anton', sans-serif;
+    --body:    'Work Sans', sans-serif;
+    --mono:    'IBM Plex Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:var(--body);
+    background:var(--mist);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+  section{ padding:5.5rem 6vw; }
+  @media(max-width:700px){ section{ padding:3.5rem 6vw; } }
+  .wrap{ max-width:1180px; margin:0 auto; }
+
+  /* focus visibility for accessibility */
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--river-lt);
+    outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
+
+  /* ===================================================
+     NAV
+     =================================================== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,32,39,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1rem 6vw;
+    max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:center; gap:.6rem;
+    font-family:var(--display);
+    font-size:1.15rem;
+    color:var(--mist);
+    letter-spacing:.02em;
+  }
+  .logo .drop{
+    width:20px; height:24px;
+    background:var(--river);
+    clip-path: path('M10 0 C10 0 20 15 20 19 A10 10 0 1 1 0 19 C0 15 10 0 10 0 Z');
+    flex-shrink:0;
+  }
+  nav ul{
+    list-style:none; display:flex; gap:2.1rem;
+  }
+  nav ul a{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--sand);
+    transition:color .2s;
+  }
+  nav ul a:hover{ color:var(--river-lt); }
+  .nav-cta{
+    background:var(--drought);
+    color:var(--ink);
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:.72rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:.6rem 1.1rem;
+    border-radius:2px;
+    transition:background .2s;
+  }
+  .nav-cta:hover{ background:var(--sand); }
+  .nav-toggle{ display:none; }
+  @media(max-width:820px){
+    nav ul{ display:none; }
+    .nav-toggle{ display:block; color:var(--mist); font-family:var(--mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; }
+  }
+
+  /* ===================================================
+     HERO — signature element: a horizon line that cracks
+     like dry earth on the left and dissolves into a
+     flowing water line on the right. Pure SVG/CSS, no
+     photography required.
+     =================================================== */
+  .hero{
+    position:relative;
+    background:linear-gradient(180deg, var(--ink) 0%, var(--deep-river) 100%);
+    color:var(--mist);
+    padding:7rem 6vw 0;
+    overflow:hidden;
+  }
+  .hero-inner{
+    max-width:1180px; margin:0 auto;
+    position:relative; z-index:2;
+  }
+  .hero .eyebrow{ color:var(--river-lt); margin-bottom:1.4rem; display:block; }
+  .hero h1{
+    font-family:var(--display);
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:clamp(2.4rem, 6.4vw, 5.1rem);
+    line-height:1.02;
+    letter-spacing:.01em;
+    max-width:15ch;
+  }
+  .hero h1 .accent{ color:var(--drought); }
+  .hero p.lede{
+    font-size:1.08rem;
+    color:var(--sand);
+    max-width:46ch;
+    margin:1.6rem 0 2.4rem;
+  }
+  .hero-actions{ display:flex; gap:1rem; flex-wrap:wrap; padding-bottom:3.2rem; }
+  .btn{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:.78rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:.9rem 1.6rem;
+    border-radius:2px;
+    display:inline-block;
+    transition:transform .18s ease, background .2s;
+  }
+  .btn-primary{ background:var(--river); color:var(--ink); }
+  .btn-primary:hover{ transform:translateY(-2px); background:var(--river-lt); }
+  .btn-ghost{ border:1.5px solid var(--sand); color:var(--sand); }
+  .btn-ghost:hover{ transform:translateY(-2px); border-color:var(--river-lt); color:var(--river-lt); }
+
+  /* the crack-to-ripple horizon (signature element) */
+  .horizon{ width:100%; height:auto; display:block; position:relative; z-index:1; }
+  .horizon path.crackline{ stroke:var(--drought); }
+  .horizon path.waveline{ stroke:var(--river); }
+
+  /* ===================================================
+     FOUR PILLARS (mirrors the 4-tile structure you liked,
+     rebuilt with our own palette + no stock photography)
+     =================================================== */
+  .pillars{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    margin-top:-1px;
+  }
+  @media(max-width:900px){ .pillars{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:520px){ .pillars{ grid-template-columns:1fr; } }
+  .pillar{
+    position:relative;
+    min-height:280px;
+    padding:2rem 1.6rem;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    color:var(--mist);
+    overflow:hidden;
+  }
+  .pillar::before{
+    content:""; position:absolute; inset:0;
+    opacity:.16; mix-blend-mode:overlay;
+    background-image:radial-gradient(circle at 30% 20%, #fff, transparent 60%);
+  }
+  .pillar .num{ font-family:var(--mono); font-size:.75rem; opacity:.75; margin-bottom:.6rem; }
+  .pillar h3{ font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:1.5rem; line-height:1.1; margin-bottom:.5rem; }
+  .pillar p{ font-size:.9rem; color:rgba(255,255,255,.85); max-width:30ch; }
+  .p1{ background:linear-gradient(160deg,#0B2027,#123B42); }
+  .p2{ background:linear-gradient(160deg,#145C66,#1E7B85); }
+  .p3{ background:linear-gradient(160deg,#2E8B96,#3FA6A9); }
+  .p4{ background:linear-gradient(160deg,#C97C3D,#9C5A26); }
+  /* If your team shoots real photos, swap a gradient above for:
+     background-image:url('your-photo.jpg'); background-size:cover; background-position:center;
+     then keep the ::before overlay so text stays legible. */
+
+  /* ===================================================
+     CRISIS / STATS
+     =================================================== */
+  .crisis{ background:var(--mist); }
+  .crisis-head{ max-width:60ch; margin-bottom:3rem; }
+  .crisis-head .eyebrow{ color:var(--drought-dk); }
+  .crisis-head h2{
+    font-family:var(--display); font-weight:400; text-transform:uppercase;
+    font-size:clamp(1.8rem,4vw,2.6rem); margin:.8rem 0 1rem; line-height:1.05;
+  }
+  .crisis-head p{ color:var(--ink-soft); font-size:1.02rem; }
+
+  .stat-row{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:2.2rem;
+    border-top:1px solid #d9dedd; padding-top:2.6rem;
+  }
+  @media(max-width:760px){ .stat-row{ grid-template-columns:1fr; } }
+  .stat{ border-left:3px solid var(--river); padding-left:1.2rem; }
+  .stat .big{ font-family:var(--display); font-size:2.6rem; color:var(--ink); line-height:1; }
+  .stat .label{ font-family:var(--mono); font-size:.78rem; color:var(--ink-soft); margin-top:.6rem; text-transform:uppercase; letter-spacing:.03em; }
+  .stat .src{ font-size:.72rem; color:#8a9a98; margin-top:.5rem; }
+  /* EDIT ME: swap these three stats for the numbers your team's
+     own research turns up — these are placeholders. */
+
+  /* ===================================================
+     MISSION / SPLIT
+     =================================================== */
+  .mission{ background:var(--ink); color:var(--mist); }
+  .mission-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; align-items:start;
+  }
+  @media(max-width:820px){ .mission-grid{ grid-template-columns:1fr; } }
+  .mission .eyebrow{ color:var(--river-lt); }
+  .mission h2{
+    font-family:var(--display); font-weight:400; text-transform:uppercase;
+    font-size:clamp(1.9rem,4vw,2.6rem); margin:.8rem 0 1.2rem; line-height:1.05;
+  }
+  .mission p{ color:var(--sand); font-size:1rem; margin-bottom:1rem; }
+  .checklist{ list-style:none; margin-top:1.6rem; }
+  .checklist li{
+    display:flex; gap:.8rem; padding:.9rem 0; border-top:1px solid rgba(255,255,255,.12);
+    font-size:.95rem; color:var(--sand);
+  }
+  .checklist li:last-child{ border-bottom:1px solid rgba(255,255,255,.12); }
+  .checklist .tick{ color:var(--river-lt); font-family:var(--mono); flex-shrink:0; }
+
+  /* ===================================================
+     TEAM — 4 members
+     =================================================== */
+  .team{ background:var(--mist); }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; margin-bottom:3rem; flex-wrap:wrap; }
+  .section-head h2{
+    font-family:var(--display); font-weight:400; text-transform:uppercase;
+    font-size:clamp(1.8rem,4vw,2.6rem);
+  }
+  .section-head .eyebrow{ color:var(--drought-dk); display:block; margin-bottom:.6rem; }
+  .team-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.6rem; }
+  @media(max-width:900px){ .team-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:520px){ .team-grid{ grid-template-columns:1fr; } }
+  .member{
+    background:#fff; border:1px solid #e2e8e7; border-radius:4px; overflow:hidden;
+  }
+  .member .photo{
+    aspect-ratio:1/1;
+    background:linear-gradient(150deg, var(--river) 0%, var(--ink) 100%);
+    display:flex; align-items:center; justify-content:center;
+    color:rgba(255,255,255,.85); font-family:var(--display); font-size:2.4rem;
+  }
+  /* EDIT ME: replace .photo background with background-image:url('photo.jpg')
+     for a real headshot, or leave the initials placeholder above. */
+  .member .info{ padding:1.1rem 1.2rem 1.4rem; }
+  .member .info h4{ font-size:1.02rem; font-weight:700; }
+  .member .info .role{ font-family:var(--mono); font-size:.72rem; text-transform:uppercase; color:var(--river); margin:.3rem 0 .6rem; letter-spacing:.04em; }
+  .member .info p{ font-size:.85rem; color:var(--ink-soft); }
+
+  /* ===================================================
+     GET INVOLVED / CONTACT
+     =================================================== */
+  .involve{ background:var(--drought); color:var(--ink); }
+  .involve-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:3rem; }
+  @media(max-width:820px){ .involve-grid{ grid-template-columns:1fr; } }
+  .involve .eyebrow{ color:rgba(11,32,39,.6); }
+  .involve h2{
+    font-family:var(--display); font-weight:400; text-transform:uppercase;
+    font-size:clamp(1.9rem,4vw,2.6rem); margin:.8rem 0 1.2rem; line-height:1.05;
+  }
+  .involve p{ max-width:46ch; margin-bottom:1.6rem; }
+  .involve .btn-primary{ background:var(--ink); color:var(--mist); }
+  .involve .btn-primary:hover{ background:var(--deep-river); }
+  .contact-card{
+    background:rgba(255,255,255,.35); border:1px solid rgba(11,32,39,.15);
+    border-radius:4px; padding:1.8rem;
+  }
+  .contact-card .row{ display:flex; justify-content:space-between; padding:.8rem 0; border-top:1px solid rgba(11,32,39,.15); font-size:.92rem; }
+  .contact-card .row:first-child{ border-top:none; }
+  .contact-card .row span:first-child{ font-family:var(--mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; }
+
+  /* ===================================================
+     FOOTER
+     =================================================== */
+  footer{ background:var(--ink); color:var(--sand); padding:2.4rem 6vw; }
+  .foot-wrap{ max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.82rem; }
+  .foot-wrap a:hover{ color:var(--river-lt); }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header>
+  <div class="nav">
+    <a class="logo" href="#top">
+      <span class="drop"></span>
+      BEYOND&nbsp;THIRST
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#crisis">The Crisis</a></li>
+        <li><a href="#work">Our Work</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#involved">Get Involved</a></li>
+      </ul>
+    </nav>
+    <a class="nav-cta" href="#involved">Support Us</a>
+  </div>
+</header>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <span class="eyebrow">// An action project on water access</span>
+    <h1>Water shouldn't be <span class="accent">a gamble.</span></h1>
+    <p class="lede">
+      Beyond Thirst is a four-person action project mapping where safe
+      water runs out — and building the smallest possible interventions
+      that make the biggest difference for the people waiting in line for it.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#work">See our work</a>
+      <a class="btn btn-ghost" href="#involved">Get involved</a>
+    </div>
+  </div>
+
+  <!-- SIGNATURE ELEMENT: horizon line that cracks (drought) on the
+       left and turns into a flowing wave (water) on the right.
+       Pure SVG, no image file needed. -->
+  <svg class="horizon" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path class="crackline" d="M0,45 L120,45 L140,20 L155,60 L175,35 L200,45 L330,45 L350,15 L365,55 L385,45 L470,45"
+          fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="waveline" d="M470,45 C560,25 610,65 700,45 C790,25 840,65 930,45 C1000,29 1060,55 1200,42"
+          fill="none" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+</section>
+
+<!-- ===== FOUR PILLARS (edit titles/descriptions to match your project's real workstreams) ===== -->
+<section class="pillars" aria-label="Our four workstreams">
+  <div class="pillar p1">
+    <div class="num">01</div>
+    <h3>Map the gap</h3>
+    <p>Field surveys of wells, taps and water points to find exactly where access breaks down.</p>
+  </div>
+  <div class="pillar p2">
+    <div class="num">02</div>
+    <h3>Test the fix</h3>
+    <p>Small, low-cost filtration and storage pilots run with the households who need them.</p>
+  </div>
+  <div class="pillar p3">
+    <div class="num">03</div>
+    <h3>Tell the story</h3>
+    <p>Photo essays, short films and data visuals that turn a statistic back into a face.</p>
+  </div>
+  <div class="pillar p4">
+    <div class="num">04</div>
+    <h3>Push for policy</h3>
+    <p>Briefs and petitions aimed at the local bodies who control water infrastructure budgets.</p>
+  </div>
+</section>
+
+<!-- ===== THE CRISIS / STATS ===== -->
+<section class="crisis" id="crisis">
+  <div class="wrap">
+    <div class="crisis-head">
+      <span class="eyebrow">The problem</span>
+      <h2>Thirst isn't a shortage. It's a distribution failure.</h2>
+      <p>
+        In much of Bangladesh, water is close by but not safe: rising
+        salinity is pushing into coastal aquifers, and naturally
+        occurring arsenic contaminates millions of tube wells inland.
+        Beyond Thirst starts by measuring exactly where those two
+        crises overlap with the communities least able to absorb them.
+      </p>
+    </div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="big">EDIT</div>
+        <div class="label">People affected in our study area</div>
+        <div class="src">Replace with your team's field data</div>
+      </div>
+      <div class="stat">
+        <div class="big">EDIT</div>
+        <div class="label">Water points surveyed so far</div>
+        <div class="src">Replace with your team's field data</div>
+      </div>
+      <div class="stat">
+        <div class="big">EDIT</div>
+        <div class="label">Households in our pilot program</div>
+        <div class="src">Replace with your team's field data</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MISSION ===== -->
+<section class="mission" id="work">
+  <div class="wrap mission-grid">
+    <div>
+      <span class="eyebrow">Why "Beyond Thirst"</span>
+      <h2>We're not just documenting a crisis.</h2>
+      <p>
+        Most water campaigns stop at raising awareness. We wanted ours
+        to also produce something usable: a public map, a tested
+        low-cost filter design, and a short brief any local council
+        could act on this year.
+      </p>
+      <p>
+        Four of us split the work across research, field testing,
+        storytelling and outreach — this site is where all four
+        strands meet.
+      </p>
+    </div>
+    <ul class="checklist">
+      <li><span class="tick">→</span> Ground-truthed field data, not secondhand statistics</li>
+      <li><span class="tick">→</span> Low-cost interventions communities can maintain themselves</li>
+      <li><span class="tick">→</span> Open data others can build on after we're done</li>
+      <li><span class="tick">→</span> A clear ask for the people who control the budget</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== TEAM (4 members — replace names, roles, one-line bios) ===== -->
+<section class="team" id="team">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The people behind it</span>
+        <h2>Four of us. One project.</h2>
+      </div>
+    </div>
+    <div class="team-grid">
+      <div class="member">
+        <div class="photo">A</div>
+        <div class="info">
+          <h4>Member One</h4>
+          <div class="role">Research &amp; Data</div>
+          <p>Leads field surveys and keeps the water-point map up to date.</p>
+        </div>
+      </div>
+      <div class="member">
+        <div class="photo">B</div>
+        <div class="info">
+          <h4>Member Two</h4>
+          <div class="role">Field Pilots</div>
+          <p>Runs the filtration and storage tests with partner households.</p>
+        </div>
+      </div>
+      <div class="member">
+        <div class="photo">C</div>
+        <div class="info">
+          <h4>Member Three</h4>
+          <div class="role">Storytelling</div>
+          <p>Shoots photo essays and edits the short films for the campaign.</p>
+        </div>
+      </div>
+      <div class="member">
+        <div class="photo">D</div>
+        <div class="info">
+          <h4>Member Four</h4>
+          <div class="role">Outreach &amp; Advocacy</div>
+          <p>Writes the policy briefs and manages partner and press outreach.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GET INVOLVED / CONTACT ===== -->
+<section class="involve" id="involved">
+  <div class="wrap involve-grid">
+    <div>
+      <span class="eyebrow">Get involved</span>
+      <h2>Three ways to help this go further.</h2>
+      <p>Volunteer for a field survey day, share our findings with someone
+        who sets local budgets, or point us to a community we haven't
+        reached yet.</p>
+      <a class="btn btn-primary" href="mailto:beyondthirst@example.com">Email the team</a>
+    </div>
+    <div class="contact-card">
+      <div class="row"><span>Email</span><span>beyondthirst@example.com</span></div>
+      <div class="row"><span>Instagram</span><span>@beyondthirst.project</span></div>
+      <div class="row"><span>Based in</span><span>Dhaka, Bangladesh</span></div>
+      <div class="row"><span>Status</span><span>Active — accepting volunteers</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="foot-wrap">
+    <span>© 2026 Beyond Thirst. A student action project.</span>
+    <span><a href="#top">Back to top ↑</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
