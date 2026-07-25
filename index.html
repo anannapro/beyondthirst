@@ -59,7 +59,7 @@
             pointer-events: none;
         }
 
-        /* Navigation */
+        /* Navigation Header */
         header {
             position: sticky;
             top: 0;
@@ -67,7 +67,7 @@
             background-color: var(--nav-bg);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 5%;
+            padding: 10px 5%;
             transition: var(--transition);
         }
 
@@ -80,6 +80,7 @@
             width: 100%;
         }
 
+        /* LOGO STYLING UPDATED */
         .logo {
             display: flex;
             align-items: center;
@@ -89,9 +90,16 @@
         }
 
         .logo img {
-            max-height: 46px;
+            max-height: 52px;
             width: auto;
             object-fit: contain;
+            border-radius: 6px;
+            transition: var(--transition);
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+        }
+
+        .logo img:hover {
+            transform: scale(1.04);
         }
 
         .logo-text {
@@ -136,10 +144,10 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* FIXED FLICKER & HOVER GAP IN DROPDOWNS */
+        /* DROPDOWNS */
         .dropdown { 
             position: relative; 
-            padding-bottom: 10px; /* Bridge gap without losing hover context */
+            padding-bottom: 10px;
             margin-bottom: -10px;
         }
 
@@ -162,7 +170,6 @@
             pointer-events: none;
         }
 
-        /* Invisible bridge above dropdown to keep hover alive */
         .dropdown-menu::before {
             content: '';
             position: absolute;
@@ -217,7 +224,7 @@
             box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
         }
 
-        /* FIXED SMOOTH PAGE TRANSITIONS */
+        /* PAGE VIEWS */
         .page-view {
             display: none;
             flex: 1;
@@ -237,10 +244,10 @@
             transform: translateY(0);
         }
 
-        /* Banner */
+        /* Sub-page Banner */
         .page-banner {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(2, 132, 199, 0.88)), 
-                        url('hero-bg.png') center/cover;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.88), rgba(2, 132, 199, 0.82)), 
+                        url('Beyond Thirst project cover.png') center/cover no-repeat;
             color: white;
             padding: 80px 5% 70px;
             text-align: center;
@@ -250,13 +257,13 @@
         .page-banner h1 { font-size: 46px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
         .page-banner p { font-size: 17px; color: var(--accent-sky); font-weight: 500; max-width: 600px; margin: 0 auto; }
 
-        /* Hero */
+        /* HERO SECTION */
         .hero {
             position: relative;
             width: 100%;
             min-height: 88vh;
-            background: linear-gradient(to right, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.75) 50%, rgba(15, 23, 42, 0.3) 100%), 
-                        url('hero-bg.png') no-repeat center center/cover;
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.55) 50%, rgba(15, 23, 42, 0.2) 100%), 
+                        url('Beyond Thirst project cover.png') no-repeat center center/cover;
             color: white;
             padding: 60px 5% 100px;
             display: flex;
@@ -441,9 +448,7 @@
             transition: var(--transition);
         }
 
-        .upload-card.secret-active {
-            display: block !important;
-        }
+        .upload-card.secret-active { display: block !important; }
 
         .upload-btn-label {
             background: linear-gradient(135deg, var(--primary-blue), #0369a1);
@@ -672,7 +677,7 @@
         footer {
             background-color: var(--dark-blue);
             color: white;
-            padding: 50px 5% 30px;
+            padding: 40px 5% 30px;
             margin-top: auto;
             position: relative;
             z-index: 10;
@@ -685,10 +690,15 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 30px;
+            padding-bottom: 25px;
             margin-bottom: 25px;
             flex-wrap: wrap;
             gap: 20px;
+        }
+
+        .footer-logo img {
+            max-height: 48px;
+            width: auto;
         }
 
         .footer-socials a {
@@ -717,10 +727,12 @@
     <!-- Header & Navigation -->
     <header>
         <nav>
+            <!-- UPDATED LOGO CONTAINER -->
             <a onclick="showPage('home')" class="logo">
                 <img src="logo.png" alt="Beyond Thirst Logo" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='inline-block';">
                 <span id="fallbackLogo" class="logo-text" style="display:none;">BEYOND <span>THIRST</span></span>
             </a>
+
             <ul class="nav-links">
                 <li><a onclick="showPage('home')" id="nav-home" class="active"><i class="fa-solid fa-house"></i> Home</a></li>
                 
@@ -745,6 +757,7 @@
                 <li><a onclick="showPage('team')" id="nav-team"><i class="fa-solid fa-users"></i> Team</a></li>
                 <li><a onclick="showPage('contact')" id="nav-contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
             </ul>
+            
             <a onclick="showPage('contact')" class="join-btn">
                 Join Us <i class="fa-solid fa-arrow-right"></i>
             </a>
@@ -1006,7 +1019,7 @@
         </div>
         <div class="container">
 
-            <!-- Secret Admin Upload Zone (Shift + U to show/hide) -->
+            <!-- Secret Admin Upload Zone -->
             <div class="upload-card" id="secretUploadZone">
                 <i class="fa-solid fa-cloud-arrow-up" style="font-size: 48px; color: var(--primary-blue);"></i>
                 <h3 style="margin-top: 10px; color: var(--dark-blue); font-size: 20px;">Team Uploader Active</h3>
@@ -1025,14 +1038,12 @@
                 <button class="filter-btn" onclick="filterGallery('videos')">Videos</button>
             </div>
 
-            <!-- GALLERY GRID: Permanent Photos & Videos Go Here -->
+            <!-- GALLERY GRID -->
             <div class="gallery-grid" id="galleryContainer">
-
-                <!-- Built-In Permanent Photos -->
                 <div class="gallery-item" data-category="workshops">
-                    <img src="hero-bg.png" alt="Clean Water Project">
+                    <img src="Beyond Thirst project cover.png" alt="Beyond Thirst Project Banner">
                     <div class="gallery-caption">
-                        <span>Interactive Student Workshop</span>
+                        <span>Save Water, Save Life Cover</span>
                         <i class="fa-solid fa-image"></i>
                     </div>
                 </div>
@@ -1052,7 +1063,6 @@
                         <i class="fa-solid fa-image"></i>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
@@ -1099,7 +1109,7 @@
                     <h3 style="color: var(--dark-blue); font-size: 26px; margin-bottom: 14px;">Get in Touch</h3>
                     <p style="font-size: 14.5px; color: var(--text-light); margin-bottom: 35px; line-height: 1.6;">Whether you want to launch a Beyond Thirst group at your school or join an upcoming campaign, reach out below.</p>
                     
-                    <p style="font-size: 14.5px; margin-bottom: 16px;"><strong><i class="fa-solid fa-envelope" style="color: var(--primary-blue); margin-right: 10px;"></i> Email:</strong> </p>
+                    <p style="font-size: 14.5px; margin-bottom: 16px;"><strong><i class="fa-solid fa-envelope" style="color: var(--primary-blue); margin-right: 10px;"></i> Email:</strong> contact@beyondthirst.org</p>
                     <p style="font-size: 14.5px;"><strong><i class="fa-solid fa-location-dot" style="color: var(--primary-blue); margin-right: 10px;"></i> Location:</strong> Dhaka, Bangladesh</p>
                 </div>
 
@@ -1137,10 +1147,12 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="logo-text" style="font-size: 22px;">BEYOND <span>THIRST</span></div>
+            <div class="footer-logo">
+                <img src="logo.png" alt="Beyond Thirst Logo" onerror="this.style.display='none'; document.getElementById('footerFallbackLogo').style.display='inline-block';">
+                <span id="footerFallbackLogo" class="logo-text" style="display:none;">BEYOND <span>THIRST</span></span>
+            </div>
             <div class="footer-socials">
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <!-- Updated Facebook Page Link -->
                 <a href="https://www.facebook.com/profile.php?id=61591584513349" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i></a>
                 <a href="#"><i class="fa-brands fa-twitter"></i></a>
                 <a href="#"><i class="fa-brands fa-linkedin"></i></a>
