@@ -13,7 +13,7 @@
             --primary-blue: #0284c7;
             --primary-hover: #0369a1;
             --dark-blue: #0f172a;
-            --nav-bg: rgba(15, 23, 42, 0.92);
+            --nav-bg: rgba(15, 23, 42, 0.95);
             --accent-sky: #38bdf8;
             --accent-teal: #14b8a6;
             --text-dark: #1e293b;
@@ -67,7 +67,7 @@
             background-color: var(--nav-bg);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 5%;
+            padding: 12px 5%;
             transition: var(--transition);
         }
 
@@ -80,36 +80,25 @@
             width: 100%;
         }
 
-        /* LOGO STYLING UPDATED */
+        /* CLEAN LOGO STYLING */
         .logo {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 12px;
             text-decoration: none;
             cursor: pointer;
         }
 
         .logo img {
-            max-height: 52px;
+            height: 48px;
             width: auto;
             object-fit: contain;
-            border-radius: 6px;
             transition: var(--transition);
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+            display: block;
         }
 
         .logo img:hover {
-            transform: scale(1.04);
+            transform: scale(1.03);
         }
-
-        .logo-text {
-            color: white;
-            font-weight: 800;
-            font-size: 22px;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-text span { color: var(--accent-sky); }
 
         .nav-links {
             display: flex;
@@ -244,10 +233,10 @@
             transform: translateY(0);
         }
 
-        /* Sub-page Banner */
+        /* SUB-PAGE BANNER PHOTO AREA */
         .page-banner {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.88), rgba(2, 132, 199, 0.82)), 
-                        url('Beyond Thirst project cover.png') center/cover no-repeat;
+                        url('banner.png') center/cover no-repeat;
             color: white;
             padding: 80px 5% 70px;
             text-align: center;
@@ -257,13 +246,13 @@
         .page-banner h1 { font-size: 46px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
         .page-banner p { font-size: 17px; color: var(--accent-sky); font-weight: 500; max-width: 600px; margin: 0 auto; }
 
-        /* HERO SECTION */
+        /* MAIN HERO COVER PHOTO AREA */
         .hero {
             position: relative;
             width: 100%;
             min-height: 88vh;
             background: linear-gradient(to right, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.55) 50%, rgba(15, 23, 42, 0.2) 100%), 
-                        url('Beyond Thirst project cover.png') no-repeat center center/cover;
+                        url('banner.png') no-repeat center center/cover;
             color: white;
             padding: 60px 5% 100px;
             display: flex;
@@ -697,7 +686,7 @@
         }
 
         .footer-logo img {
-            max-height: 48px;
+            height: 44px;
             width: auto;
         }
 
@@ -727,10 +716,9 @@
     <!-- Header & Navigation -->
     <header>
         <nav>
-            <!-- UPDATED LOGO CONTAINER -->
+            <!-- LOGO ONLY -->
             <a onclick="showPage('home')" class="logo">
-                <img src="logo.png" alt="Beyond Thirst Logo" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='inline-block';">
-                <span id="fallbackLogo" class="logo-text" style="display:none;">BEYOND <span>THIRST</span></span>
+                <img src="logo.png" alt="Beyond Thirst Logo">
             </a>
 
             <ul class="nav-links">
@@ -1041,7 +1029,7 @@
             <!-- GALLERY GRID -->
             <div class="gallery-grid" id="galleryContainer">
                 <div class="gallery-item" data-category="workshops">
-                    <img src="Beyond Thirst project cover.png" alt="Beyond Thirst Project Banner">
+                    <img src="banner.png" alt="Beyond Thirst Project Banner">
                     <div class="gallery-caption">
                         <span>Save Water, Save Life Cover</span>
                         <i class="fa-solid fa-image"></i>
@@ -1148,8 +1136,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="logo.png" alt="Beyond Thirst Logo" onerror="this.style.display='none'; document.getElementById('footerFallbackLogo').style.display='inline-block';">
-                <span id="footerFallbackLogo" class="logo-text" style="display:none;">BEYOND <span>THIRST</span></span>
+                <img src="logo.png" alt="Beyond Thirst Logo">
             </div>
             <div class="footer-socials">
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
