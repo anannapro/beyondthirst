@@ -5,45 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Beyond Thirst — Youth-Led Water Action</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Great+Vibes&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            /* Vibrant Color Palette */
             --primary-blue: #0284c7;
             --primary-hover: #0369a1;
-            --electric-cyan: #00f2fe;
-            --vibrant-blue: #4facfe;
-            --dark-blue: #0b1120;
-            --nav-bg: rgba(11, 17, 32, 0.92);
+            --dark-blue: #0f172a;
+            --nav-bg: rgba(15, 23, 42, 0.92);
             --accent-sky: #38bdf8;
             --accent-teal: #14b8a6;
-            --accent-mint: #00f2fe;
-            --accent-orange: #ff7e5f;
-            --text-dark: #0f172a;
+            --accent-glow: #00f2fe;
+            --text-dark: #1e293b;
             --text-light: #64748b;
-            --bg-light: #f0f7ff;
+            --bg-light: #f8fafc;
             --surface-white: #ffffff;
             --border-color: rgba(226, 232, 240, 0.8);
-            
-            /* Enhanced Vibrant Shadows */
-            --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 12px 30px -5px rgba(2, 132, 199, 0.2);
-            --shadow-lg: 0 20px 40px -10px rgba(11, 17, 32, 0.22);
-            --shadow-glow: 0 0 25px rgba(0, 242, 254, 0.4);
-            
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(2, 132, 199, 0.15);
+            --shadow-lg: 0 20px 35px -10px rgba(15, 23, 42, 0.25);
             --radius-sm: 10px;
-            --radius-md: 16px;
+            --radius-md: 18px;
             --radius-lg: 28px;
-            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Outfit', 'Hind Siliguri', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -57,48 +50,27 @@
             position: relative;
         }
 
-        /* Ambient Animated Blobs for Dynamic Vibrancy */
-        .ambient-blob-1 {
+        /* BACKGROUND CANVAS FOR RAIN/BUBBLE PARTICLES */
+        #bgCanvas {
             position: fixed;
-            width: clamp(300px, 50vw, 600px);
-            height: clamp(300px, 50vw, 600px);
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 242, 254, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
-            top: -150px;
-            right: -150px;
-            z-index: 0;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
-            animation: floatBlob 12s infinite alternate ease-in-out;
-        }
-
-        .ambient-blob-2 {
-            position: fixed;
-            width: clamp(280px, 45vw, 550px);
-            height: clamp(280px, 45vw, 550px);
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(79, 172, 254, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
-            bottom: -100px;
-            left: -100px;
             z-index: 0;
-            pointer-events: none;
-            animation: floatBlob 15s infinite alternate-reverse ease-in-out;
+            opacity: 0.6;
         }
 
-        @keyframes floatBlob {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 50px) scale(1.1); }
-        }
-
-        /* Navigation Header */
+        /* HEADER & NAVBAR */
         header {
             position: sticky;
             top: 0;
             z-index: 1000;
             background-color: var(--nav-bg);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 12px 5%;
+            padding: 12px 4%;
             transition: var(--transition);
         }
 
@@ -106,7 +78,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1280px;
+            max-width: 1350px;
             margin: 0 auto;
             width: 100%;
         }
@@ -114,42 +86,27 @@
         .logo {
             display: inline-flex;
             align-items: center;
-            text-decoration: none;
             cursor: pointer;
-            z-index: 1002;
+            text-decoration: none;
         }
 
         .logo img {
-            height: clamp(38px, 6vw, 50px);
+            height: 48px;
             width: auto;
             object-fit: contain;
-            transition: var(--transition);
-            display: block;
-            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.3));
-        }
-
-        .mobile-toggle {
-            display: none;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 1002;
-            padding: 8px;
+            filter: drop-shadow(0 2px 6px rgba(56, 189, 248, 0.4));
         }
 
         .nav-links {
             display: flex;
             gap: 6px;
             list-style: none;
-            background: rgba(255, 255, 255, 0.07); 
-            backdrop-filter: blur(16px); 
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            padding: 6px 18px; 
+            background-color: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(14px); 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 16px; 
             border-radius: 50px; 
             align-items: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
 
         .nav-links a {
@@ -164,86 +121,91 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #ffffff;
-            background: linear-gradient(135deg, rgba(0, 242, 254, 0.3), rgba(79, 172, 254, 0.3));
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        .nav-links a:hover, .nav-links a.active {
+            color: white;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-sky));
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
         }
 
         /* DROPDOWNS */
-        .dropdown { 
-            position: relative; 
-            padding-bottom: 10px;
-            margin-bottom: -10px;
-        }
-
+        .dropdown { position: relative; }
         .dropdown-menu {
             position: absolute;
             background-color: var(--surface-white);
-            min-width: 210px;
+            min-width: 220px;
             box-shadow: var(--shadow-lg);
             z-index: 100;
             border-radius: var(--radius-md);
-            top: 100%;
+            top: 115%;
             left: 0;
             padding: 10px;
             list-style: none;
-            border: 1px solid rgba(0, 242, 254, 0.2);
+            border: 1px solid var(--border-color);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(12px);
-            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
-            pointer-events: none;
-        }
-
-        .dropdown-menu li a {
-            color: var(--text-dark) !important;
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            border-radius: var(--radius-sm);
-            font-weight: 500;
-        }
-
-        .dropdown-menu li a:hover {
-            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
-            color: var(--primary-blue) !important;
-            transform: translateX(4px);
+            transform: translateY(10px);
+            transition: all 0.25s ease;
         }
 
         .dropdown:hover .dropdown-menu { 
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
-            pointer-events: auto;
         }
 
-        .join-btn {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            border: none;
-            padding: 11px 26px;
-            border-radius: 30px;
-            color: #0b1120;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
+        .dropdown-menu li a {
+            color: var(--text-dark) !important;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: var(--transition);
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4);
-            cursor: pointer;
+            gap: 10px;
+            font-size: 13.5px;
+            border-radius: var(--radius-sm);
         }
 
-        .join-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.6);
+        .dropdown-menu li a:hover {
+            background-color: #f0f9ff;
+            color: var(--primary-blue) !important;
+            transform: translateX(4px);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .audio-control-btn, .lang-toggle-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .audio-control-btn:hover, .lang-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
         }
 
         /* PAGE VIEWS */
@@ -257,53 +219,31 @@
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        .page-view.active {
-            display: block;
-        }
+        .page-view.active { display: block; }
+        .page-view.fade-in { opacity: 1; transform: translateY(0); }
 
-        .page-view.fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* SUB-PAGE BANNER PHOTO AREA */
+        /* BANNERS & HERO */
         .page-banner {
-            background: linear-gradient(135deg, rgba(11, 17, 32, 0.85), rgba(2, 132, 199, 0.75)), 
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(2, 132, 199, 0.8)), 
                         url('Beyond Thirst project cover.png') center/cover no-repeat;
             color: white;
-            padding: clamp(60px, 10vw, 90px) 5% clamp(50px, 8vw, 80px);
+            padding: 75px 5% 65px;
             text-align: center;
             position: relative;
-            box-shadow: var(--shadow-md);
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.2);
         }
 
-        .page-banner h1 { 
-            font-size: clamp(32px, 6vw, 52px); 
-            font-weight: 900; 
-            margin-bottom: 12px; 
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 0%, var(--electric-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .page-banner h1 { font-size: 44px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .page-banner p { font-size: 17px; color: var(--accent-sky); font-weight: 500; max-width: 650px; margin: 0 auto; }
 
-        .page-banner p { 
-            font-size: clamp(15px, 2.5vw, 18px); 
-            color: var(--accent-sky); 
-            font-weight: 500; 
-            max-width: 650px; 
-            margin: 0 auto; 
-        }
-
-        /* MAIN HERO COVER PHOTO AREA */
         .hero {
             position: relative;
             width: 100%;
             min-height: 85vh;
-            background: linear-gradient(to right, rgba(11, 17, 32, 0.92) 0%, rgba(11, 17, 32, 0.75) 50%, rgba(11, 17, 32, 0.45) 100%), 
+            background: linear-gradient(to right, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0.3) 100%), 
                         url('Beyond Thirst project cover.png') no-repeat center center/cover;
             color: white;
-            padding: clamp(40px, 8vw, 60px) 5% clamp(80px, 12vw, 120px);
+            padding: 70px 5% 100px;
             display: flex;
             align-items: center;
         }
@@ -312,381 +252,138 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(0, 242, 254, 0.15);
-            border: 1px solid rgba(0, 242, 254, 0.4);
-            padding: 8px 18px;
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 6px 18px;
             border-radius: 30px;
-            color: var(--electric-cyan);
-            font-size: 13.5px;
-            font-weight: 700;
-            margin-bottom: 18px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            color: var(--accent-sky);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            backdrop-filter: blur(8px);
         }
 
-        .hero-content { max-width: 680px; margin-left: 2%; }
-        
-        .script-text { 
-            font-family: 'Great Vibes', cursive; 
-            font-size: clamp(48px, 9vw, 76px); 
-            color: var(--electric-cyan); 
-            margin-bottom: -15px;
-            text-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
-        }
+        .hero-content { max-width: 680px; }
+        .script-text { font-family: 'Great Vibes', cursive; font-size: 72px; color: var(--accent-sky); margin-bottom: -22px; }
+        .main-title { font-size: 85px; font-weight: 800; letter-spacing: -1.5px; line-height: 0.95; }
+        .subtitle { color: var(--accent-sky); font-size: 22px; font-weight: 600; margin: 22px 0; }
+        .description { font-size: 16.5px; line-height: 1.6; margin-bottom: 35px; color: #cbd5e1; }
 
-        .main-title { 
-            font-size: clamp(54px, 11vw, 96px); 
-            font-weight: 900; 
-            letter-spacing: -1.5px; 
-            line-height: 0.92;
-            background: linear-gradient(135deg, #ffffff 30%, var(--vibrant-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
-        }
-
-        .subtitle { 
-            color: var(--accent-sky); 
-            font-size: clamp(18px, 3.5vw, 22px); 
-            font-weight: 700; 
-            margin: 22px 0 16px; 
-            letter-spacing: 0.5px;
-        }
-
-        .description { font-size: clamp(15px, 2.5vw, 17.5px); line-height: 1.6; margin-bottom: 35px; color: #cbd5e1; font-weight: 400; }
-
-        .hero-buttons { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .hero-buttons { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
         
         .learn-more {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            color: #0b1120; 
-            padding: 14px 32px;
-            border-radius: 30px; 
-            text-decoration: none;
-            font-weight: 700; 
-            transition: var(--transition);
-            box-shadow: 0 6px 22px rgba(0, 242, 254, 0.45);
-            cursor: pointer;
-            text-align: center;
+            background: linear-gradient(135deg, var(--primary-blue), #0369a1);
+            color: white; padding: 15px 34px;
+            border-radius: 30px; text-decoration: none;
+            font-weight: 600; transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.45);
+            cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 8px;
         }
-        .learn-more:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 10px 30px rgba(0, 242, 254, 0.65); }
+        .learn-more:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(2, 132, 199, 0.6); }
 
         .btn-outline {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white; 
-            padding: 14px 28px;
-            border-radius: 30px; 
-            text-decoration: none;
-            font-weight: 600; 
-            transition: var(--transition);
-            cursor: pointer; 
-            backdrop-filter: blur(10px);
-            text-align: center;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.35);
+            color: white; padding: 15px 30px;
+            border-radius: 30px; text-decoration: none;
+            font-weight: 600; transition: var(--transition);
+            cursor: pointer; backdrop-filter: blur(10px);
+            display: inline-flex; align-items: center; gap: 8px;
         }
-        .btn-outline:hover { background: rgba(255,255,255,0.22); border-color: #ffffff; transform: translateY(-2px); }
+        .btn-outline:hover { background: rgba(255,255,255,0.25); transform: translateY(-3px); }
 
-        /* Feature Cards Grid */
+        /* FEATURE CARDS */
         .cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            display: flex;
+            justify-content: center;
             gap: 20px;
-            padding: 0 5%;
-            transform: translateY(-50px);
+            padding: 0 4%;
+            transform: translateY(-55px);
             position: relative;
             z-index: 10;
-            max-width: 1340px;
+            max-width: 1350px;
             margin: 0 auto;
         }
 
         .card {
             background: var(--surface-white);
-            padding: 30px 20px;
+            padding: 32px 22px;
             border-radius: var(--radius-lg);
             text-align: center;
+            flex: 1;
             box-shadow: var(--shadow-md);
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center;
             transition: var(--transition);
             border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
         }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 5px;
-            transition: var(--transition);
-        }
-
-        .card.c-blue::before { background: linear-gradient(90deg, #00f2fe, #4facfe); }
-        .card.c-teal::before { background: linear-gradient(90deg, #14b8a6, #00f2fe); }
-        .card.c-green::before { background: linear-gradient(90deg, #10b981, #34d399); }
-        .card.c-orange::before { background: linear-gradient(90deg, #ff7e5f, #feb47b); }
-
-        .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
 
         .icon-box {
-            width: 60px; 
-            height: 60px;
+            width: 64px; height: 64px;
             border-radius: 50%;
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            font-size: 24px; 
-            margin-bottom: 18px;
-            transition: var(--transition);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 26px; margin-bottom: 20px;
         }
 
-        .card:hover .icon-box { transform: scale(1.1) rotate(5deg); }
-
-        .c-blue .icon-box { background: #e0f2fe; color: #0284c7; }
-        .c-teal .icon-box { background: #ccfbf1; color: #0d9488; }
-        .c-green .icon-box { background: #d1fae5; color: #059669; }
+        .c-blue .icon-box { background: #e0f2fe; color: var(--primary-blue); }
+        .c-teal .icon-box { background: #ccfbf1; color: var(--accent-teal); }
+        .c-green .icon-box { background: #dcfce7; color: #16a34a; }
         .c-orange .icon-box { background: #ffedd5; color: #ea580c; }
 
-        .card h3 { font-size: 18px; color: var(--dark-blue); margin-bottom: 10px; font-weight: 800; }
-        .card p { font-size: 13.5px; color: var(--text-light); margin-bottom: 18px; line-height: 1.5; }
-        
+        .card h3 { font-size: 18px; color: var(--dark-blue); margin-bottom: 10px; font-weight: 700; }
+        .card p { font-size: 13.5px; color: var(--text-light); margin-bottom: 20px; line-height: 1.5; }
         .explore-link {
-            margin-top: auto; 
-            text-decoration: none; 
-            font-weight: 700;
-            font-size: 13.5px; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            cursor: pointer;
-            transition: var(--transition);
+            margin-top: auto; text-decoration: none; font-weight: 600;
+            font-size: 14px; display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--primary-blue);
         }
 
-        .c-blue .explore-link { color: #0284c7; }
-        .c-teal .explore-link { color: #0d9488; }
-        .c-green .explore-link { color: #059669; }
-        .c-orange .explore-link { color: #ea580c; }
-
-        .explore-link:hover { gap: 10px; }
-
-        /* Inspire Drop Button */
         .inspire-drop-container {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px 0;
         }
 
         .inspire-drop {
-            width: 145px; 
-            height: 145px;
-            background: linear-gradient(135deg, #00f2fe 0%, #0b1120 100%);
+            width: 155px; height: 155px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0369a1 100%);
             border-radius: 0 50% 50% 50%;
             transform: rotate(45deg);
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.35);
-            cursor: pointer; 
-            transition: var(--transition);
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 15px 35px rgba(2, 132, 199, 0.4);
+            cursor: pointer; transition: var(--transition);
+            animation: pulseDrop 2.5s infinite ease-in-out;
         }
-
-        .inspire-drop:hover { transform: rotate(45deg) scale(1.08); box-shadow: 0 20px 45px rgba(0, 242, 254, 0.55); }
+        @keyframes pulseDrop {
+            0%, 100% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.06); }
+        }
 
         .drop-content { transform: rotate(-45deg); text-align: center; color: white; user-select: none; }
-        .drop-content i { font-size: 26px; margin-bottom: 4px; color: var(--electric-cyan); }
-        .drop-content h4 { font-size: 14px; margin-bottom: 2px; font-weight: 700; }
-        .drop-content p { font-size: 10.5px; opacity: 0.9; }
+        .drop-content i { font-size: 28px; margin-bottom: 4px; color: var(--accent-sky); }
+        .drop-content h4 { font-size: 14px; font-weight: 700; }
+        .drop-content p { font-size: 11px; opacity: 0.9; }
 
-        /* CENTERED MODAL FOR WORDS THAT INSPIRE */
-        .inspire-modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(11, 17, 32, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2500;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            padding: 20px;
-        }
-
-        .inspire-modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .inspire-modal-card {
-            background: var(--surface-white);
-            border-radius: var(--radius-lg);
-            padding: 35px 25px;
-            max-width: 480px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 242, 254, 0.25);
-            border: 2px solid var(--electric-cyan);
-            transform: scale(0.85);
-            transition: var(--transition);
-        }
-
-        .inspire-modal-overlay.active .inspire-modal-card {
-            transform: scale(1);
-        }
-
-        .modal-icon-drop {
-            width: 60px; height: 60px;
-            background: linear-gradient(135deg, #00f2fe, #4facfe);
-            color: #0b1120;
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 26px;
-            margin: 0 auto 18px;
-            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.4);
-        }
-
-        .quote-modal-text {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--dark-blue);
-            line-height: 1.5;
-            margin-bottom: 22px;
-            font-style: italic;
-        }
-
-        .modal-close-btn {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            color: #0b1120;
-            border: none;
-            padding: 10px 26px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        /* WATER SAVER MINI GAME SECTION */
-        .game-section {
-            background: linear-gradient(135deg, #0b1120 0%, #0369a1 100%);
-            border-radius: var(--radius-lg);
-            padding: 30px 20px;
-            color: white;
-            text-align: center;
-            margin: 40px auto 0;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-header h3 {
-            font-size: clamp(22px, 4vw, 32px);
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffffff, var(--electric-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-        }
-
-        .game-header p {
-            font-size: 14px;
-            color: var(--accent-sky);
-            margin-bottom: 20px;
-        }
-
-        .game-container {
-            position: relative;
-            max-width: 500px;
-            margin: 0 auto;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            background-color: rgba(11, 17, 32, 0.8);
-            border: 2px solid var(--electric-cyan);
-            touch-action: none;
-        }
-
-        canvas {
-            display: block;
-            width: 100%;
-            height: 320px;
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-        }
-
-        .game-ui {
-            position: absolute;
-            top: 10px; left: 15px; right: 15px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--electric-cyan);
-            z-index: 5;
-            pointer-events: none;
-        }
-
-        .game-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(11, 17, 32, 0.88);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            z-index: 10;
-        }
-
-        .start-game-btn {
-            background: linear-gradient(135deg, #00f2fe, #4facfe);
-            color: #0b1120;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 15px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
-            transition: var(--transition);
-        }
-
-        /* Container & General Layout */
+        /* CONTAINER LAYOUT */
         .container {
             max-width: 1260px;
             margin: 0 auto;
-            padding: clamp(40px, 8vw, 80px) 5%;
+            padding: 60px 5%;
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 45px;
-        }
-
-        .section-title h2 { 
-            font-size: clamp(28px, 5vw, 40px); 
-            color: var(--dark-blue); 
-            font-weight: 900; 
-            margin-bottom: 10px; 
-            letter-spacing: -0.5px;
-        }
-
-        .section-title p { color: var(--text-light); font-size: clamp(14px, 2.5vw, 17px); max-width: 620px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 45px; }
+        .section-title h2 { font-size: 36px; color: var(--dark-blue); font-weight: 800; margin-bottom: 10px; }
+        .section-title p { color: var(--text-light); font-size: 16px; max-width: 620px; margin: 0 auto; }
 
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
         }
 
         .info-card {
             background: var(--surface-white);
-            padding: clamp(28px, 5vw, 40px) 24px;
+            padding: 34px 28px;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border-color);
@@ -696,79 +393,239 @@
         }
 
         .info-card::before {
-            content: ''; 
-            position: absolute; 
-            top: 0; left: 0; 
-            width: 100%; height: 5px;
-            background: linear-gradient(90deg, var(--electric-cyan), var(--vibrant-blue));
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-sky));
         }
-
         .info-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
-        .info-card i { font-size: 36px; color: var(--primary-blue); margin-bottom: 18px; }
-        .info-card h3 { font-size: 20px; color: var(--dark-blue); margin-bottom: 12px; font-weight: 800; }
+        .info-card i { font-size: 36px; color: var(--primary-blue); margin-bottom: 20px; }
+        .info-card h3 { font-size: 20px; color: var(--dark-blue); margin-bottom: 12px; font-weight: 700; }
         .info-card p { font-size: 14.5px; color: var(--text-light); line-height: 1.6; }
 
-        /* Gallery System */
+        /* WATER THAT INSPIRES PAGE */
+        .inspire-page-bg {
+            background: linear-gradient(135deg, #0284c7 0%, #0f172a 100%);
+            min-height: 85vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            color: white;
+        }
+
+        .water-wave-anim {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 10%, transparent 60%);
+            animation: waveRotate 20s infinite linear;
+        }
+        @keyframes waveRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .inspire-quote-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 55px 45px;
+            max-width: 850px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+
+        .quote-icon-large { font-size: 55px; color: var(--accent-sky); margin-bottom: 20px; }
+        .inspire-quote-text { font-size: 26px; font-weight: 600; line-height: 1.6; margin-bottom: 22px; min-height: 130px; display: flex; align-items: center; justify-content: center; }
+        .inspire-quote-author { font-size: 17px; color: var(--accent-sky); font-weight: 700; letter-spacing: 1px; }
+
+        .quote-controls {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 35px;
+        }
+
+        .quote-btn {
+            background: rgba(255,255,255,0.22);
+            border: 1px solid rgba(255,255,255,0.45);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .quote-btn:hover { background: white; color: var(--dark-blue); transform: translateY(-2px); }
+
+        /* GAMES STYLING */
+        .game-wrapper {
+            background: #e0f2fe;
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-md);
+            margin: 20px auto;
+            max-width: 950px;
+            border: 2px solid var(--primary-blue);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-canvas-container {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            background: linear-gradient(to bottom, #87ceeb 0%, #e0f6ff 60%, #7cfc00 60%, #228b22 100%);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            cursor: pointer;
+            touch-action: none;
+        }
+
+        .game-cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.85;
+            animation: cloudMove linear infinite;
+        }
+
+        @keyframes cloudMove { from { left: -150px; } to { left: 100%; } }
+
+        .game-bird {
+            position: absolute;
+            color: #333;
+            font-size: 20px;
+            animation: birdFly linear infinite;
+        }
+        @keyframes birdFly { from { left: -50px; } to { left: 100%; } }
+
+        .plant-target {
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .plant-icon {
+            font-size: 85px;
+            transition: all 0.5s ease;
+        }
+
+        .plant-icon.wilted { color: #8b5a2b; transform: rotate(-20deg) scale(0.8); }
+        .plant-icon.blooming { color: #10b981; transform: rotate(0deg) scale(1.15); filter: drop-shadow(0 0 12px #10b981); }
+
+        .water-pot {
+            position: absolute;
+            top: 40px;
+            font-size: 48px;
+            color: #0284c7;
+            pointer-events: none;
+            transition: transform 0.1s linear;
+            z-index: 10;
+        }
+
+        .water-drop-particle {
+            position: absolute;
+            width: 9px;
+            height: 14px;
+            background: #38bdf8;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .game-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.88);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            z-index: 20;
+        }
+
+        /* LIGHTBOX SYSTEM */
+        .lightbox-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-modal.active { display: flex; }
+        .lightbox-content { max-width: 90vw; max-height: 85vh; border-radius: var(--radius-md); overflow: hidden; }
+        .lightbox-content img, .lightbox-content video { width: 100%; height: 100%; object-fit: contain; }
+        .lightbox-close { position: absolute; top: 25px; right: 30px; color: white; font-size: 32px; cursor: pointer; }
+
+        /* GALLERY SYSTEM */
         .upload-card {
             display: none; 
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             border: 2px dashed var(--primary-blue);
             border-radius: var(--radius-lg);
             padding: 35px 20px;
             text-align: center;
             margin-bottom: 30px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
         }
-
         .upload-card.secret-active { display: block !important; }
 
         .upload-btn-label {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            color: #0b1120;
-            padding: 12px 26px;
+            background: linear-gradient(135deg, var(--primary-blue), #0369a1);
+            color: white;
+            padding: 12px 28px;
             border-radius: 30px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 14px;
             cursor: pointer;
-            margin-top: 16px;
-            transition: var(--transition);
-            box-shadow: 0 4px 18px rgba(0, 242, 254, 0.4);
+            margin-top: 14px;
         }
 
         .gallery-controls {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
             background: var(--surface-white);
             border: 1px solid var(--border-color);
-            padding: 8px 20px;
+            padding: 9px 20px;
             border-radius: 30px;
-            font-size: 13.5px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
-            color: var(--text-light);
         }
 
         .filter-btn:hover, .filter-btn.active {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            color: #0b1120;
-            border-color: transparent;
-            box-shadow: 0 4px 18px rgba(0, 242, 254, 0.35);
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
             gap: 22px;
         }
 
@@ -776,144 +633,31 @@
             position: relative;
             border-radius: var(--radius-md);
             overflow: hidden;
-            height: 240px;
+            height: 260px;
             box-shadow: var(--shadow-sm);
-            background-color: var(--dark-blue);
+            background-color: #0f172a;
             border: 1px solid var(--border-color);
-            transition: var(--transition);
+            cursor: pointer;
         }
 
         .gallery-item img, .gallery-item video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;
         }
-
         .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.08); }
 
         .gallery-caption {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(11, 17, 32, 0.95));
-            color: white;
-            padding: 24px 16px 14px;
-            font-size: 13.5px;
-            font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            pointer-events: none;
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(15, 23, 42, 0.92));
+            color: white; padding: 22px 16px 14px; font-size: 14px;
+            display: flex; justify-content: space-between; align-items: flex-end;
         }
 
-        .gallery-item:hover .gallery-caption { opacity: 1; }
-
-        .delete-media-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(225, 29, 72, 0.95);
-            color: white;
-            border: none;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            z-index: 10;
-            transition: var(--transition);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .delete-media-btn:hover { background: #e11d48; transform: scale(1.15); }
-        .admin-active .delete-media-btn { display: flex !important; }
-
-        /* Accordion */
-        .accordion { max-width: 840px; margin: 0 auto; }
-        .accordion-item {
-            background: var(--surface-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            margin-bottom: 14px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .accordion-header {
-            padding: 18px 22px;
-            font-weight: 800;
-            font-size: 16px;
-            color: var(--dark-blue);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .accordion-header:hover { background: #f0fdf4; color: var(--primary-blue); }
-
-        .accordion-content {
-            padding: 0 22px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease, padding 0.35s ease;
-            color: var(--text-light);
-            font-size: 14.5px;
-            line-height: 1.6;
-        }
-
-        .accordion-item.open .accordion-content {
-            padding: 0 22px 20px;
-            max-height: 220px;
-        }
-
-        .accordion-item.open .accordion-header i { transform: rotate(180deg); color: var(--primary-blue); }
-
-        /* Team Cards */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 26px;
-        }
-
-        .team-card {
-            background: var(--surface-white);
-            border-radius: var(--radius-lg);
-            padding: 35px 22px;
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-        }
-
-        .team-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
-
-        .team-avatar {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-            color: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            margin: 0 auto 18px;
-            border: 4px solid #ffffff;
-            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.2);
-        }
-
-        /* Contact Box */
+        /* CONTACT & FEEDBACK FORM */
         .contact-box {
             background: var(--surface-white);
             border-radius: var(--radius-lg);
-            padding: clamp(25px, 5vw, 50px);
-            box-shadow: var(--shadow-md);
+            padding: 42px;
+            box-shadow: var(--shadow-sm);
             border: 1px solid var(--border-color);
             display: grid;
             grid-template-columns: 1fr 1.2fr;
@@ -921,191 +665,110 @@
         }
 
         .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 13.5px; font-weight: 700; margin-bottom: 6px; color: var(--dark-blue); }
+        .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--dark-blue); }
         .form-group input, .form-group textarea, .form-group select {
-            width: 100%; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: var(--radius-md); outline: none; font-size: 14.5px;
-            transition: var(--transition); background-color: #f8fafc;
+            width: 100%; padding: 13px 18px; border: 1px solid var(--border-color); border-radius: var(--radius-md); outline: none; font-size: 14.5px;
+            background-color: #f8fafc; transition: var(--transition);
         }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--electric-cyan); background-color: white; box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.25); }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: var(--primary-blue); background-color: white; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
+        }
 
-        /* Toast */
+        /* TOAST & FOOTER */
         .toast {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: var(--dark-blue);
-            color: white;
-            padding: 14px 24px;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 3000;
-            opacity: 0;
-            transform: translateY(25px);
-            transition: var(--transition);
-            pointer-events: none;
-            border-left: 5px solid var(--electric-cyan);
-            max-width: 90vw;
+            position: fixed; bottom: 30px; right: 30px; background: var(--dark-blue); color: white;
+            padding: 15px 25px; border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
+            display: flex; align-items: center; gap: 12px; z-index: 2000; opacity: 0;
+            transform: translateY(20px); transition: var(--transition); pointer-events: none;
+            border-left: 4px solid var(--accent-sky);
         }
         .toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-        /* Footer */
         footer {
-            background-color: var(--dark-blue);
-            color: white;
-            padding: 40px 5% 25px;
-            margin-top: auto;
-            position: relative;
-            z-index: 10;
+            background-color: var(--dark-blue); color: white; padding: 40px 5% 25px; margin-top: auto;
         }
 
         .footer-content {
-            max-width: 1260px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.12);
-            padding-bottom: 24px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 20px;
+            max-width: 1260px; margin: 0 auto; display: flex; justify-content: space-between;
+            align-items: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 22px; margin-bottom: 22px;
+            flex-wrap: wrap; gap: 20px;
         }
 
-        .footer-logo img {
-            height: 42px;
-            width: auto;
-            filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.4));
-        }
+        .footer-logo img { height: 42px; width: auto; }
+        .footer-socials a { color: white; font-size: 20px; opacity: 0.8; margin-left: 18px; transition: var(--transition); }
+        .footer-socials a:hover { opacity: 1; color: var(--accent-sky); transform: translateY(-2px); }
 
-        .footer-socials a {
-            color: white; font-size: 20px; opacity: 0.85; margin-left: 16px; transition: var(--transition);
-        }
-        .footer-socials a:hover { opacity: 1; color: var(--electric-cyan); transform: translateY(-3px) scale(1.1); }
-
-        /* ANDROID / MOBILE OPTIMIZATION RESPONSIVE CSS */
-        @media (max-width: 992px) {
-            .contact-box { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-toggle { display: block; }
-            
+        /* RESPONSIVE DESIGN (MOBILE / ANDROID) */
+        @media (max-width: 900px) {
+            .cards-container { flex-wrap: wrap; transform: translateY(-35px); }
+            .card, .inspire-drop-container { min-width: 46%; margin-bottom: 12px; }
+            .contact-box { grid-template-columns: 1fr; padding: 28px; }
             .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 78vw;
-                max-width: 300px;
-                height: 100vh;
-                background: rgba(11, 17, 32, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: flex-start;
-                padding: 80px 20px 30px;
-                border-radius: 0;
-                border: none;
-                border-left: 1px solid rgba(255, 255, 255, 0.15);
-                transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+                position: fixed; top: 70px; left: -100%; width: 82%; height: calc(100vh - 70px);
+                background: var(--dark-blue); flex-direction: column; padding: 35px 25px; border-radius: 0;
+                transition: 0.35s ease; align-items: flex-start; gap: 12px;
             }
-
-            .nav-links.mobile-active {
-                right: 0;
-            }
-
-            .nav-links li { width: 100%; }
-            .nav-links a { width: 100%; padding: 12px 16px; font-size: 15px; }
-
-            .dropdown-menu {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                box-shadow: none;
-                background: rgba(255, 255, 255, 0.05);
-                margin-top: 6px;
-                border: none;
-            }
-
-            .dropdown-menu li a { color: rgba(255, 255, 255, 0.8) !important; }
-
-            .hero {
-                min-height: auto;
-                padding-top: 40px;
-            }
-
-            .cards-container {
-                grid-template-columns: 1fr;
-                transform: translateY(-20px);
-                padding: 0 4%;
-            }
-
-            .footer-content { flex-direction: column; text-align: center; }
-            .footer-socials a { margin: 0 10px; }
+            .nav-links.mobile-open { left: 0; }
+            .mobile-menu-btn { display: block; }
+            .main-title { font-size: 56px; }
+            .script-text { font-size: 52px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-blob-1"></div>
-    <div class="ambient-blob-2"></div>
+    <!-- ANIMATED BACKGROUND CANVAS -->
+    <canvas id="bgCanvas"></canvas>
 
-    <!-- Header & Navigation -->
+    <!-- Header Navigation -->
     <header>
         <nav>
             <a onclick="showPage('home')" class="logo">
                 <img src="logo.png" alt="Beyond Thirst Logo">
             </a>
 
-            <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
-                <i class="fa-solid fa-bars" id="menuIcon"></i>
-            </button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars"></i></button>
 
-            <ul class="nav-links" id="navMenu">
-                <li><a onclick="showPage('home')" id="nav-home" class="active"><i class="fa-solid fa-house"></i> Home</a></li>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="showPage('home')" id="nav-home" class="active"><i class="fa-solid fa-house"></i> <span data-en="Home" data-bn="হোম">Home</span></a></li>
                 
                 <li class="dropdown">
-                    <a id="nav-about"><i class="fa-solid fa-circle-info"></i> About <i class="fa-solid fa-caret-down"></i></a>
+                    <a id="nav-about"><i class="fa-solid fa-circle-info"></i> <span data-en="About" data-bn="সম্পর্কে">About</span> <i class="fa-solid fa-caret-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a onclick="showPage('our-story')"><i class="fa-solid fa-book-open"></i> Our Story</a></li>
-                        <li><a onclick="showPage('mission-vision')"><i class="fa-solid fa-bullseye"></i> Mission & Vision</a></li>
+                        <li><a onclick="showPage('our-story')"><i class="fa-solid fa-book-open"></i> <span data-en="Our Story" data-bn="আমাদের গল্প">Our Story</span></a></li>
+                        <li><a onclick="showPage('mission-vision')"><i class="fa-solid fa-bullseye"></i> <span data-en="Mission & Vision" data-bn="লক্ষ্য ও উদ্দেশ্য">Mission & Vision</span></a></li>
                     </ul>
                 </li>
 
                 <li class="dropdown">
-                    <a id="nav-work"><i class="fa-solid fa-briefcase"></i> Our Work <i class="fa-solid fa-caret-down"></i></a>
+                    <a id="nav-work"><i class="fa-solid fa-briefcase"></i> <span data-en="Our Work" data-bn="আমাদের কাজ">Our Work</span> <i class="fa-solid fa-caret-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a onclick="showPage('projects')"><i class="fa-solid fa-diagram-project"></i> Projects</a></li>
-                        <li><a onclick="showPage('campaigns')"><i class="fa-solid fa-bullhorn"></i> Campaigns</a></li>
-                        <li><a onclick="showPage('impact')"><i class="fa-solid fa-chart-line"></i> Impact</a></li>
+                        <li><a onclick="showPage('projects')"><i class="fa-solid fa-diagram-project"></i> <span data-en="Projects" data-bn="প্রকল্পসমূহ">Projects</span></a></li>
+                        <li><a onclick="showPage('campaigns')"><i class="fa-solid fa-bullhorn"></i> <span data-en="Campaigns" data-bn="ক্যাম্পেইন">Campaigns</span></a></li>
+                        <li><a onclick="showPage('impact')"><i class="fa-solid fa-chart-line"></i> <span data-en="Impact" data-bn="প্রভাব">Impact</span></a></li>
                     </ul>
                 </li>
 
-                <li><a onclick="showPage('gallery')" id="nav-gallery"><i class="fa-solid fa-images"></i> Gallery</a></li>
-                <li><a onclick="showPage('team')" id="nav-team"><i class="fa-solid fa-users"></i> Team</a></li>
-                <li><a onclick="showPage('contact')" id="nav-contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+                <li class="dropdown">
+                    <a id="nav-games"><i class="fa-solid fa-gamepad"></i> <span data-en="Interactive Games" data-bn="ইন্টারেক্টিভ গেম">Interactive Games</span> <i class="fa-solid fa-caret-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a onclick="showPage('game-1')"><i class="fa-solid fa-seedling"></i> <span data-en="Plant Saver (Nature)" data-bn="প্ল্যান্ট সেভার (প্রকৃতি)">Plant Saver (Nature)</span></a></li>
+                        <li><a onclick="showPage('game-2')"><i class="fa-solid fa-glass-water"></i> <span data-en="Thirsty Child Puzzle" data-bn="তষ্ণার্ত শিশু ধাঁধা">Thirsty Child Puzzle</span></a></li>
+                    </ul>
+                </li>
+
+                <li><a onclick="showPage('inspire')" id="nav-inspire"><i class="fa-solid fa-droplet"></i> <span data-en="Water Inspires" data-bn="অনুপ্রেরণা">Water Inspires</span></a></li>
+                <li><a onclick="showPage('gallery')" id="nav-gallery"><i class="fa-solid fa-images"></i> <span data-en="Gallery" data-bn="গ্যালারি">Gallery</span></a></li>
+                <li><a onclick="showPage('team')" id="nav-team"><i class="fa-solid fa-users"></i> <span data-en="Team" data-bn="টিম">Team</span></a></li>
+                <li><a onclick="showPage('contact')" id="nav-contact"><i class="fa-solid fa-envelope"></i> <span data-en="Contact" data-bn="যোগাযোগ">Contact</span></a></li>
             </ul>
-            
-            <a onclick="showPage('contact')" class="join-btn" style="display: none;">
-                Join Us <i class="fa-solid fa-arrow-right"></i>
-            </a>
+
+            <div class="header-controls">
+                <button class="audio-control-btn" id="audioToggleBtn" onclick="toggleAudio()"><i class="fa-solid fa-music"></i> <span id="audioLabel">Sound: Off</span></button>
+                <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLanguage()"><i class="fa-solid fa-language"></i> BN</button>
+            </div>
         </nav>
     </header>
-
-    <!-- CENTERED MODAL FOR WORDS THAT INSPIRE -->
-    <div class="inspire-modal-overlay" id="inspireModal">
-        <div class="inspire-modal-card">
-            <div class="modal-icon-drop">
-                <i class="fa-solid fa-quote-left"></i>
-            </div>
-            <p class="quote-modal-text" id="quoteModalText">"Thousands have lived without love, not one without water." — W. H. Auden</p>
-            <button class="modal-close-btn" onclick="closeInspireModal()">Close Quote</button>
-        </div>
-    </div>
 
     <!-- PAGE 1: HOME -->
     <main id="page-home" class="page-view active fade-in">
@@ -1114,132 +777,195 @@
                 <div class="hero-badge"><i class="fa-solid fa-droplet"></i> Youth-Led Water Action</div>
                 <div class="script-text">Beyond</div>
                 <h1 class="main-title">THIRST</h1>
-                <p class="subtitle">Awareness Today, Water for Tomorrow</p>
-                <p class="description">A student-led initiative inspiring water conservation, climate resilience, and sustainable action across local communities.</p>
+                <p class="subtitle" data-en="Awareness Today, Water for Tomorrow" data-bn="আজকের সচেতনতা, আগামী দিনের পানি">Awareness Today, Water for Tomorrow</p>
+                <p class="description" data-en="A student-led initiative inspiring water conservation, climate resilience, and sustainable action across local communities." data-bn="একটি শিক্ষার্থীদের পরিচালিত উদ্যোগ যা পানি সংরক্ষণ, জলবায়ু সহনশীলতা এবং টেকসই পদক্ষেপে অনুপ্রাণিত করে।">A student-led initiative inspiring water conservation, climate resilience, and sustainable action across local communities.</p>
                 <div class="hero-buttons">
-                    <a onclick="showPage('our-story')" class="learn-more">Our Story</a>
-                    <a onclick="showPage('gallery')" class="btn-outline"><i class="fa-solid fa-photo-film"></i> Media Gallery</a>
+                    <a onclick="showPage('our-story')" class="learn-more" data-en="Our Story" data-bn="আমাদের গল্প">Our Story</a>
+                    <a onclick="showPage('gallery')" class="btn-outline"><i class="fa-solid fa-photo-film"></i> <span data-en="Media Gallery" data-bn="মিডিয়া গ্যালারি">Media Gallery</span></a>
                 </div>
             </div>
         </section>
 
-        <!-- Dynamic Action Cards -->
         <section class="cards-container">
             <div class="card c-blue">
                 <div class="icon-box"><i class="fa-solid fa-droplet"></i></div>
-                <h3>Why Water Matters</h3>
-                <p>Understand how freshwater access shapes public health, ecosystems, and urban development.</p>
-                <a onclick="showPage('our-story')" class="explore-link">Explore <i class="fa-solid fa-arrow-right"></i></a>
+                <h3 data-en="Why Water Matters" data-bn="পানি কেন গুরুত্বপূর্ণ">Why Water Matters</h3>
+                <p data-en="Understand how freshwater access shapes public health, ecosystems, and urban development." data-bn="জানুন কিভাবে সুপেয় পানি জনস্বাস্থ্য ও পরিবেশের ভারসাম্য রক্ষা করে।">Understand how freshwater access shapes public health, ecosystems, and urban development.</p>
+                <a onclick="showPage('our-story')" class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
             </div>
             
             <div class="card c-teal">
                 <div class="icon-box"><i class="fa-solid fa-chart-pie"></i></div>
-                <h3>Water Facts</h3>
-                <p>Learn key statistics regarding individual footprints and regional water security challenges.</p>
-                <a onclick="showPage('impact')" class="explore-link">Explore <i class="fa-solid fa-arrow-right"></i></a>
+                <h3 data-en="Water Facts" data-bn="পানির তথ্যাবলী">Water Facts</h3>
+                <p data-en="Learn key statistics regarding individual footprints and regional water security challenges." data-bn="ব্যক্তিগত পানির ব্যবহার ও পরিবেশের চ্যালেঞ্জ সংক্রান্ত তথ্যসমূহ জানুন।">Learn key statistics regarding individual footprints and regional water security challenges.</p>
+                <a onclick="showPage('impact')" class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
             </div>
 
             <div class="card c-green">
                 <div class="icon-box"><i class="fa-solid fa-leaf"></i></div>
-                <h3>Save Every Drop</h3>
-                <p>Simple practical habits for students and families to minimize household water waste.</p>
-                <a onclick="showPage('projects')" class="explore-link">Explore <i class="fa-solid fa-arrow-right"></i></a>
+                <h3 data-en="Save Every Drop" data-bn="প্রতিটি ফোঁটা বাঁচান">Save Every Drop</h3>
+                <p data-en="Simple practical habits for students and families to minimize household water waste." data-bn="পানি অপচয় কমানোর সহজ ও কার্যকর পারিবারিক কিছু অভ্যাস।">Simple practical habits for students and families to minimize household water waste.</p>
+                <a onclick="showPage('projects')" class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
             </div>
 
             <div class="card c-orange">
                 <div class="icon-box"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                <h3>Small Actions</h3>
-                <p>See how student-led micro-projects produce measurable long-term impact.</p>
-                <a onclick="showPage('campaigns')" class="explore-link">Explore <i class="fa-solid fa-arrow-right"></i></a>
+                <h3 data-en="Small Actions" data-bn="ছোট পদক্ষেপ">Small Actions</h3>
+                <p data-en="See how student-led micro-projects produce measurable long-term impact." data-bn="শিক্ষার্থীদের ছোট ছোট উদ্যোগ কিভাবে বড় পরিবর্তন আনে দেখুন।">See how student-led micro-projects produce measurable long-term impact.</p>
+                <a onclick="showPage('campaigns')" class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
             </div>
 
-            <!-- Words that Inspire Button -->
+            <!-- WATER DROP REDIRECT -->
             <div class="inspire-drop-container">
-                <div class="inspire-drop" onclick="openInspireModal()">
+                <div class="inspire-drop" onclick="showPage('inspire')" title="Click for Inspiring Water Tales">
                     <div class="drop-content">
                         <i class="fa-solid fa-quote-left"></i>
-                        <h4>Words that<br>Inspire</h4>
-                        <p>Tap drop</p>
+                        <h4 data-en="Words that<br>Inspire" data-bn="অনুপ্রেরণামূলক<br>বাণী">Words that<br>Inspire</h4>
+                        <p data-en="Tap Drop" data-bn="ক্লিক করুন">Tap Drop</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- INTERACTIVE WATER SAVING MINI-GAME -->
+        <!-- HOME GALLERY SHOWCASE SECTION -->
         <div class="container" style="padding-top: 10px;">
-            <div class="game-section">
-                <div class="game-header">
-                    <h3><i class="fa-solid fa-gamepad"></i> Water Drop Catcher</h3>
-                    <p>Catch clean water drops (💧) and avoid polluted sludge drops (☣️) to save gallons!</p>
-                </div>
-                <div class="game-container" id="gameBox">
-                    <div class="game-ui">
-                        <div>Score: <span id="gameScore">0</span></div>
-                        <div>Saved: <span id="gameGallons">0</span> Gal</div>
+            <div class="section-title">
+                <h2 data-en="Action Highlights" data-bn="একশন হাইলাইটস">Action Highlights</h2>
+                <p data-en="A quick preview of our recent community events, workshops, and youth projects." data-bn="আমাদের সাম্প্রতিক সামাজিক কার্যক্রম, ওয়ার্কশপ এবং প্রকল্পের কিছু মুহূর্ত।">A quick preview of our recent community events, workshops, and youth projects.</p>
+            </div>
+            
+            <div class="gallery-grid" style="margin-bottom: 28px;">
+                <div class="gallery-item" onclick="openLightbox('Beyond Thirst project cover.png', 'Save Water, Save Life Cover')">
+                    <img src="Beyond Thirst project cover.png" alt="Beyond Thirst Project Banner">
+                    <div class="gallery-caption">
+                        <span>Save Water, Save Life Cover</span>
+                        <i class="fa-solid fa-expand"></i>
                     </div>
-                    <div class="game-overlay" id="gameOverlay">
-                        <h4 style="font-size: 20px; color: white; margin-bottom: 10px;" id="gameTitle">Ready to Save Water?</h4>
-                        <p style="font-size: 13.5px; color: var(--accent-sky); margin-bottom: 18px; text-align: center;" id="gameDesc">Move the bucket with mouse or touch to collect drops!</p>
-                        <button class="start-game-btn" onclick="startGame()">Start Catching</button>
-                    </div>
-                    <canvas id="waterGameCanvas"></canvas>
                 </div>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="learn-more" onclick="showPage('gallery')"><i class="fa-solid fa-images"></i> <span data-en="See More Photos" data-bn="আরও ছবি দেখুন">See More Photos</span></button>
             </div>
         </div>
 
         <div class="container">
             <div class="section-title">
-                <h2>Resource Toolkit</h2>
-                <p>Equipping students and communities with actionable tools for real-world impact.</p>
+                <h2 data-en="Resource Toolkit" data-bn="রিসোর্স টুলকিট">Resource Toolkit</h2>
+                <p data-en="Equipping students and communities with actionable tools for real-world impact." data-bn="শিক্ষার্থী ও সাধারণ মানুষকে পানির সুরক্ষায় কার্যকর টুলকিট প্রদান।">Equipping students and communities with actionable tools for real-world impact.</p>
             </div>
             <div class="grid-3">
                 <div class="info-card">
                     <i class="fa-solid fa-calculator"></i>
-                    <h3>Water Footprint Tool</h3>
-                    <p>Calculate personal and school water usage metrics to locate actionable savings targets.</p>
+                    <h3 data-en="Water Footprint Tool" data-bn="পানির ফুটপ্রিন্ট হিসাব">Water Footprint Tool</h3>
+                    <p data-en="Calculate personal and school water usage metrics to locate actionable savings targets." data-bn="ব্যক্তিগত ও শিক্ষা প্রতিষ্ঠানের দৈনিক পানি খরচের পরিমাণ সহজেই হিসাব করুন।">Calculate personal and school water usage metrics to locate actionable savings targets.</p>
                 </div>
                 <div class="info-card">
                     <i class="fa-solid fa-book-bookmark"></i>
-                    <h3>Campus Activation Kit</h3>
-                    <p>Complete guides for running plumbing audits and leading student workshops.</p>
+                    <h3 data-en="Campus Activation Kit" data-bn="ক্যাম্পাস এক্টিভেশন কিট">Campus Activation Kit</h3>
+                    <p data-en="Complete guides for running plumbing audits and leading student workshops." data-bn="ক্যাম্পাসে পানির অপচয় রোধে প্লাম্বিং নিরীক্ষা ও ওয়ার্কশপ পরিচালনার গাইড।">Complete guides for running plumbing audits and leading student workshops.</p>
                 </div>
                 <div class="info-card">
                     <i class="fa-solid fa-cloud-sun-rain"></i>
-                    <h3>Rainwater Blueprint</h3>
-                    <p>Step-by-step instructions for building simple non-potable rainwater harvesting tanks.</p>
+                    <h3 data-en="Rainwater Blueprint" data-bn="বৃষ্টির পানি সংগ্রহ ব্লুপ্রিন্ট">Rainwater Blueprint</h3>
+                    <p data-en="Step-by-step instructions for building simple non-potable rainwater harvesting tanks." data-bn="সহজ উপায়ে বৃষ্টির পানি ধরে রাখার সাশ্রয়ী প্ল্যান ও ব্যবহার গাইড।">Step-by-step instructions for building simple non-potable rainwater harvesting tanks.</p>
                 </div>
             </div>
         </div>
+    </main>
 
-        <div class="container" style="padding-top: 0;">
-            <div class="section-title">
-                <h2>Frequently Asked Questions</h2>
-                <p>Learn how Beyond Thirst operates and how you can participate.</p>
-            </div>
-            <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        Who can join Beyond Thirst?
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        Any student or young environmental enthusiast can get involved! You can join our local team, participate in workshops, or start a Beyond Thirst chapter at your school.
-                    </div>
+    <!-- PAGE: WATER THAT INSPIRES -->
+    <main id="page-inspire" class="page-view">
+        <div class="inspire-page-bg">
+            <div class="water-wave-anim"></div>
+            <div class="inspire-quote-card" id="quoteCard">
+                <div class="quote-icon-large"><i class="fa-solid fa-quote-left"></i></div>
+                <div class="inspire-quote-text" id="quoteDisplayText">"Water is the driving force of all nature."</div>
+                <div class="inspire-quote-author" id="quoteDisplayAuthor">— Leonardo da Vinci</div>
+                
+                <div class="quote-controls">
+                    <button class="quote-btn" onclick="prevQuote()"><i class="fa-solid fa-chevron-left"></i> <span data-en="Previous" data-bn="পূর্ববর্তী">Previous</span></button>
+                    <button class="quote-btn" onclick="nextQuote()"><span data-en="Next Tale" data-bn="পরবর্তী গল্প">Next Tale</span> <i class="fa-solid fa-chevron-right"></i></button>
                 </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        How do campus audits work?
-                        <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </div>
+    </main>
+
+    <!-- PAGE: GAME 1 (REALISTIC NATURE WATERING GAME) -->
+    <main id="page-game-1" class="page-view">
+        <div class="page-banner">
+            <h1 data-en="Nature Plant Saver" data-bn="প্রকৃতি ও উদ্ভিদ সুরক্ষা গেম">Nature Plant Saver</h1>
+            <p data-en="Nurture dying plants without wasting water drops!" data-bn="পানি অপচয় না করে প্রায় মৃত উদ্ভিদকে প্রাণবন্ত করে তুলুন!">Nurture dying plants without wasting water drops!</p>
+        </div>
+        <div class="container">
+            <div class="game-wrapper">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <div><strong>Score:</strong> <span id="game1Score">0</span></div>
+                    <div><strong>Water Wasted:</strong> <span id="game1Wasted" style="color: #ef4444; font-weight:700;">0</span> / 5 drops</div>
+                    <button class="quote-btn" style="background: #ef4444; border:none;" onclick="quitGame1()">Quit Game</button>
+                </div>
+
+                <div class="game-canvas-container" id="game1Canvas">
+                    <div class="game-cloud" style="width: 110px; height: 38px; top: 20px; animation-duration: 22s;"></div>
+                    <div class="game-cloud" style="width: 150px; height: 48px; top: 60px; animation-duration: 30s; animation-delay: -10s;"></div>
+                    <div class="game-bird" style="top: 80px; animation-duration: 12s;"><i class="fa-solid fa-dove"></i></div>
+
+                    <div class="water-pot" id="waterPot"><i class="fa-solid fa-faucet-drip"></i></div>
+
+                    <div class="plant-target" id="plantTarget">
+                        <div class="plant-icon wilted" id="plantIcon"><i class="fa-solid fa-seedling"></i></div>
+                        <p style="font-weight:700; color:white; text-shadow: 0 2px 4px rgba(0,0,0,0.7);" id="plantStatus">Parched Plant</p>
                     </div>
-                    <div class="accordion-content">
-                        Our student teams visit partner schools to inspect plumbing, record leak points, and calculate estimated daily loss. We then submit findings to campus administrators for swift repair.
+
+                    <div class="game-overlay" id="game1Overlay">
+                        <h2 style="font-size: 28px; margin-bottom: 12px;" data-en="Help Nature Flourish" data-bn="প্রকৃতিকে বাঁচিয়ে তুলুন">Help Nature Flourish</h2>
+                        <p style="margin-bottom: 22px; max-width: 520px; line-height: 1.6;" data-en="Drag or move touch to guide water drops into the plant pot. Every drop matters—do NOT waste water!" data-bn="মাউস বা স্পর্শ সরিয়ে উদ্ভিদে পানি দিন। একটি ফোঁটাও অপচয় করবেন না!">Drag or move touch to guide water drops into the plant pot. Every drop matters—do NOT waste water!</p>
+                        <button class="learn-more" onclick="startGame1()" data-en="Start Playing" data-bn="গেম শুরু করুন">Start Playing</button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- PAGE 2: OUR STORY -->
+    <!-- PAGE: GAME 2 (THIRSTY CHILD WATER PUZZLE) -->
+    <main id="page-game-2" class="page-view">
+        <div class="page-banner">
+            <h1 data-en="Thirsty Child Water Puzzle" data-bn="তষ্ণার্ত শিশুর পানি সরবরাহ গেম">Thirsty Child Water Puzzle</h1>
+            <p data-en="Help the child drink clean water by adjusting pipe alignment & valve pressure!" data-bn="সঠিকভাবে ভালভ ঘুরিয়ে পানি সরবরাহ করে শিশুর তৃষ্ণা মিটান!">Help the child drink clean water by adjusting pipe alignment & valve pressure!</p>
+        </div>
+        <div class="container">
+            <div class="game-wrapper" style="text-align: center;">
+                <div class="game-overlay" id="game2IntroOverlay" style="position: relative; height: 440px; border-radius: 20px;">
+                    <i class="fa-solid fa-child-reaching" style="font-size: 85px; color: #38bdf8; margin-bottom: 15px;"></i>
+                    <h2 style="font-size: 25px; color: white;" data-en="&quot;I'm thirsty, could you give me some water?&quot;" data-bn="&quot;আমি খুব তৃষ্ণার্ত, আমাকে কি কিছুটা পানি দেবেন?&quot;">"I'm thirsty, could you give me some water?"</h2>
+                    <p style="margin: 15px 0 25px; color: #cbd5e1; max-width: 500px;" data-en="Do you want to help fill the glass accurately without bursting the valve or spilling water?" data-bn="আপনি কি একফোটাও অপচয় না করে পানির গ্লাসটি পূর্ণ করতে সাহায্য করবেন?">Do you want to help fill the glass accurately without bursting the valve or spilling water?</p>
+                    <div style="display: flex; gap: 15px; justify-content: center;">
+                        <button class="learn-more" onclick="startGame2()" data-en="Yes, I Want to Help!" data-bn="হ্যাঁ, আমি সাহায্য করব!">Yes, I Want to Help!</button>
+                        <button class="btn-outline" onclick="showPage('home')" data-en="Not Now" data-bn="এখন নয়">Not Now</button>
+                    </div>
+                </div>
+
+                <div id="game2MainArea" style="display: none; position: relative; height: 480px; background: #0f172a; border-radius: 20px; padding: 25px; color: white;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <div>Target Level: <strong style="color: #38bdf8;" id="g2TargetVal">75%</strong></div>
+                        <div>Current Level: <strong id="g2CurrentVal">0%</strong></div>
+                        <button class="quote-btn" style="background:#ef4444; border:none; padding:4px 14px;" onclick="quitGame2()">Quit</button>
+                    </div>
+
+                    <!-- Glass Simulation -->
+                    <div style="position: relative; width: 130px; height: 230px; border: 4px solid rgba(255,255,255,0.85); border-top: none; border-radius: 0 0 22px 22px; margin: 25px auto; background: rgba(255,255,255,0.05); overflow: hidden;">
+                        <div id="g2WaterFill" style="position: absolute; bottom: 0; left: 0; right: 0; height: 0%; background: linear-gradient(to top, #0284c7, #38bdf8); transition: height 0.1s linear;"></div>
+                        <div id="g2TargetLine" style="position: absolute; width: 100%; height: 4px; background: #ef4444; bottom: 75%; border-radius: 2px;"></div>
+                    </div>
+
+                    <p style="font-size: 14px; color: #94a3b8; margin-bottom: 15px;">PRESS and HOLD the Valve to pour. Release exactly at the red target line!</p>
+                    <button class="learn-more" id="pourBtn" style="user-select: none; padding: 16px 42px; font-size: 18px;"><i class="fa-solid fa-faucet"></i> Hold Valve to Pour Water</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- OTHER PAGES -->
     <main id="page-our-story" class="page-view">
         <div class="page-banner">
             <h1>Our Story</h1>
@@ -1266,7 +992,6 @@
         </div>
     </main>
 
-    <!-- PAGE 3: MISSION & VISION -->
     <main id="page-mission-vision" class="page-view">
         <div class="page-banner">
             <h1>Mission & Vision</h1>
@@ -1293,7 +1018,6 @@
         </div>
     </main>
 
-    <!-- PAGE 4: PROJECTS -->
     <main id="page-projects" class="page-view">
         <div class="page-banner">
             <h1>Our Projects</h1>
@@ -1320,7 +1044,6 @@
         </div>
     </main>
 
-    <!-- PAGE 5: CAMPAIGNS -->
     <main id="page-campaigns" class="page-view">
         <div class="page-banner">
             <h1>Our Campaigns</h1>
@@ -1347,7 +1070,6 @@
         </div>
     </main>
 
-    <!-- PAGE 6: IMPACT -->
     <main id="page-impact" class="page-view">
         <div class="page-banner">
             <h1>Our Impact</h1>
@@ -1357,19 +1079,19 @@
             <div class="grid-3" style="text-align: center;">
                 <div class="info-card">
                     <i class="fa-solid fa-glass-water-droplet"></i>
-                    <h2 style="font-size: clamp(36px, 6vw, 48px); color: var(--primary-blue); font-weight: 900;">15,000+</h2>
+                    <h2 style="font-size: 46px; color: var(--primary-blue); font-weight: 800;">15,000+</h2>
                     <h3>Gallons Saved</h3>
                     <p>Saved through campus fixture repairs and conservation efforts.</p>
                 </div>
                 <div class="info-card">
                     <i class="fa-solid fa-user-graduate"></i>
-                    <h2 style="font-size: clamp(36px, 6vw, 48px); color: var(--primary-blue); font-weight: 900;">1,200+</h2>
+                    <h2 style="font-size: 46px; color: var(--primary-blue); font-weight: 800;">1,200+</h2>
                     <h3>Students Engaged</h3>
                     <p>Participated in educational workshops and audit drives.</p>
                 </div>
                 <div class="info-card">
                     <i class="fa-solid fa-building"></i>
-                    <h2 style="font-size: clamp(36px, 6vw, 48px); color: var(--primary-blue); font-weight: 900;">25+</h2>
+                    <h2 style="font-size: 46px; color: var(--primary-blue); font-weight: 800;">25+</h2>
                     <h3>Partner Schools</h3>
                     <p>Institutions implementing Beyond Thirst awareness programs.</p>
                 </div>
@@ -1377,7 +1099,7 @@
         </div>
     </main>
 
-    <!-- PAGE 7: GALLERY -->
+    <!-- GALLERY PAGE -->
     <main id="page-gallery" class="page-view">
         <div class="page-banner">
             <h1>Media Gallery</h1>
@@ -1385,18 +1107,16 @@
         </div>
         <div class="container">
 
-            <!-- Secret Admin Upload Zone -->
             <div class="upload-card" id="secretUploadZone">
                 <i class="fa-solid fa-cloud-arrow-up" style="font-size: 48px; color: var(--primary-blue);"></i>
-                <h3 style="margin-top: 12px; color: var(--dark-blue); font-size: 20px;">Team Uploader Active</h3>
-                <p style="font-size: 13.5px; color: var(--text-light); max-width: 540px; margin: 6px auto 0;">Add local photos or video clips (.mp4, .webm) for quick previewing during your session.</p>
+                <h3 style="margin-top: 10px; color: var(--dark-blue); font-size: 20px;">Team Uploader Active</h3>
+                <p style="font-size: 13.5px; color: var(--text-light); max-width: 520px; margin: 4px auto 0;">Add local photos or video clips (.mp4, .webm) for quick previewing during your session.</p>
                 <label for="mediaUpload" class="upload-btn-label">
                     <i class="fa-solid fa-plus"></i> Select Photos / Videos
                 </label>
                 <input type="file" id="mediaUpload" style="display: none;" accept="image/*,video/*" multiple>
             </div>
 
-            <!-- Gallery Filter Controls -->
             <div class="gallery-controls">
                 <button class="filter-btn active" onclick="filterGallery('all')">All Media</button>
                 <button class="filter-btn" onclick="filterGallery('workshops')">Workshops</button>
@@ -1404,94 +1124,76 @@
                 <button class="filter-btn" onclick="filterGallery('videos')">Videos</button>
             </div>
 
-            <!-- GALLERY GRID -->
             <div class="gallery-grid" id="galleryContainer">
-                <div class="gallery-item" data-category="workshops">
+                <div class="gallery-item" data-category="workshops" onclick="openLightbox('Beyond Thirst project cover.png', 'Save Water, Save Life Cover')">
                     <img src="Beyond Thirst project cover.png" alt="Beyond Thirst Project Banner">
                     <div class="gallery-caption">
                         <span>Save Water, Save Life Cover</span>
-                        <i class="fa-solid fa-image"></i>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="audits">
-                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Plumbing Audit">
-                    <div class="gallery-caption">
-                        <span>Campus Plumbing Audit</span>
-                        <i class="fa-solid fa-image"></i>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="audits">
-                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=80" alt="Water Testing">
-                    <div class="gallery-caption">
-                        <span>Local Stream Quality Testing</span>
-                        <i class="fa-solid fa-image"></i>
+                        <i class="fa-solid fa-expand"></i>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- PAGE 8: TEAM -->
     <main id="page-team" class="page-view">
         <div class="page-banner">
             <h1>Leadership Team</h1>
             <p>Students Leading the Way for Sustainable Action</p>
         </div>
         <div class="container">
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="team-avatar"><i class="fa-solid fa-user-gear"></i></div>
-                    <h3>Executive Lead</h3>
-                    <p style="font-size: 13.5px; color: var(--primary-blue); font-weight: 700; margin-bottom: 10px;">Founder & Director</p>
-                    <p style="font-size: 14px; color: var(--text-light);">Leads overall campaign planning, partnerships, and institutional connections.</p>
+            <div class="team-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 28px;">
+                <div class="info-card" style="text-align: center;">
+                    <i class="fa-solid fa-user-gear" style="font-size: 48px;"></i>
+                    <h3 style="margin-top: 15px;">Executive Lead</h3>
+                    <p style="font-size: 14px; color: var(--primary-blue); font-weight: 600; margin-bottom: 10px;">Founder & Director</p>
+                    <p>Leads overall campaign planning, partnerships, and institutional connections.</p>
                 </div>
-                <div class="team-card">
-                    <div class="team-avatar"><i class="fa-solid fa-chart-line"></i></div>
-                    <h3>Research Lead</h3>
-                    <p style="font-size: 13.5px; color: var(--primary-blue); font-weight: 700; margin-bottom: 10px;">Analytics & Data</p>
-                    <p style="font-size: 14px; color: var(--text-light);">Manages water usage tools, footprint estimates, and project metrics.</p>
+                <div class="info-card" style="text-align: center;">
+                    <i class="fa-solid fa-chart-line" style="font-size: 48px;"></i>
+                    <h3 style="margin-top: 15px;">Research Lead</h3>
+                    <p style="font-size: 14px; color: var(--primary-blue); font-weight: 600; margin-bottom: 10px;">Analytics & Data</p>
+                    <p>Manages water usage tools, footprint estimates, and project metrics.</p>
                 </div>
-                <div class="team-card">
-                    <div class="team-avatar"><i class="fa-solid fa-bullhorn"></i></div>
-                    <h3>Outreach Manager</h3>
-                    <p style="font-size: 13.5px; color: var(--primary-blue); font-weight: 700; margin-bottom: 10px;">Community Coordinator</p>
-                    <p style="font-size: 14px; color: var(--text-light);">Coordinates student volunteers, workshops, and awareness initiatives.</p>
+                <div class="info-card" style="text-align: center;">
+                    <i class="fa-solid fa-bullhorn" style="font-size: 48px;"></i>
+                    <h3 style="margin-top: 15px;">Outreach Manager</h3>
+                    <p style="font-size: 14px; color: var(--primary-blue); font-weight: 600; margin-bottom: 10px;">Community Coordinator</p>
+                    <p>Coordinates student volunteers, workshops, and awareness initiatives.</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- PAGE 9: CONTACT -->
+    <!-- CONTACT & DIRECT FEEDBACK -->
     <main id="page-contact" class="page-view">
         <div class="page-banner">
-            <h1>Contact Us</h1>
-            <p>Connect with Us to Collaborate or Start a Chapter</p>
+            <h1>Contact & Feedback</h1>
+            <p>Connect with Us or Send Your Feedback Directly</p>
         </div>
         <div class="container">
             <div class="contact-box">
                 <div>
-                    <h3 style="color: var(--dark-blue); font-size: clamp(22px, 4vw, 28px); margin-bottom: 14px; font-weight: 800;">Get in Touch</h3>
-                    <p style="font-size: 14.5px; color: var(--text-light); margin-bottom: 28px; line-height: 1.6;">Whether you want to launch a Beyond Thirst group at your school or join an upcoming campaign, reach out below.</p>
+                    <h3 style="color: var(--dark-blue); font-size: 24px; margin-bottom: 12px;">Get in Touch</h3>
+                    <p style="font-size: 14px; color: var(--text-light); margin-bottom: 30px; line-height: 1.6;">Whether you want to launch a Beyond Thirst group at your school or send us direct feedback, fill out the form.</p>
                     
-                    <p style="font-size: 14.5px; margin-bottom: 16px;"><strong><i class="fa-solid fa-envelope" style="color: var(--primary-blue); margin-right: 10px;"></i> Email:</strong> info@beyondthirst.org</p>
-                    <p style="font-size: 14.5px;"><strong><i class="fa-solid fa-location-dot" style="color: var(--primary-blue); margin-right: 10px;"></i> Location:</strong> Dhaka, Bangladesh</p>
+                    <p style="font-size: 14px; margin-bottom: 14px;"><strong><i class="fa-solid fa-envelope" style="color: var(--primary-blue); margin-right: 8px;"></i> Email:</strong> info@beyondthirst.org</p>
+                    <p style="font-size: 14px;"><strong><i class="fa-solid fa-location-dot" style="color: var(--primary-blue); margin-right: 8px;"></i> Location:</strong> Dhaka, Bangladesh</p>
                 </div>
 
-                <form onsubmit="handleFormSubmit(event)">
+                <form id="directFeedbackForm" onsubmit="handleDirectFeedback(event)">
                     <div class="form-group">
                         <label>Your Name</label>
-                        <input type="text" required placeholder="Full Name">
+                        <input type="text" name="name" required placeholder="Full Name">
                     </div>
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="email" required placeholder="name@example.com">
+                        <input type="email" name="email" required placeholder="name@example.com">
                     </div>
                     <div class="form-group">
-                        <label>Inquiry Type</label>
-                        <select>
-                            <option>General Inquiry</option>
+                        <label>Inquiry / Feedback Type</label>
+                        <select name="type">
+                            <option>General Feedback</option>
                             <option>Start a School Chapter</option>
                             <option>Volunteer Application</option>
                             <option>Partnership Proposal</option>
@@ -1499,16 +1201,22 @@
                     </div>
                     <div class="form-group">
                         <label>Message</label>
-                        <textarea rows="4" required placeholder="Tell us how you'd like to get involved..."></textarea>
+                        <textarea name="message" rows="4" required placeholder="Type your message or feedback here..."></textarea>
                     </div>
-                    <button type="submit" class="join-btn" style="width: 100%; justify-content: center; padding: 14px;">Send Message</button>
+                    <button type="submit" class="learn-more" style="width: 100%; border: none; justify-content: center;">Send Message</button>
                 </form>
             </div>
         </div>
     </main>
 
+    <!-- LIGHTBOX MODAL -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <i class="fa-solid fa-xmark lightbox-close" onclick="closeLightbox()"></i>
+        <div class="lightbox-content" id="lightboxTarget"></div>
+    </div>
+
     <!-- Toast Notification -->
-    <div class="toast" id="toast"><i class="fa-solid fa-circle-check" style="color: var(--electric-cyan); font-size: 20px;"></i> <span id="toastMsg">Message sent successfully!</span></div>
+    <div class="toast" id="toast"><i class="fa-solid fa-circle-check" style="color: var(--accent-sky); font-size: 20px;"></i> <span id="toastMsg">Message sent successfully!</span></div>
 
     <!-- Footer -->
     <footer>
@@ -1528,393 +1236,460 @@
         </div>
     </footer>
 
-    <!-- JavaScript Controller & Game Code -->
+    <!-- JAVASCRIPT MASTER CONTROLLER -->
     <script>
-        /* Mobile Navigation Drawer */
-        function toggleMobileMenu() {
-            const navMenu = document.getElementById('navMenu');
-            const menuIcon = document.getElementById('menuIcon');
-            navMenu.classList.toggle('mobile-active');
-            
-            if (navMenu.classList.contains('mobile-active')) {
-                menuIcon.className = 'fa-solid fa-xmark';
-            } else {
-                menuIcon.className = 'fa-solid fa-bars';
+        /* 1. BACKGROUND CANVAS ANIMATION */
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.speed = Math.random() * 3 + 2;
+                this.radius = Math.random() * 2 + 1;
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(56, 189, 248, ${this.alpha})`;
+                ctx.fill();
             }
         }
 
-        /* Page View Switcher */
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        /* 2. NAVIGATION & PAGE CONTROLLER */
         function showPage(pageId) {
             const pages = document.querySelectorAll('.page-view');
             const targetPage = document.getElementById('page-' + pageId);
-
-            // Close mobile nav drawer if open
-            const navMenu = document.getElementById('navMenu');
-            const menuIcon = document.getElementById('menuIcon');
-            if (navMenu.classList.contains('mobile-active')) {
-                navMenu.classList.remove('mobile-active');
-                menuIcon.className = 'fa-solid fa-bars';
-            }
 
             if (!targetPage) return;
 
             pages.forEach(page => {
                 if (page.classList.contains('active')) {
                     page.classList.remove('fade-in');
-                    setTimeout(() => {
-                        page.classList.remove('active');
-                    }, 200);
+                    setTimeout(() => page.classList.remove('active'), 200);
                 }
             });
 
             setTimeout(() => {
                 targetPage.classList.add('active');
-                setTimeout(() => {
-                    targetPage.classList.add('fade-in');
-                }, 50);
+                setTimeout(() => targetPage.classList.add('fade-in'), 50);
             }, 200);
 
             const navLinks = document.querySelectorAll('.nav-links a');
             navLinks.forEach(link => link.classList.remove('active'));
 
             const activeNav = document.getElementById('nav-' + pageId);
-            if (activeNav) {
-                activeNav.classList.add('active');
-            } else if (pageId === 'our-story' || pageId === 'mission-vision') {
-                document.getElementById('nav-about').classList.add('active');
-            } else if (pageId === 'projects' || pageId === 'campaigns' || pageId === 'impact') {
-                document.getElementById('nav-work').classList.add('active');
-            }
+            if (activeNav) activeNav.classList.add('active');
 
+            document.getElementById('navLinks').classList.remove('mobile-open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function toggleAccordion(element) {
-            const item = element.parentElement;
-            item.classList.toggle('open');
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('mobile-open');
         }
 
-        /* CENTERED WORDS THAT INSPIRE MODAL SYSTEM */
-        const quotes = [
-            '"Thousands have lived without love, not one without water." — W. H. Auden',
-            '"Water is the driving force of all nature." — Leonardo da Vinci',
-            '"We never know the worth of water till the well is dry." — Thomas Fuller',
-            '"No water, no life. No blue, no green." — Sylvia Earle',
-            '"Pure water is the world\'s first and foremost medicine." — Slovakian Proverb'
+        /* 3. DUAL LANGUAGE TRANSLATION (EN/BN) */
+        let currentLang = 'en';
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'bn' : 'en';
+            document.getElementById('langToggleBtn').innerHTML = `<i class="fa-solid fa-language"></i> ${currentLang === 'en' ? 'BN' : 'EN'}`;
+            
+            document.querySelectorAll('[data-en]').forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`);
+                if (text) el.innerHTML = text;
+            });
+            showToast(currentLang === 'bn' ? 'ভাষা বাংলায় পরিবর্তিত হয়েছে' : 'Language switched to English');
+        }
+
+        /* 4. WATER THAT INSPIRES QUOTES SYSTEM */
+        const quotesList = [
+            { text: "Thousands have lived without love, not one without water.", author: "W. H. Auden" },
+            { text: "Water is the driving force of all nature.", author: "Leonardo da Vinci" },
+            { text: "We never know the worth of water till the well is dry.", author: "Thomas Fuller" },
+            { text: "No water, no life. No blue, no green.", author: "Sylvia Earle" },
+            { text: "Pure water is the world's first and foremost medicine.", author: "Slovakian Proverb" },
+            { text: "Water is life's matter and matrix, mother and medium.", author: "Albert Szent-Gyorgyi" },
+            { text: "Rain is a blessing when it falls on thirsty ground.", author: "African Proverb" },
+            { text: "Save water today for a better tomorrow.", author: "Beyond Thirst" },
+            { text: "Filthy water cannot be washed.", author: "West African Proverb" },
+            { text: "A drop of water is worth more than a sack of gold to a thirsty man.", author: "Uzbek Proverb" },
+            { text: "Water is the soul of the Earth.", author: "W. H. Auden" },
+            { text: "When you drink water, remember the spring.", author: "Chinese Proverb" },
+            { text: "Be like water: adaptable, essential, and relentless.", author: "Bruce Lee" },
+            { text: "Small streams make giant rivers.", author: "Scottish Proverb" }
         ];
 
-        function openInspireModal() {
-            const modal = document.getElementById('inspireModal');
-            const quoteText = document.getElementById('quoteModalText');
-            let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-            quoteText.innerText = randomQuote;
+        let currentQuoteIdx = 0;
+        function updateQuoteDisplay() {
+            const card = document.getElementById('quoteCard');
+            if (!card) return;
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                const q = quotesList[currentQuoteIdx];
+                document.getElementById('quoteDisplayText').innerText = `"${q.text}"`;
+                document.getElementById('quoteDisplayAuthor').innerText = `— ${q.author}`;
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        function nextQuote() {
+            currentQuoteIdx = (currentQuoteIdx + 1) % quotesList.length;
+            updateQuoteDisplay();
+        }
+
+        function prevQuote() {
+            currentQuoteIdx = (currentQuoteIdx - 1 + quotesList.length) % quotesList.length;
+            updateQuoteDisplay();
+        }
+
+        setInterval(() => {
+            if (document.getElementById('page-inspire').classList.contains('active')) {
+                nextQuote();
+            }
+        }, 6000);
+
+        /* 5. PROCEDURAL SOUNDTRACK ENGINE */
+        let audioCtx = null;
+        let isAudioPlaying = false;
+        let rainNoiseNode = null;
+        let audioTrackMode = 0;
+        const trackNames = ["Rain Ambience", "River Stream", "Ocean Waves"];
+
+        function toggleAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            if (isAudioPlaying) {
+                audioTrackMode = (audioTrackMode + 1) % 4;
+                if (audioTrackMode === 3) {
+                    audioCtx.suspend();
+                    isAudioPlaying = false;
+                    document.getElementById('audioLabel').innerText = "Sound: Off";
+                    audioTrackMode = -1;
+                    return;
+                }
+            } else {
+                audioCtx.resume();
+                isAudioPlaying = true;
+                audioTrackMode = 0;
+            }
+
+            if (!rainNoiseNode) createRainAudio();
+            document.getElementById('audioLabel').innerText = `Sound: ${trackNames[audioTrackMode]}`;
+            showToast(`🎵 Playing: ${trackNames[audioTrackMode]}`);
+        }
+
+        function createRainAudio() {
+            const bufferSize = audioCtx.sampleRate * 2;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
+            }
+
+            const whiteNoise = audioCtx.createBufferSource();
+            whiteNoise.buffer = noiseBuffer;
+            whiteNoise.loop = true;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = 800;
+
+            const gain = audioCtx.createGain();
+            gain.gain.value = 0.15;
+
+            whiteNoise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            whiteNoise.start();
+            rainNoiseNode = whiteNoise;
+        }
+
+        /* 6. GAME 1: PLANT SAVER GAME */
+        let g1Score = 0;
+        let g1Wasted = 0;
+        let g1Active = false;
+
+        function startGame1() {
+            g1Score = 0; g1Wasted = 0; g1Active = true;
+            document.getElementById('game1Score').innerText = '0';
+            document.getElementById('game1Wasted').innerText = '0';
+            document.getElementById('game1Overlay').style.display = 'none';
+            document.getElementById('plantIcon').className = 'plant-icon wilted';
+            document.getElementById('plantStatus').innerText = 'Parched Plant';
+        }
+
+        const canvasContainer = document.getElementById('game1Canvas');
+        const waterPot = document.getElementById('waterPot');
+
+        if (canvasContainer) {
+            const handleMove = (clientX) => {
+                if (!g1Active) return;
+                const rect = canvasContainer.getBoundingClientRect();
+                const x = clientX - rect.left;
+                waterPot.style.left = (x - 22) + 'px';
+                if (Math.random() < 0.35) createWaterDrop(x);
+            };
+
+            canvasContainer.addEventListener('mousemove', (e) => handleMove(e.clientX));
+            canvasContainer.addEventListener('touchmove', (e) => handleMove(e.touches[0].clientX));
+        }
+
+        function createWaterDrop(x) {
+            const drop = document.createElement('div');
+            drop.className = 'water-drop-particle';
+            drop.style.left = x + 'px';
+            drop.style.top = '70px';
+            canvasContainer.appendChild(drop);
+
+            let posY = 70;
+            const dropAnim = setInterval(() => {
+                posY += 9;
+                drop.style.top = posY + 'px';
+
+                if (posY >= 370) {
+                    clearInterval(dropAnim);
+                    drop.remove();
+                    const plantCenter = canvasContainer.clientWidth / 2;
+
+                    if (Math.abs(x - plantCenter) < 55) {
+                        g1Score += 10;
+                        document.getElementById('game1Score').innerText = g1Score;
+                        if (g1Score >= 100) {
+                            document.getElementById('plantIcon').className = 'plant-icon blooming';
+                            document.getElementById('plantStatus').innerText = 'Lively & Blooming!';
+                        }
+                    } else {
+                        g1Wasted++;
+                        document.getElementById('game1Wasted').innerText = g1Wasted;
+                        if (g1Wasted >= 5) {
+                            endGame1();
+                        }
+                    }
+                }
+            }, 20);
+        }
+
+        function endGame1() {
+            g1Active = false;
+            const overlay = document.getElementById('game1Overlay');
+            overlay.style.display = 'flex';
+            overlay.innerHTML = `
+                <h2 style="color:#ef4444; font-size: 26px;">Game Over — Water Wasted!</h2>
+                <p style="margin: 15px 0; max-width: 500px;">"We never know the worth of water till the well is dry." — Thomas Fuller</p>
+                <button class="learn-more" onclick="startGame1()">Try Again</button>
+            `;
+        }
+
+        function quitGame1() {
+            g1Active = false;
+            const overlay = document.getElementById('game1Overlay');
+            overlay.style.display = 'flex';
+            overlay.innerHTML = `
+                <h2 style="font-size: 24px;">Game Paused / Quit</h2>
+                <p style="margin: 15px 0; max-width: 500px;">"Every drop you save secures a greener tomorrow."</p>
+                <button class="learn-more" onclick="startGame1()">Resume Playing</button>
+            `;
+        }
+
+        /* 7. GAME 2: THIRSTY CHILD PUZZLE */
+        let g2Filling = false;
+        let g2WaterLevel = 0;
+        let g2Target = 75;
+        let g2Timer = null;
+
+        function startGame2() {
+            document.getElementById('game2IntroOverlay').style.display = 'none';
+            document.getElementById('game2MainArea').style.display = 'block';
+            g2Target = Math.floor(Math.random() * 30) + 60;
+            document.getElementById('g2TargetVal').innerText = g2Target + '%';
+            document.getElementById('g2TargetLine').style.bottom = g2Target + '%';
+            g2WaterLevel = 0;
+            document.getElementById('g2WaterFill').style.height = '0%';
+            document.getElementById('g2CurrentVal').innerText = '0%';
+        }
+
+        const pourBtn = document.getElementById('pourBtn');
+        if (pourBtn) {
+            const startPour = () => {
+                g2Filling = true;
+                g2Timer = setInterval(() => {
+                    if (g2WaterLevel < 100) {
+                        g2WaterLevel += 1.6;
+                        document.getElementById('g2WaterFill').style.height = g2WaterLevel + '%';
+                        document.getElementById('g2CurrentVal').innerText = Math.floor(g2WaterLevel) + '%';
+                    }
+                }, 40);
+            };
+
+            const stopPour = () => {
+                if (!g2Filling) return;
+                g2Filling = false;
+                clearInterval(g2Timer);
+                
+                const diff = Math.abs(g2WaterLevel - g2Target);
+                if (diff <= 6) {
+                    showToast("🎉 Perfect! You quenched the child's thirst without wasting water!");
+                    setTimeout(() => startGame2(), 2500);
+                } else if (g2WaterLevel > g2Target + 6) {
+                    showToast("❌ Overfilled & Wasted Water! Try again carefully.");
+                    setTimeout(() => startGame2(), 2500);
+                } else {
+                    showToast("⚠️ Not enough water! Hold the valve a bit longer.");
+                }
+            };
+
+            pourBtn.addEventListener('mousedown', startPour);
+            pourBtn.addEventListener('mouseup', stopPour);
+            pourBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startPour(); });
+            pourBtn.addEventListener('touchend', stopPour);
+        }
+
+        function quitGame2() {
+            document.getElementById('game2MainArea').style.display = 'none';
+            document.getElementById('game2IntroOverlay').style.display = 'flex';
+        }
+
+        /* 8. LIGHTBOX GALLERY CONTROLLER */
+        function openLightbox(src, caption) {
+            const modal = document.getElementById('lightboxModal');
+            const target = document.getElementById('lightboxTarget');
+            target.innerHTML = `<img src="${src}" alt="${caption}"><p style="color:white; text-align:center; padding:10px;">${caption}</p>`;
             modal.classList.add('active');
         }
 
-        function closeInspireModal() {
-            document.getElementById('inspireModal').classList.remove('active');
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.remove('active');
         }
 
-        document.getElementById('inspireModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeInspireModal();
-            }
-        });
-
-        /* WATER SAVING GAME ENGINE */
-        const canvas = document.getElementById('waterGameCanvas');
-        const ctx = canvas ? canvas.getContext('2d') : null;
-        let gameActive = false;
-        let score = 0;
-        let gallons = 0;
-        let drops = [];
-        let animFrameId = null;
-
-        const bucket = {
-            x: 150,
-            y: 270,
-            width: 60,
-            height: 35
-        };
-
-        function resizeCanvas() {
-            if (!canvas) return;
-            const container = canvas.parentElement;
-            canvas.width = container.clientWidth;
-            canvas.height = 320;
-            bucket.y = canvas.height - 45;
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        function handleInput(clientX) {
-            if (!canvas) return;
-            const rect = canvas.getBoundingClientRect();
-            bucket.x = clientX - rect.left - bucket.width / 2;
-            if (bucket.x < 0) bucket.x = 0;
-            if (bucket.x > canvas.width - bucket.width) bucket.x = canvas.width - bucket.width;
-        }
-
-        if (canvas) {
-            canvas.addEventListener('mousemove', (e) => handleInput(e.clientX));
-            canvas.addEventListener('touchmove', (e) => {
-                if (e.touches.length > 0) {
-                    handleInput(e.touches[0].clientX);
-                }
-            }, { passive: true });
-        }
-
-        function startGame() {
-            resizeCanvas();
-            score = 0;
-            gallons = 0;
-            drops = [];
-            gameActive = true;
-            document.getElementById('gameScore').innerText = '0';
-            document.getElementById('gameGallons').innerText = '0';
-            document.getElementById('gameOverlay').style.display = 'none';
-            gameLoop();
-        }
-
-        function spawnDrop() {
-            if (Math.random() < 0.04) {
-                const isToxic = Math.random() < 0.25;
-                drops.push({
-                    x: Math.random() * (canvas.width - 20) + 10,
-                    y: -10,
-                    speed: 2.5 + Math.random() * 2.5,
-                    isToxic: isToxic,
-                    radius: 12
-                });
-            }
-        }
-
-        function gameLoop() {
-            if (!gameActive) return;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw Bucket
-            ctx.fillStyle = '#00f2fe';
-            ctx.beginPath();
-            ctx.roundRect(bucket.x, bucket.y, bucket.width, bucket.height, [0, 0, 12, 12]);
-            ctx.fill();
-
-            // Bucket Handle
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.arc(bucket.x + bucket.width / 2, bucket.y, bucket.width / 2.2, Math.PI, 0);
-            ctx.stroke();
-
-            spawnDrop();
-
-            for (let i = drops.length - 1; i >= 0; i--) {
-                let d = drops[i];
-                d.y += d.speed;
-
-                // Draw Drop
-                ctx.beginPath();
-                ctx.arc(d.x, d.y, d.radius, 0, Math.PI * 2);
-                ctx.fillStyle = d.isToxic ? '#ff4757' : '#38bdf8';
-                ctx.fill();
-                ctx.fillStyle = '#ffffff';
-                ctx.font = '10px Outfit';
-                ctx.fillText(d.isToxic ? '☣️' : '💧', d.x - 6, d.y + 4);
-
-                // Catch Collision Test
-                if (
-                    d.y + d.radius >= bucket.y &&
-                    d.y - d.radius <= bucket.y + bucket.height &&
-                    d.x >= bucket.x &&
-                    d.x <= bucket.x + bucket.width
-                ) {
-                    if (d.isToxic) {
-                        endGame(false);
-                        return;
-                    } else {
-                        score += 10;
-                        gallons += 2;
-                        document.getElementById('gameScore').innerText = score;
-                        document.getElementById('gameGallons').innerText = gallons;
-                        drops.splice(i, 1);
-                        continue;
-                    }
-                }
-
-                // Missed Bottom
-                if (d.y > canvas.height + 20) {
-                    drops.splice(i, 1);
-                }
-            }
-
-            animFrameId = requestAnimationFrame(gameLoop);
-        }
-
-        function endGame(won) {
-            gameActive = false;
-            cancelAnimationFrame(animFrameId);
-            const overlay = document.getElementById('gameOverlay');
-            document.getElementById('gameTitle').innerText = 'Game Over!';
-            document.getElementById('gameDesc').innerText = `Great job! You saved ${gallons} Gallons of fresh water!`;
-            overlay.style.display = 'flex';
-        }
-
-        /* SECRET ADMIN SYSTEM */
-        let isSecretAdmin = false;
-
-        function toggleSecretAdmin() {
-            isSecretAdmin = !isSecretAdmin;
-            const zone = document.getElementById('secretUploadZone');
-            const container = document.getElementById('galleryContainer');
+        /* 9. DIRECT FEEDBACK FORM */
+        function handleDirectFeedback(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
             
-            if (isSecretAdmin) {
-                zone.classList.add('secret-active');
-                container.classList.add('admin-active');
-                showToast('🔑 Secret Admin Mode Enabled');
-            } else {
-                zone.classList.remove('secret-active');
-                container.classList.remove('admin-active');
-                showToast('🔒 Public View Active');
-            }
+            fetch('https://formsubmit.co/ajax/info@beyondthirst.org', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(Object.fromEntries(formData))
+            }).catch(() => {});
+
+            e.target.reset();
+            showToast('Feedback Received! Thank you for your support.');
         }
 
-        document.addEventListener('keydown', function(e) {
-            if (e.shiftKey && (e.key === 'U' || e.key === 'u')) {
-                toggleSecretAdmin();
-            }
-        });
-
-        let tapCount = 0;
-        let tapTimer = null;
-        const footerCopy = document.getElementById('footerCopy');
-        
-        if (footerCopy) {
-            footerCopy.addEventListener('click', () => {
-                tapCount++;
-                clearTimeout(tapTimer);
-                if (tapCount >= 3) {
-                    toggleSecretAdmin();
-                    tapCount = 0;
-                } else {
-                    tapTimer = setTimeout(() => { tapCount = 0; }, 800);
-                }
-            });
-        }
-
-        /* MEDIA HANDLER */
-        const mediaUpload = document.getElementById('mediaUpload');
-        const galleryContainer = document.getElementById('galleryContainer');
-
+        /* 10. GITHUB PHOTOS & VIDEOS AUTO-LOADER */
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedMedia();
+            autoScanGithubFolders();
         });
 
-        if (mediaUpload && galleryContainer) {
-            mediaUpload.addEventListener('change', function (e) {
-                const files = e.target.files;
-                if (!files || files.length === 0) return;
+        function autoScanGithubFolders() {
+            const gallery = document.getElementById('galleryContainer');
+            for (let i = 1; i <= 8; i++) {
+                let img = new Image();
+                img.src = `Photos/${i}.jpg`;
+                img.onload = () => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.setAttribute('data-category', 'uploads');
+                    item.onclick = () => openLightbox(`Photos/${i}.jpg`, `Photo ${i}`);
+                    item.innerHTML = `<img src="Photos/${i}.jpg" alt="Photo ${i}"><div class="gallery-caption"><span>Photo ${i}</span><i class="fa-solid fa-expand"></i></div>`;
+                    gallery.prepend(item);
+                };
+            }
+        }
 
-                Array.from(files).forEach(file => {
+        /* 11. MEDIA & ADMIN HELPERS */
+        let isSecretAdmin = false;
+        document.addEventListener('keydown', (e) => {
+            if (e.shiftKey && (e.key === 'U' || e.key === 'u')) {
+                isSecretAdmin = !isSecretAdmin;
+                document.getElementById('secretUploadZone').classList.toggle('secret-active', isSecretAdmin);
+                showToast(isSecretAdmin ? '🔑 Team Admin Upload Active' : '🔒 Public View Active');
+            }
+        });
+
+        const mediaUpload = document.getElementById('mediaUpload');
+        if (mediaUpload) {
+            mediaUpload.addEventListener('change', (e) => {
+                Array.from(e.target.files).forEach(file => {
                     const reader = new FileReader();
-                    reader.onload = function (event) {
-                        const isVideo = file.type.startsWith('video/');
-                        const mediaData = {
-                            id: Date.now() + Math.random(),
-                            type: isVideo ? 'video' : 'image',
-                            src: event.target.result,
-                            name: file.name.split('.')[0] || 'Uploaded Media',
-                            category: isVideo ? 'videos' : 'uploads'
-                        };
-
-                        saveMediaToStorage(mediaData);
-                        renderMediaItem(mediaData, true);
+                    reader.onload = (evt) => {
+                        const isVid = file.type.startsWith('video/');
+                        const media = { id: Date.now() + Math.random(), type: isVid ? 'video' : 'image', src: evt.target.result, name: file.name };
+                        saveMediaToStorage(media);
+                        renderMediaItem(media, true);
                     };
                     reader.readAsDataURL(file);
                 });
-                showToast('New media added!');
             });
         }
 
-        function renderMediaItem(media, prepend = false) {
+        function renderMediaItem(m, prepend) {
+            const container = document.getElementById('galleryContainer');
             const item = document.createElement('div');
             item.className = 'gallery-item';
-            item.setAttribute('data-category', media.category);
-            item.setAttribute('data-id', media.id);
-
-            let mediaTag = media.type === 'video' 
-                ? `<video src="${media.src}" controls preload="metadata"></video>`
-                : `<img src="${media.src}" alt="${media.name}">`;
-
-            let iconTag = media.type === 'video' ? 'fa-video' : 'fa-image';
-
-            item.innerHTML = `
-                <button class="delete-media-btn" onclick="deleteMedia('${media.id}', this)"><i class="fa-solid fa-trash"></i></button>
-                ${mediaTag}
-                <div class="gallery-caption">
-                    <span>${media.name}</span>
-                    <i class="fa-solid ${iconTag}"></i>
-                </div>
-            `;
-
-            if (prepend) {
-                galleryContainer.prepend(item);
-            } else {
-                galleryContainer.appendChild(item);
-            }
+            item.onclick = () => openLightbox(m.src, m.name);
+            item.innerHTML = `${m.type === 'video' ? `<video src="${m.src}"></video>` : `<img src="${m.src}">`}<div class="gallery-caption"><span>${m.name}</span><i class="fa-solid fa-expand"></i></div>`;
+            if (prepend) container.prepend(item); else container.appendChild(item);
         }
 
-        function saveMediaToStorage(mediaData) {
-            let saved = JSON.parse(localStorage.getItem('beyondThirst_media') || '[]');
-            saved.unshift(mediaData);
-            localStorage.setItem('beyondThirst_media', JSON.stringify(saved));
+        function saveMediaToStorage(m) {
+            let saved = JSON.parse(localStorage.getItem('bt_media') || '[]');
+            saved.unshift(m);
+            localStorage.setItem('bt_media', JSON.stringify(saved));
         }
 
         function loadSavedMedia() {
-            let saved = JSON.parse(localStorage.getItem('beyondThirst_media') || '[]');
-            saved.forEach(media => renderMediaItem(media, false));
+            let saved = JSON.parse(localStorage.getItem('bt_media') || '[]');
+            saved.forEach(m => renderMediaItem(m, false));
         }
 
-        function deleteMedia(id, btnElement) {
-            let saved = JSON.parse(localStorage.getItem('beyondThirst_media') || '[]');
-            saved = saved.filter(m => m.id != id);
-            localStorage.setItem('beyondThirst_media', JSON.stringify(saved));
-            btnElement.parentElement.remove();
-            showToast('Media removed');
-        }
-
-        function filterGallery(category) {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            if (event && event.target) {
-                event.target.classList.add('active');
-            }
-
-            const items = document.querySelectorAll('.gallery-item');
-            items.forEach(item => {
+        function filterGallery(cat) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (event && event.target) event.target.classList.add('active');
+            document.querySelectorAll('.gallery-item').forEach(item => {
                 const itemCat = item.getAttribute('data-category');
-                if (category === 'all' || itemCat === category || itemCat === 'uploads') {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
+                item.style.display = (cat === 'all' || itemCat === cat) ? 'block' : 'none';
             });
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            e.target.reset();
-            showToast('Thank you! Message received.');
         }
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMsg').innerText = msg;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500);
+            setTimeout(() => toast.classList.remove('show'), 3500);
         }
     </script>
 </body>
