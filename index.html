@@ -53,7 +53,6 @@
 
         #bgCanvas { position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:0; opacity:0.5; }
 
-        /* Animated aurora blobs */
         .aurora { position:fixed; z-index:0; pointer-events:none; filter:blur(60px); opacity:0.35; border-radius:50%; }
         .aurora.a1 { width:380px; height:380px; background:#38bdf8; top:-80px; left:-80px; animation:float1 16s ease-in-out infinite; }
         .aurora.a2 { width:320px; height:320px; background:#14b8a6; bottom:-60px; right:-60px; animation:float2 20s ease-in-out infinite; }
@@ -65,7 +64,7 @@
             backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
             border-bottom:1px solid rgba(255,255,255,0.12); padding:10px 4%; transition:var(--transition);
         }
-        nav { display:flex; justify-content:space-between; align-items:center; max-width:1350px; margin:0 auto; width:100%; gap:10px; }
+        nav { display:flex; justify-space-between; align-items:center; max-width:1350px; margin:0 auto; width:100%; gap:10px; }
         .logo { display:inline-flex; align-items:center; cursor:pointer; text-decoration:none; gap:10px; flex-shrink:0; }
         .logo img { height:46px; width:auto; object-fit:contain; filter:drop-shadow(0 2px 6px rgba(56,189,248,0.4)); }
         .logo-text { display:flex; flex-direction:column; line-height:1; }
@@ -144,13 +143,8 @@
         [data-theme="dark"] .info-card h3 { color:var(--text-dark); }
         .info-card p { font-size:14.5px; color:var(--text-light); line-height:1.6; }
 
-        /* WATER THAT INSPIRES — vibrant watery page */
+        /* WATER THAT INSPIRES PAGE */
         .inspire-page-bg { background:linear-gradient(135deg,#0284c7 0%, #0ea5e9 35%, #06b6d4 70%, #0f172a 100%); min-height:100vh; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:60px 20px; color:#fff; }
-        .inspire-wave-layer { position:absolute; inset:0; pointer-events:none; }
-        .inspire-wave-layer svg { position:absolute; bottom:0; left:0; width:200%; height:200px; }
-        .float-drop { position:absolute; width:18px; height:24px; background:rgba(255,255,255,0.5); border-radius:50% 50% 50% 0; transform:rotate(45deg); animation:floatUp linear infinite; pointer-events:none; }
-        @keyframes floatUp { 0%{transform:translateY(0) rotate(45deg); opacity:0;} 10%{opacity:0.8;} 100%{transform:translateY(-90vh) rotate(45deg); opacity:0;} }
-
         .inspire-quote-card { background:rgba(255,255,255,0.12); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px); border:1px solid rgba(255,255,255,0.3); border-radius:var(--radius-lg); padding:50px 40px; max-width:820px; width:100%; text-align:center; box-shadow:0 30px 60px -12px rgba(0,0,0,0.5); position:relative; z-index:2; transform:scale(0.85); opacity:0; transition:opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1); }
         .inspire-quote-card.show { opacity:1; transform:scale(1); }
         .inspire-quote-card.peek { transform:scale(1.06); }
@@ -282,10 +276,7 @@
                         <li><a onclick="showPage('game-2')"><i class="fa-solid fa-glass-water"></i> <span data-en="Thirsty Child Puzzle" data-bn="তৃষ্ণার্ত শিশু">Thirsty Child Puzzle</span></a></li>
                     </ul>
                 </li>
-                <li><a onclick="showPage('inspire')" id="nav-inspire"><i class="fa-solid fa-droplet"></i> <span data-en="Water Inspires" data-bn="অনুপ্রেরণা">Water Inspires</span></a></li>
                 <li><a onclick="showPage('gallery')" id="nav-gallery"><i class="fa-solid fa-images"></i> <span data-en="Gallery" data-bn="গ্যালারি">Gallery</span></a></li>
-                <li><a onclick="showPage('research')" id="nav-research"><i class="fa-solid fa-flask"></i> <span data-en="Research" data-bn="গবেষণা">Research</span></a></li>
-                <li><a onclick="showPage('learn')" id="nav-learn"><i class="fa-solid fa-book-open-reader"></i> <span data-en="Learn & Save" data-bn="শিখুন ও বাঁচান">Learn & Save</span></a></li>
                 <li><a onclick="showPage('team')" id="nav-team"><i class="fa-solid fa-users"></i> <span data-en="Team" data-bn="টিম">Team</span></a></li>
                 <li><a onclick="showPage('contact')" id="nav-contact"><i class="fa-solid fa-envelope"></i> <span data-en="Contact" data-bn="যোগাযোগ">Contact</span></a></li>
             </ul>
@@ -360,31 +351,24 @@
                 <button class="learn-more" onclick="showPage('gallery')"><i class="fa-solid fa-images"></i> <span data-en="See More Photos" data-bn="আরও ছবি দেখুন">See More Photos</span></button>
             </div>
         </div>
+    </main> 
 
-        <div class="container">
-            <div class="section-title">
-                <h2 data-en="Resource Toolkit" data-bn="রিসোর্স টুলকিট">Resource Toolkit</h2>
-                <p data-en="Equipping students and communities with actionable tools for real-world impact." data-bn="শিক্ষার্থী ও সাধারণ মানুষকে পানির সুরক্ষায় কার্যকর টুলকিট প্রদান।">Equipping students and communities with actionable tools for real-world impact.</p>
-            </div>
-            <div class="grid-3">
-                <div class="info-card">
-                    <i class="fa-solid fa-calculator"></i>
-                    <h3 data-en="Water Footprint Tool" data-bn="পানির ফুটপ্রিন্ট হিসাব">Water Footprint Tool</h3>
-                    <p data-en="Calculate personal and school water usage metrics to locate actionable savings targets." data-bn="ব্যক্তিগত ও শিক্ষা প্রতিষ্ঠানের দৈনিক পানি খরচের পরিমাণ সহজেই হিসাব করুন।">Calculate personal and school water usage metrics to locate actionable savings targets.</p>
+    <!-- WATER THAT INSPIRES PAGE -->
+    <main id="page-inspire" class="page-view">
+        <div class="inspire-page-bg">
+            <div class="inspire-quote-card show" id="quoteCard">
+                <i class="fa-solid fa-quote-left quote-icon-large"></i>
+                <div class="inspire-quote-text" id="quoteDisplayText">"Water is the driving force of all nature."</div>
+                <div class="inspire-quote-author" id="quoteDisplayAuthor">— Leonardo da Vinci</div>
+                <div class="quote-controls">
+                    <button class="quote-btn" onclick="prevQuote()"><i class="fa-solid fa-chevron-left"></i> <span data-en="Previous" data-bn="পূর্ববর্তী">Previous</span></button>
+                    <button class="quote-btn" onclick="nextQuote()"><span data-en="Next Quote" data-bn="পরবর্তী">Next Quote</span> <i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="quote-btn" onclick="toggleAutoShuffle()"><i class="fa-solid fa-shuffle"></i> <span data-en="Auto Shuffle" data-bn="স্বয়ংক্রিয়">Auto Shuffle</span></button>
                 </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-book-bookmark"></i>
-                    <h3 data-en="Campus Activation Kit" data-bn="ক্যাম্পাস অ্যাক্টিভেশন কিট">Campus Activation Kit</h3>
-                    <p data-en="Complete guides for running plumbing audits and leading student workshops." data-bn="ক্যাম্পাসে পানির অপচয় রোধে প্লাম্বিং নিরীক্ষা ও ওয়ার্কশপ পরিচালনার গাইড।">Complete guides for running plumbing audits and leading student workshops.</p>
-                </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-cloud-sun-rain"></i>
-                    <h3 data-en="Rainwater Blueprint" data-bn="বৃষ্টির পানি সংগ্রহ ব্লুপ্রিন্ট">Rainwater Blueprint</h3>
-                    <p data-en="Step-by-step instructions for building simple non-potable rainwater harvesting tanks." data-bn="সহজ উপায়ে বৃষ্টির পানি ধরে রাখার সাশ্রয়ী প্ল্যান ও ব্যবহার গাইড।">Step-by-step instructions for building simple non-potable rainwater harvesting tanks.</p>
-                </div>
+                <div class="quote-progress" id="quoteProgress"></div>
             </div>
         </div>
-    </main> 
+    </main>
 
     <!-- GAME 1 -->
     <main id="page-game-1" class="page-view">
@@ -533,71 +517,6 @@
         </div>
     </main>
 
-        <div class="container">
-            <div class="section-title">
-                <h2 data-en="Motivation Speeches" data-bn="অনুপ্রেরণামূলক বক্তৃতা">Motivation Speeches</h2>
-                <p data-en="Powerful voices inspiring communities to value and protect freshwater." data-bn="মিঠা পানির মূল্য বোঝাতে ও রক্ষা করতে সমাজকে অনুপ্রেরণা জোগাতে শক্তিশালী কণ্ঠস্বর।">Powerful voices inspiring communities to value and protect freshwater.</p>
-            </div>
-            <div class="grid-3">
-                <div class="info-card">
-                    <i class="fa-solid fa-microphone-lines"></i>
-                    <h3 data-en="Every Drop is a Lifeline" data-bn="প্রতিটি ফোঁটা একটি জীবনরেখা">Every Drop is a Lifeline</h3>
-                    <p style="font-size:13px;color:var(--primary-blue);font-weight:600;margin-bottom:10px;" data-en="Youth Advocate · Beyond Thirst" data-bn="যুব অ্যাডভোকেট · বিয়ন্ড থার্স্ট">Youth Advocate · Beyond Thirst</p>
-                    <p data-en="&quot;When we waste a drop, we borrow from someone's future. Conservation begins with a single mindful turn of the tap.&quot;" data-bn="&quot;আমরা এক ফোঁটা অপচয় করলে কারও ভবিষ্যতের থেকে ধার নিই। সংরক্ষণ শুরু হয় ট্যাপ ঘোরানোর একটি সচেতন মুহূর্তে।&quot;">"When we waste a drop, we borrow from someone's future. Conservation begins with a single mindful turn of the tap."</p>
-                </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-bullhorn"></i>
-                    <h3 data-en="Water is a Right, Not a Privilege" data-bn="পানি অধিকার, বিশেষাধিকার নয়">Water is a Right, Not a Privilege</h3>
-                    <p style="font-size:13px;color:var(--primary-blue);font-weight:600;margin-bottom:10px;" data-en="Community Coordinator" data-bn="কমিউনিটি কোঅর্ডিনেটর">Community Coordinator</p>
-                    <p data-en="&quot;Millions walk miles for clean water. We must speak, act, and share until that long walk becomes history.&quot;" data-bn="&quot;লাখো মানুষ পরিষ্কার পানির জন্য মাইল জুড়ে হাঁটে। আমরা কথা বলব, কাজ করব এবং ভাগ করব — যতক্ষণ না সেই দীর্ঘ পথ ইতিহাসে পরিণত হয়।&quot;">"Millions walk miles for clean water. We must speak, act, and share until that long walk becomes history."</p>
-                </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-water"></i>
-                    <h3 data-en="The River Remembers" data-bn="নদী মনে রাখে">The River Remembers</h3>
-                    <p style="font-size:13px;color:var(--primary-blue);font-weight:600;margin-bottom:10px;" data-en="Research Lead" data-bn="গবেষণা প্রধান">Research Lead</p>
-                    <p data-en="&quot;Every polluted stream carries the memory of our neglect. Restoration begins with respect for every source.&quot;" data-bn="&quot;দূষিত প্রতিটি স্রোত আমাদের অবহেলার স্মৃতি বহন করে। পুনরুদ্ধার শুরু হয় প্রতিটি উৎসের প্রতি সম্মান থেকে।&quot;">"Every polluted stream carries the memory of our neglect. Restoration begins with respect for every source."</p>
-                </div>
-            </div>
-        </div>
-        <div class="container" style="padding-top:0;">
-            <div class="section-title">
-                <h2 data-en="Awareness Articles" data-bn="সচেতনতামূলক প্রবন্ধ">Awareness Articles</h2>
-                <p data-en="Understand the science and solutions behind the global water crisis." data-bn="বিশ্বব্যাপী পানি সংকটের পেছনের বিজ্ঞান ও সমাধান বুঝুন।">Understand the science and solutions behind the global water crisis.</p>
-            </div>
-            <div class="grid-3">
-                <div class="info-card">
-                    <i class="fa-solid fa-droplet-slash"></i>
-                    <h3 data-en="Why Freshwater is Running Out" data-bn="কেন মিঠা পানি ফুরিয়ে যাচ্ছে">Why Freshwater is Running Out</h3>
-                    <p data-en="Less than 1% of Earth's water is accessible freshwater, yet demand doubles every generation. Discover where the gap is widening and why action can no longer wait." data-bn="পৃথিবীর পানির ১%-এরও কম ব্যবহারযোগ্য মিঠা পানি, কিন্তু চাহিদা প্রতি প্রজন্মে দ্বিগুণ হচ্ছে। ফারাকটা কোথায় বাড়ছে ও কেন আর অপেক্ষা নেই জানুন।">Less than 1% of Earth's water is accessible freshwater, yet demand doubles every generation. Discover where the gap is widening and why action can no longer wait.</p>
-                </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-bowl-food"></i>
-                    <h3 data-en="The Hidden Water in Your Food" data-bn="আপনার খাবারে লুকানো পানি">The Hidden Water in Your Food</h3>
-                    <p data-en="It takes about 15,000 litres to produce 1 kg of beef and roughly 1,800 litres for 1 kg of wheat. Learn how everyday diet choices quietly shape your water footprint." data-bn="১ কেজি গরুর মাংসে প্রায় ১৫,০০০ লিটার ও ১ কেজি গমে প্রায় ১,৮০০ লিটার পানি লাগে। দৈনন্দিন খাদ্যাভ্যাস কীভাবে আপনার পানি-ফুটপ্রিন্ট গড়ে তোলে জানুন।">It takes about 15,000 litres to produce 1 kg of beef and roughly 1,800 litres for 1 kg of wheat. Learn how everyday diet choices quietly shape your water footprint.</p>
-                </div>
-                <div class="info-card">
-                    <i class="fa-solid fa-faucet-drip"></i>
-                    <h3 data-en="How Leaks Drain More Than You Think" data-bn="লিক যেভাবে অনেক বেশি ক্ষতি করে">How Leaks Drain More Than You Think</h3>
-                    <p data-en="A single dripping tap wastes up to 11,000 litres a year. Find out how to audit and fix common fixtures in minutes — no plumber required for most repairs." data-bn="একটি ফোঁটানি ট্যাপ বছরে ১১,০০০ লিটার পর্যন্ত অপচয় করে। কয়েক মিনিটেই সাধারণ ফিক্সচার নিরীক্ষা ও মেরামত করার উপায় জানুন — বেশিরভাগে প্লাম্বার লাগে না।">A single dripping tap wastes up to 11,000 litres a year. Find out how to audit and fix common fixtures in minutes — no plumber required for most repairs.</p>
-                </div>
-            </div>
-        </div>
-        <div class="container" style="padding-top:0;">
-            <div class="section-title">
-                <h2 data-en="Daily Water-Saving Tips" data-bn="দৈনন্দিন পানি সংরক্ষণের টিপস">Daily Water-Saving Tips</h2>
-                <p data-en="Simple habits you can start today at home, school, and work." data-bn="ঘরে, স্কুলে ও কর্মক্ষেত্রে আজই শুরু করতে পারেন এমন সহজ অভ্যাস।">Simple habits you can start today at home, school, and work.</p>
-            </div>
-            <div class="grid-3">
-                <div class="info-card"><i class="fa-solid fa-faucet"></i><h3 data-en="Turn Off the Tap While Brushing" data-bn="ব্রাশ করার সময় ট্যাপ বন্ধ রাখুন">Turn Off the Tap While Brushing</h3><p data-en="Closing the tap while you brush saves up to 24 litres each time — a small habit with big daily savings." data-bn="ব্রাশ করার সময় ট্যাপ বন্ধ রাখলে প্রতিবার প্রায় ২৪ লিটার বাঁচে — ছোট অভ্যাস, বড় সাশ্রয়।">Closing the tap while you brush saves up to 24 litres each time — a small habit with big daily savings.</p></div>
-                <div class="info-card"><i class="fa-solid fa-wrench"></i><h3 data-en="Fix Dripping Taps Promptly" data-bn="ফোঁটানি ট্যাপ দ্রুত মেরামত করুন">Fix Dripping Taps Promptly</h3><p data-en="A tap dripping once per second wastes 11,000 litres a year. Replace worn washers immediately to stop the silent drain." data-bn="প্রতি সেকেন্ডে ফোঁটানো একটি ট্যাপ বছরে ১১,০০০ লিটার অপচয় করে। নীরব অপচয় বন্ধে পুরোনো ওয়াশার সাথে সাথে বদলান।">A tap dripping once per second wastes 11,000 litres a year. Replace worn washers immediately to stop the silent drain.</p></div>
-                <div class="info-card"><i class="fa-solid fa-shower"></i><h3 data-en="Take Shorter Showers" data-bn="ছোট গোসল করুন">Take Shorter Showers</h3><p data-en="Cutting your shower by just 2 minutes saves around 30 litres per wash — set a timer and make it a game." data-bn="গোসল মাত্র ২ মিনিট কমালে প্রতিবার প্রায় ৩০ লিটার বাঁচে — টাইমার বেধে একে খেলায় পরিণত করুন।">Cutting your shower by just 2 minutes saves around 30 litres per wash — set a timer and make it a game.</p></div>
-                <div class="info-card"><i class="fa-solid fa-seedling"></i><h3 data-en="Reuse Cooking Water for Plants" data-bn="রান্নার পানি গাছে পুনরায় ব্যবহার করুন">Reuse Cooking Water for Plants</h3><p data-en="Cooled water from boiling vegetables is nutrient-rich — let it cool and pour it straight onto your garden." data-bn="সবজি সেদ্ধ করার ঠান্ডা পানি পুষ্টিগুণে ভরপুর — ঠান্ডা করে সরাসরি বাগানে দিন।">Cooled water from boiling vegetables is nutrient-rich — let it cool and pour it straight onto your garden.</p></div>
-                <div class="info-card"><i class="fa-solid fa-soap"></i><h3 data-en="Run Full Loads Only" data-bn="শুধু পূর্ণ লোডে চালান">Run Full Loads Only</h3><p data-en="Washing machines and dishwashers use the same water regardless of load — wait until full before pressing start." data-bn="ওয়াশিং মেশিন ও ডিশওয়াশার লোড যাই হোক সমান পানি খরচ করে — শুরু করার আগে পুরোপুরি ভরে নিন।">Washing machines and dishwashers use the same water regardless of load — wait until full before pressing start.</p></div>
-                <div class="info-card"><i class="fa-solid fa-sun"></i><h3 data-en="Water Plants Early or Late" data-bn="ভোরে বা সন্ধ্যায় গাছে পানি দিন">Water Plants Early or Late</h3><p data-en="Watering at dawn or dusk reduces evaporation loss by up to 50%, so more water reaches the roots where it matters." data-bn="ভোরে বা গোধূলিতে পানি দিলে বাষ্পীভবন কমে প্রায় ৫০%, ফলে শেকড়ে পৌঁছায় বেশি পানি।">Watering at dawn or dusk reduces evaporation loss by up to 50%, so more water reaches the roots where it matters.</p></div>
-            </div>
-        </div>
-    </main>
-
     <!-- TEAM -->
     <main id="page-team" class="page-view">
         <div class="page-banner"><h1 data-en="Leadership Team" data-bn="নেতৃত্ব দল">Leadership Team</h1><p data-en="Students Leading the Way for Sustainable Action" data-bn="টেকসই পদক্ষেপে নেতৃত্বদানকারী শিক্ষার্থী">Students Leading the Way for Sustainable Action</p></div>
@@ -706,7 +625,14 @@
     }
     function toggleTheme(){ darkMode=!darkMode; localStorage.setItem('bt_theme',darkMode?'dark':'light'); applyTheme(); showToast(darkMode?'Dark mode on':'Light mode on'); }
 
-    /* ===== 5. WATER THAT INSPIRES — 70 QUOTES ===== */
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastMsg').innerText = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    /* ===== 5. WATER THAT INSPIRES — QUOTES ===== */
     const quotesList = [
         {t:"Water is the driving force of all nature.",a:"Leonardo da Vinci"},
         {t:"Thousands have lived without love, not one without water.",a:"W. H. Auden"},
@@ -714,71 +640,12 @@
         {t:"No water, no life. No blue, no green.",a:"Sylvia Earle"},
         {t:"Pure water is the world's first and foremost medicine.",a:"Slovakian Proverb"},
         {t:"Water is life's matter and matrix, mother and medium.",a:"Albert Szent-Gyorgyi"},
-        {t:"Rain is a blessing when it falls on thirsty ground.",a:"African Proverb"},
         {t:"Save water today for a better tomorrow.",a:"Beyond Thirst"},
-        {t:"Filthy water cannot be washed.",a:"West African Proverb"},
         {t:"A drop of water is worth more than a sack of gold to a thirsty man.",a:"Uzbek Proverb"},
-        {t:"Water is the soul of the Earth.",a:"W. H. Auden"},
         {t:"When you drink water, remember the spring.",a:"Chinese Proverb"},
-        {t:"Be like water: adaptable, essential, and relentless.",a:"Bruce Lee"},
-        {t:"Small streams make giant rivers.",a:"Scottish Proverb"},
-        {t:"Water is the only drink for a wise man.",a:"Henry David Thoreau"},
-        {t:"The earth, the air, the land, and the water are not an inheritance from our ancestors but a loan from our children.",a:"Indian Proverb"},
-        {t:"We forget that the water cycle and the life cycle are one.",a:"Jacques Cousteau"},
-        {t:"A river is more than an amenity, it is a treasure.",a:"Oliver Wendell Holmes"},
-        {t:"Water is the most critical resource issue of our lifetime and our children's lifetime.",a:"Isabel Allende"},
-        {t:"If there is magic on this planet, it is contained in water.",a:"Loren Eiseley"},
-        {t:"Water links us to our neighbor in a way more profound than any other.",a:"John Thorson"},
-        {t:"The wars of the next century will be fought over water.",a:"Ismail Serageldin"},
-        {t:"Water is the hub of life on planet Earth.",a:"Steve Earle"},
-        {t:"Every drop in the ocean counts.",a:"Yoko Ono"},
-        {t:"Water is the softest thing, yet it can penetrate mountains and earth.",a:"Lao Tzu"},
-        {t:"To a thirsty man, a drop of water is worth more than a sack of gold.",a:"Proverb"},
-        {t:"When the well is dry, we know the worth of water.",a:"Benjamin Franklin"},
-        {t:"Children of a culture born in a water-rich environment, we have never really learned how important water is to us.",a:"Marq de Villiers"},
-        {t:"Water is the driving force of all nature; without it, nothing can survive.",a:"Beyond Thirst"},
-        {t:"Do not waste water, even if you were at a running stream.",a:"Prophet Muhammad (PBUH)"},
-        {t:"The frog does not drink up the pond in which he lives.",a:"Native American Proverb"},
-        {t:"We must not forget that water is a finite and vulnerable resource.",a:"Beyond Thirst"},
-        {t:"A society is defined not only by what it creates, but by what it refuses to destroy.",a:"John Sawhill"},
-        {t:"Rain showers my spirit and waters my soul.",a:"Emily Logan Decens"},
-        {t:"All water has a perfect memory and is forever trying to get back to where it was.",a:"Toni Morrison"},
-        {t:"Water is the true elixir of life.",a:"C. V. Raman"},
-        {t:"The life of every river is the story of the land it flows through.",a:"Tim Palmer"},
-        {t:"Water is the prism of life on Earth.",a:"Beyond Thirst"},
-        {t:"In every drop of water, the ocean is present.",a:"Proverb"},
-        {t:"Still waters run deep.",a:"Proverb"},
-        {t:"Water is patient. A drip of water hollows out the stone.",a:"Ovid"},
-        {t:"The sea, once it casts its spell, holds one in its net of wonder forever.",a:"Jacques Cousteau"},
-        {t:"Water is the reason for every season of life.",a:"Beyond Thirst"},
-        {t:"Save water, it doesn't grow on trees.",a:"Anonymous"},
-        {t:"Water is the one substance from which the earth cannot escape.",a:"Beyond Thirst"},
-        {t:"Let us keep water clean so the fish can live.",a:"Anonymous"},
-        {t:"Water is a friend of the wise, an enemy of the wasteful.",a:"Beyond Thirst"},
-        {t:"By means of water, we give life to everything.",a:"Koran"},
-        {t:"The quality of water is the quality of life.",a:"Beyond Thirst"},
-        {t:"Water is the force of nature that writes the story of our planet.",a:"Beyond Thirst"},
-        {t:"It is a curious situation that the sea, from which life first arose, should now be threatened by the activities of one form of that life.",a:"Jacques Cousteau"},
-        {t:"There is no life without water.",a:"Beyond Thirst"},
-        {t:"Water is the mother of all that lives.",a:"Anonymous"},
-        {t:"A drop of water, if it could write out its own history, would explain the universe to us.",a:"Lucy Larcom"},
-        {t:"The river is everywhere.",a:"Hermann Hesse"},
-        {t:"Water does not resist. Water flows.",a:"Margaret Atwood"},
-        {t:"Pure water is the world's best medicine.",a:"Beyond Thirst"},
-        {t:"Without water, everything withers.",a:"Beyond Thirst"},
-        {t:"Every drop you save today is a life you save tomorrow.",a:"Beyond Thirst"},
-        {t:"Water is not a commodity; it is a lifeline.",a:"Beyond Thirst"},
-        {t:"A drop saved is a future earned.",a:"Beyond Thirst"},
-        {t:"We do not inherit the water; we borrow it from the next generation.",a:"Beyond Thirst"},
-        {t:"The worth of water is known only when the well runs dry.",a:"Beyond Thirst"},
-        {t:"Water is precious; treat it so.",a:"Beyond Thirst"},
-        {t:"When you save water, you save life.",a:"Beyond Thirst"},
-        {t:"A single drop can reflect the whole sky.",a:"Beyond Thirst"},
-        {t:"Water is the poetry of nature.",a:"Beyond Thirst"},
-        {t:"Nature's message is simple: respect water, respect life.",a:"Beyond Thirst"},
-        {t:"Water is the thread that stitches Earth together.",a:"Beyond Thirst"}
+        {t:"Be like water: adaptable, essential, and relentless.",a:"Bruce Lee"}
     ];
-    let currentQuoteIdx=0, quoteShuffleOn=true, quoteTimer=null;
+    let currentQuoteIdx=0, quoteShuffleOn=true;
     function updateQuoteDisplay(peek){
         const card=document.getElementById('quoteCard');
         if(!card) return;
@@ -812,7 +679,7 @@
     function quoteTick(){ if(document.getElementById('page-inspire').classList.contains('active') && quoteShuffleOn) nextQuote(); }
     setInterval(quoteTick,6000);
 
-    /* ===== 6. PROCEDURAL CALM SOUNDTRACKS (rain / river / ocean) ===== */
+    /* ===== 6. SOUNDTRACKS ===== */
     let audioCtx=null, masterGain=null, noiseSrc=null, filter=null, lfo=null, lfoGain=null, isAudioPlaying=false, audioTrackMode=0, shuffleTimer=null;
     const trackNames=["Rain Ambience","River Stream","Ocean Waves"];
     function setupAudioGraph(){
@@ -847,48 +714,44 @@
     }
     function startShuffle(){ clearInterval(shuffleTimer); shuffleTimer=setInterval(()=>{ if(isAudioPlaying){ audioTrackMode=(audioTrackMode+1)%3; setTrack(audioTrackMode); document.getElementById('audioLabel').innerText='Sound: '+trackNames[audioTrackMode]; } },25000); }
 
-    /* ===== 7. GAME 1: NATURE PLANT SAVER (canvas, realistic) ===== */
+    /* ===== 7. GAME 1 ===== */
     const g1cv=document.getElementById('game1Cv');
     const g1ctx=g1cv.getContext('2d');
     let g1Score=0,g1Saved=0,g1Wasted=0,g1Active=false,g1PotX=0,g1Health=0,g1Birds=[],g1Drops=[];
     function sizeG1(){ const r=g1cv.parentElement.getBoundingClientRect(); g1cv.width=r.width; g1cv.height=r.height; }
     function drawG1Scene(){
         const w=g1cv.width,h=g1cv.height;
-        // sky
         const sky=g1ctx.createLinearGradient(0,0,0,h*0.6);
         sky.addColorStop(0,'#6bb6e3'); sky.addColorStop(1,'#c9ecf7');
         g1ctx.fillStyle=sky; g1ctx.fillRect(0,0,w,h*0.6);
-        // sun
+
         g1ctx.save(); g1ctx.globalAlpha=0.85;
         const sg=g1ctx.createRadialGradient(w-90,70,5,w-90,70,70);
         sg.addColorStop(0,'rgba(255,240,180,1)'); sg.addColorStop(1,'rgba(255,240,180,0)');
         g1ctx.fillStyle=sg; g1ctx.beginPath(); g1ctx.arc(w-90,70,70,0,Math.PI*2); g1ctx.fill();
         g1ctx.restore();
-        // hills
+
         g1ctx.fillStyle='#5fae5f'; g1ctx.beginPath(); g1ctx.moveTo(0,h*0.6);
         for(let x=0;x<=w;x+=20){ g1ctx.lineTo(x,h*0.55+Math.sin(x*0.02)*12); } g1ctx.lineTo(w,h); g1ctx.lineTo(0,h); g1ctx.closePath(); g1ctx.fill();
-        // ground
+
         const gr=g1ctx.createLinearGradient(0,h*0.6,0,h); gr.addColorStop(0,'#4f8f3f'); gr.addColorStop(1,'#2f6f2f');
         g1ctx.fillStyle=gr; g1ctx.fillRect(0,h*0.6,w,h*0.4);
-        // birds
+
         g1Birds.forEach(b=>{ b.x+=b.s; if(b.x>w+20) b.x=-20; g1ctx.save(); g1ctx.translate(b.x,b.y); g1ctx.strokeStyle='#333'; g1ctx.lineWidth=2; g1ctx.beginPath(); const flap=Math.sin(Date.now()*0.01+b.p)*4; g1ctx.moveTo(-8,flap); g1ctx.quadraticCurveTo(-4,-6-flap,0,flap); g1ctx.quadraticCurveTo(4,-6-flap,8,flap); g1ctx.stroke(); g1ctx.restore(); });
-        // plant
+
         const px=w/2, py=h*0.62;
         g1ctx.save(); g1ctx.translate(px,py);
         const grow=g1Health/100;
-        // stem
         g1ctx.strokeStyle='#3b7d3b'; g1ctx.lineWidth=5+grow*2; g1ctx.beginPath(); g1ctx.moveTo(0,0); g1ctx.quadraticCurveTo(-4,-30*(0.3+grow),0,-70*(0.3+grow)); g1ctx.stroke();
-        // leaves
         const leafColor=g1Health>50?'#2e8b2e':'#7a6b3a';
         g1ctx.fillStyle=leafColor;
         for(let i=0;i<3;i++){ const yy=-20-i*18*(0.4+grow); g1ctx.save(); g1ctx.translate(0,yy); g1ctx.rotate((i%2?1:-1)*0.5+grow*0.3); g1ctx.beginPath(); g1ctx.ellipse(14*(0.4+grow),0,16*(0.4+grow),7,0,0,Math.PI*2); g1ctx.fill(); g1ctx.restore(); g1ctx.save(); g1ctx.translate(0,yy); g1ctx.rotate((i%2?-1:1)*0.5-grow*0.3); g1ctx.beginPath(); g1ctx.ellipse(-14*(0.4+grow),0,16*(0.4+grow),7,0,0,Math.PI*2); g1ctx.fill(); g1ctx.restore(); }
         if(g1Health>70){ g1ctx.fillStyle='#f5487f'; for(let i=0;i<3;i++){ g1ctx.beginPath(); g1ctx.arc((i-1)*10,-80*(0.3+grow),6,0,Math.PI*2); g1ctx.fill(); } }
         g1ctx.restore();
-        // watering can follows pointer
+
         if(g1Active){ drawCan(g1PotX,70); }
-        // drops
         g1Drops.forEach(d=>{ d.y+=6; g1ctx.fillStyle='rgba(56,189,248,0.9)'; g1ctx.beginPath(); g1ctx.ellipse(d.x,d.y,4,7,0,0,Math.PI*2); g1ctx.fill(); });
-        // check drops
+
         const plantBaseY=h*0.62;
         for(let i=g1Drops.length-1;i>=0;i--){ const d=g1Drops[i]; if(d.y>=plantBaseY){ if(Math.abs(d.x-px)<45){ g1Health=Math.min(100,g1Health+8); g1Score+=10; document.getElementById('game1Score').innerText=g1Score; if(g1Health>=100) bloomPlant(); } else { g1Wasted++; document.getElementById('game1Wasted').innerText=g1Wasted; if(g1Wasted>=5) endGame1('over'); } g1Drops.splice(i,1); } else if(d.y>h){ g1Drops.splice(i,1); } }
         if(g1Active && Math.random()<0.12) g1Drops.push({x:g1PotX,y:90});
@@ -905,7 +768,7 @@
     function endGame1(type){ g1Active=false; const ov=document.getElementById('game1Overlay'); ov.style.display='flex'; const tales=['"We never know the worth of water till the well is dry." — Thomas Fuller','"Every drop you save secures a greener tomorrow." — Beyond Thirst','"Water is the driving force of all nature." — Leonardo da Vinci']; const t=tales[Math.floor(Math.random()*tales.length)]; ov.innerHTML='<h2 style="color:'+(type==='over'?'#ef4444':'#38bdf8')+';font-size:24px;margin-bottom:10px;">'+(type==='over'?'Game Over — Water Wasted!':'Game Paused')+'</h2><p style="margin:12px 0;max-width:480px;font-style:italic;">'+t+'</p><button class="learn-more" onclick="startGame1()">Try Again</button>'; }
     function quitGame1(){ endGame1('quit'); }
 
-    /* ===== 8. GAME 2: THIRSTY CHILD PUZZLE ===== */
+    /* ===== 8. GAME 2 ===== */
     let g2Filling=false,g2Level=0,g2Target=75,g2Timer=null,g2ValveAngle=0,g2TargetAngle=120,g2Wasted=0,g2Aligned=false;
     function startGame2(){
         document.getElementById('game2IntroOverlay').style.display='none';
@@ -921,7 +784,6 @@
         document.getElementById('valveTarget').style.transform='translate(-50%,-100%) rotate('+g2TargetAngle+'deg)';
         document.getElementById('valveNeedle').style.transform='translate(-50%,-100%) rotate(0deg)';
     }
-    // valve drag
     const valve=document.getElementById('valveDial');
     function valveMove(cx,cy){ const r=valve.getBoundingClientRect(); const ang=Math.atan2(cy-(r.top+r.height/2),cx-(r.left+r.width/2)); let deg=ang*180/Math.PI+90; if(deg<0)deg+=360; g2ValveAngle=deg; document.getElementById('valveNeedle').style.transform='translate(-50%,-100%) rotate('+deg+'deg)'; let diff=Math.abs(deg-g2TargetAngle); diff=Math.min(diff,360-diff); g2Aligned=diff<18; document.getElementById('valveNeedle').style.background=g2Aligned?'#22c55e':'#fff'; }
     let valveDragging=false;
@@ -948,19 +810,20 @@
     }
     function closeLightbox(){ document.getElementById('lightboxModal').style.display='none'; document.getElementById('lightboxTarget').innerHTML=''; }
 
-    /* ===== 10. FEEDBACK FORM (seamless, no email app) ===== */
+    /* ===== 10. FEEDBACK FORM ===== */
     function handleDirectFeedback(e){
         e.preventDefault();
         const data=Object.fromEntries(new FormData(e.target));
-        // Save into the app's database (works in the Base44 app)
-        try { window.parent.postMessage({type:'bt_feedback', data:data}, '*'); } catch(_){}
-        // Email relay fallback (works on the standalone GitHub Pages deployment)
-        fetch('https://formsubmit.co/ajax/info@beyondthirst.org',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
+        fetch('https://formsubmit.co/ajax/info@beyondthirst.org',{
+            method:'POST',
+            headers:{'Content-Type':'application/json','Accept':'application/json'},
+            body:JSON.stringify(data)
+        }).catch(()=>{});
         e.target.reset();
         showToast(currentLang==='bn'?'ফিডব্যাক গৃহীত হয়েছে! ধন্যবাদ।':'Feedback Received! Thank you for your support.');
     }
 
-    /* ===== 11. GALLERY: GITHUB PHOTOS/ & VIDEOS/ AUTO-LOADER ===== */
+    /* ===== 11. GALLERY AUTO-LOADER ===== */
     function makeItem(src,name,cat,isVideo){
         const item=document.createElement('div');
         item.className='gallery-item'; item.setAttribute('data-category',cat);
@@ -984,34 +847,29 @@
     function autoScanGithubFolders(){
         scanFolder('Photos/',1,12,['jpg','jpeg','png','webp'],false,'photos');
         scanFolder('Videos/',1,8,['mp4','webm'],true,'videos');
-        // fallback cover
         const gallery=document.getElementById('galleryContainer');
         const cover=makeItem('Beyond Thirst project cover.png','Save Water, Save Life Cover','photos',false);
         gallery.appendChild(cover);
         const homePreview=document.getElementById('homeGalleryPreview');
         if(homePreview.children.length===0){ const hc=makeItem('Beyond Thirst project cover.png','Save Water Cover','photos',false); hc.onclick=()=>showPage('gallery'); homePreview.appendChild(hc); }
     }
+    autoScanGithubFolders();
 
-    /* ===== 12. MEDIA UPLOAD (admin) ===== */
+    /* ===== 12. MEDIA UPLOAD ===== */
     let isSecretAdmin=false;
     document.addEventListener('keydown',e=>{ if(e.shiftKey && (e.key==='U'||e.key==='u')){ isSecretAdmin=!isSecretAdmin; document.getElementById('secretUploadZone').classList.toggle('secret-active',isSecretAdmin); showToast(isSecretAdmin?'🔑 Team Admin Upload Active':'🔒 Public View Active'); } });
     const mediaUpload=document.getElementById('mediaUpload');
     if(mediaUpload){ mediaUpload.addEventListener('change',e=>{ Array.from(e.target.files).forEach(file=>{ const reader=new FileReader(); reader.onload=ev=>{ const isVid=file.type.startsWith('video/'); const m={id:Date.now()+Math.random(),type:isVid?'video':'image',src:ev.target.result,name:file.name}; saveMedia(m); renderMedia(m,true); }; reader.readAsDataURL(file); }); }); }
-    function renderMedia(m,prepend){ const c=document.getElementById('galleryContainer'); const it=makeItem(m.src,m.name,'uploads',m.type==='video'); if(prepend)c.prepend(it); else c.appendChild(it); }
-    function saveMedia(m){ let s=JSON.parse(localStorage.getItem('bt_media')||'[]'); s.unshift(m); localStorage.setItem('bt_media',JSON.stringify(s)); }
-    function loadSavedMedia(){ let s=JSON.parse(localStorage.getItem('bt_media')||'[]'); s.forEach(m=>renderMedia(m,false)); }
-    function filterGallery(cat,btn){ document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); if(btn)btn.classList.add('active'); document.querySelectorAll('.gallery-item').forEach(it=>{ it.style.display=(cat==='all'||it.getAttribute('data-category')===cat)?'block':'none'; }); }
-
-    /* ===== 13. TOAST ===== */
-    function showToast(msg){ const t=document.getElementById('toast'); document.getElementById('toastMsg').innerText=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3500); }
-
-    /* ===== INIT ===== */
-    window.addEventListener('DOMContentLoaded',()=>{ applyTheme(); applyLang(); loadSavedMedia(); autoScanGithubFolders(); sizeG1(); });
-    window.addEventListener('resize',()=>{ sizeG1(); });
-    // wave animation keyframes injected
-    const styleEl=document.createElement('style');
-    styleEl.innerHTML='@keyframes waveMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}';
-    document.head.appendChild(styleEl);
+    function saveMedia(m){ let cur=JSON.parse(localStorage.getItem('bt_uploads')||'[]'); cur.push(m); localStorage.setItem('bt_uploads',JSON.stringify(cur)); }
+    function renderMedia(m, prepend){ const item=makeItem(m.src,m.name,'uploads',m.type==='video'); const container=document.getElementById('galleryContainer'); if(prepend) container.prepend(item); else container.appendChild(item); }
+    function filterGallery(category, btn){
+        document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+        document.querySelectorAll('.gallery-item').forEach(item=>{
+            if(category==='all' || item.getAttribute('data-category')===category) item.style.display='block';
+            else item.style.display='none';
+        });
+    }
     </script>
 </body>
 </html>
