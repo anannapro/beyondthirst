@@ -1,0 +1,31 @@
+{
+  "mediaFolder": "assets/gallery/",
+  "albums": [
+    {
+      "id": "main-gallery",
+      "title": "Beyond Thirst Gallery",
+      "items": [
+        {
+          "src": "IMG_20260801_102432.jpg",
+          "caption": "Field Work Inspection",
+          "category": "photos"
+        },
+        {
+          "src": "VID_20260802_143011.mp4",
+          "caption": "Clean Water Testing Demo",
+          "category": "videos"
+        },
+        {
+          "src": "DSC_0042.PNG",
+          "caption": "Community Outreach Event",
+          "category": "photos"
+        },
+        {
+          "src": "CLIP_2026_HEVC.mov",
+          "caption": "Filtration Unit Assembly",
+          "category": "videos"
+        }
+      ]
+    }
+  ]
+}
