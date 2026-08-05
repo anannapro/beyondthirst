@@ -64,7 +64,7 @@
             backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
             border-bottom:1px solid rgba(255,255,255,0.12); padding:10px 4%; transition:var(--transition);
         }
-        nav { display:flex; justify-space-between; align-items:center; max-width:1350px; margin:0 auto; width:100%; gap:10px; }
+        nav { display:flex; justify-content:space-between; align-items:center; max-width:1350px; margin:0 auto; width:100%; gap:10px; }
         .logo { display:inline-flex; align-items:center; cursor:pointer; text-decoration:none; gap:10px; flex-shrink:0; }
         .logo img { height:46px; width:auto; object-fit:contain; filter:drop-shadow(0 2px 6px rgba(56,189,248,0.4)); }
         .logo-text { display:flex; flex-direction:column; line-height:1; }
@@ -281,7 +281,6 @@
                 <li><a onclick="showPage('contact')" id="nav-contact"><i class="fa-solid fa-envelope"></i> <span data-en="Contact" data-bn="যোগাযোগ">Contact</span></a></li>
             </ul>
             <div class="header-controls">
-                <button class="ctl-btn" id="audioToggleBtn" onclick="toggleAudio()"><i class="fa-solid fa-music"></i> <span id="audioLabel">Sound: Off</span></button>
                 <button class="ctl-btn" id="langToggleBtn" onclick="toggleLanguage()"><i class="fa-solid fa-language"></i> <span id="langLabel">BN</span></button>
                 <button class="ctl-btn" id="themeToggleBtn" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
             </div>
@@ -679,42 +678,7 @@
     function quoteTick(){ if(document.getElementById('page-inspire').classList.contains('active') && quoteShuffleOn) nextQuote(); }
     setInterval(quoteTick,6000);
 
-    /* ===== 6. SOUNDTRACKS ===== */
-    let audioCtx=null, masterGain=null, noiseSrc=null, filter=null, lfo=null, lfoGain=null, isAudioPlaying=false, audioTrackMode=0, shuffleTimer=null;
-    const trackNames=["Rain Ambience","River Stream","Ocean Waves"];
-    function setupAudioGraph(){
-        if(audioCtx) return;
-        audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-        const bufferSize=audioCtx.sampleRate*2;
-        const buffer=audioCtx.createBuffer(1,bufferSize,audioCtx.sampleRate);
-        const out=buffer.getChannelData(0);
-        for(let i=0;i<bufferSize;i++) out[i]=Math.random()*2-1;
-        noiseSrc=audioCtx.createBufferSource(); noiseSrc.buffer=buffer; noiseSrc.loop=true;
-        filter=audioCtx.createBiquadFilter();
-        masterGain=audioCtx.createGain(); masterGain.gain.value=0.0;
-        noiseSrc.connect(filter); filter.connect(masterGain); masterGain.connect(audioCtx.destination);
-        lfo=audioCtx.createOscillator(); lfo.frequency.value=0.15;
-        lfoGain=audioCtx.createGain(); lfoGain.gain.value=0.0;
-        lfo.connect(lfoGain); lfoGain.connect(masterGain.gain);
-        noiseSrc.start(); lfo.start();
-    }
-    function setTrack(mode){
-        if(!audioCtx) return;
-        if(mode===0){ filter.type='lowpass'; filter.frequency.value=1100; lfoGain.gain.value=0.02; lfo.frequency.value=0.2; masterGain.gain.setTargetAtTime(0.12,audioCtx.currentTime,0.5); }
-        else if(mode===1){ filter.type='bandpass'; filter.frequency.value=700; filter.Q.value=0.7; lfoGain.gain.value=0.04; lfo.frequency.value=0.8; masterGain.gain.setTargetAtTime(0.13,audioCtx.currentTime,0.5); }
-        else { filter.type='lowpass'; filter.frequency.value=500; lfoGain.gain.value=0.06; lfo.frequency.value=0.12; masterGain.gain.setTargetAtTime(0.14,audioCtx.currentTime,1); }
-    }
-    function toggleAudio(){
-        if(!audioCtx) setupAudioGraph();
-        if(audioCtx.state==='suspended') audioCtx.resume();
-        if(!isAudioPlaying){ isAudioPlaying=true; audioTrackMode=0; setTrack(0); startShuffle(); }
-        else { audioTrackMode=(audioTrackMode+1)%3; setTrack(audioTrackMode); }
-        document.getElementById('audioLabel').innerText='Sound: '+trackNames[audioTrackMode];
-        showToast('🎵 '+trackNames[audioTrackMode]);
-    }
-    function startShuffle(){ clearInterval(shuffleTimer); shuffleTimer=setInterval(()=>{ if(isAudioPlaying){ audioTrackMode=(audioTrackMode+1)%3; setTrack(audioTrackMode); document.getElementById('audioLabel').innerText='Sound: '+trackNames[audioTrackMode]; } },25000); }
-
-    /* ===== 7. GAME 1 ===== */
+    /* ===== 6. GAME 1 ===== */
     const g1cv=document.getElementById('game1Cv');
     const g1ctx=g1cv.getContext('2d');
     let g1Score=0,g1Saved=0,g1Wasted=0,g1Active=false,g1PotX=0,g1Health=0,g1Birds=[],g1Drops=[];
@@ -768,7 +732,7 @@
     function endGame1(type){ g1Active=false; const ov=document.getElementById('game1Overlay'); ov.style.display='flex'; const tales=['"We never know the worth of water till the well is dry." — Thomas Fuller','"Every drop you save secures a greener tomorrow." — Beyond Thirst','"Water is the driving force of all nature." — Leonardo da Vinci']; const t=tales[Math.floor(Math.random()*tales.length)]; ov.innerHTML='<h2 style="color:'+(type==='over'?'#ef4444':'#38bdf8')+';font-size:24px;margin-bottom:10px;">'+(type==='over'?'Game Over — Water Wasted!':'Game Paused')+'</h2><p style="margin:12px 0;max-width:480px;font-style:italic;">'+t+'</p><button class="learn-more" onclick="startGame1()">Try Again</button>'; }
     function quitGame1(){ endGame1('quit'); }
 
-    /* ===== 8. GAME 2 ===== */
+    /* ===== 7. GAME 2 ===== */
     let g2Filling=false,g2Level=0,g2Target=75,g2Timer=null,g2ValveAngle=0,g2TargetAngle=120,g2Wasted=0,g2Aligned=false;
     function startGame2(){
         document.getElementById('game2IntroOverlay').style.display='none';
@@ -801,7 +765,7 @@
     pourBtn.addEventListener('touchend',stopPour);
     function quitGame2(){ document.getElementById('game2MainArea').style.display='none'; document.getElementById('game2IntroOverlay').style.display='flex'; }
 
-    /* ===== 9. LIGHTBOX ===== */
+    /* ===== 8. LIGHTBOX ===== */
     function openLightbox(src,caption,isVideo){
         const modal=document.getElementById('lightboxModal');
         const target=document.getElementById('lightboxTarget');
@@ -810,7 +774,7 @@
     }
     function closeLightbox(){ document.getElementById('lightboxModal').style.display='none'; document.getElementById('lightboxTarget').innerHTML=''; }
 
-    /* ===== 10. FEEDBACK FORM ===== */
+    /* ===== 9. FEEDBACK FORM ===== */
     function handleDirectFeedback(e){
         e.preventDefault();
         const data=Object.fromEntries(new FormData(e.target));
@@ -823,7 +787,7 @@
         showToast(currentLang==='bn'?'ফিডব্যাক গৃহীত হয়েছে! ধন্যবাদ।':'Feedback Received! Thank you for your support.');
     }
 
-    /* ===== 11. GALLERY AUTO-LOADER ===== */
+    /* ===== 10. GALLERY AUTO-LOADER ===== */
     function makeItem(src,name,cat,isVideo){
         const item=document.createElement('div');
         item.className='gallery-item'; item.setAttribute('data-category',cat);
@@ -855,7 +819,7 @@
     }
     autoScanGithubFolders();
 
-    /* ===== 12. MEDIA UPLOAD ===== */
+    /* ===== 11. MEDIA UPLOAD ===== */
     let isSecretAdmin=false;
     document.addEventListener('keydown',e=>{ if(e.shiftKey && (e.key==='U'||e.key==='u')){ isSecretAdmin=!isSecretAdmin; document.getElementById('secretUploadZone').classList.toggle('secret-active',isSecretAdmin); showToast(isSecretAdmin?'🔑 Team Admin Upload Active':'🔒 Public View Active'); } });
     const mediaUpload=document.getElementById('mediaUpload');
