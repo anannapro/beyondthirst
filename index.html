@@ -64,7 +64,7 @@
             backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
             border-bottom:1px solid rgba(255,255,255,0.12); padding:10px 4%; transition:var(--transition);
         }
-        nav { display:flex; justify-content:space-between; align-items:center; max-width:1350px; margin:0 auto; width:100%; gap:10px; }
+        nav { display:flex; justify-space-between; align-items:center; max-width:1350px; margin:0 auto; width:100%; gap:10px; }
         .logo { display:inline-flex; align-items:center; cursor:pointer; text-decoration:none; gap:10px; flex-shrink:0; }
         .logo img { height:46px; width:auto; object-fit:contain; filter:drop-shadow(0 2px 6px rgba(56,189,248,0.4)); }
         .logo-text { display:flex; flex-direction:column; line-height:1; }
@@ -552,23 +552,23 @@
                     <span class="album-tag">Campaigns</span>
                     <div class="album-preview">
                         <img src="Beyond Thirst project cover.png" alt="School Drives">
-                        <img src="Photos/1.jpg" alt="Water Action" onerror="this.src='Beyond Thirst project cover.png'">
+                        <img src="Beyond Thirst project cover.png" alt="Water Action" id="albumCover2" onerror="this.src='Beyond Thirst project cover.png'">
                     </div>
                     <div class="album-info">
                         <h3 data-en="Community Outreach & School Drives" data-bn="কমিউনিটি আউটরিচ ও স্কুল ড্রাইভ">Community Outreach & School Drives</h3>
-                        <p><span><i class="fa-solid fa-images"></i> 6 Items</span> <i class="fa-solid fa-arrow-right" style="color:var(--primary-blue);"></i></p>
+                        <p><span><i class="fa-solid fa-images"></i> Active Items</span> <i class="fa-solid fa-arrow-right" style="color:var(--primary-blue);"></i></p>
                     </div>
                 </div>
 
                 <div class="album-card" onclick="openAlbum('workshops')">
                     <span class="album-tag">Workshops</span>
                     <div class="album-preview">
-                        <img src="Photos/2.jpg" alt="Student Workshops" onerror="this.src='Beyond Thirst project cover.png'">
-                        <img src="Photos/3.jpg" alt="Peer Training" onerror="this.src='Beyond Thirst project cover.png'">
+                        <img src="Beyond Thirst project cover.png" alt="Student Workshops">
+                        <img src="Beyond Thirst project cover.png" alt="Peer Training">
                     </div>
                     <div class="album-info">
                         <h3 data-en="Youth Audits & Peer Training" data-bn="যুব নিরীক্ষা ও প্রশিক্ষণ">Youth Audits & Peer Training</h3>
-                        <p><span><i class="fa-solid fa-images"></i> 5 Items</span> <i class="fa-solid fa-arrow-right" style="color:var(--primary-blue);"></i></p>
+                        <p><span><i class="fa-solid fa-images"></i> Active Items</span> <i class="fa-solid fa-arrow-right" style="color:var(--primary-blue);"></i></p>
                     </div>
                 </div>
 
@@ -873,6 +873,15 @@
         document.getElementById('lightboxTarget').innerHTML=''; 
     }
 
+    document.addEventListener('keydown', e => {
+        const modal = document.getElementById('lightboxModal');
+        if(modal && modal.style.display === 'flex'){
+            if(e.key === 'Escape') closeLightbox();
+            if(e.key === 'ArrowLeft') navigateLightbox(-1);
+            if(e.key === 'ArrowRight') navigateLightbox(1);
+        }
+    });
+
     function makeItem(src, name, cat, isVideo, index){
         const item = document.createElement('div');
         item.className = 'gallery-item'; 
@@ -958,9 +967,21 @@
         }
     }
 
+    function loadSavedUploads(){
+        try {
+            const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
+            saved.forEach(m => allMediaItems.unshift(m));
+        } catch(e){}
+    }
+
     function autoScanGithubFolders(){
         allMediaItems.push({ src: 'Beyond Thirst project cover.png', name: 'Save Water Cover', cat: 'photos', isVideo: false });
+        
+        loadSavedUploads();
+        
+        // Scans both root Photos/ and Photos/Project Highlights/
         scanFolder('Photos/', 1, 12, ['jpg','jpeg','png','webp'], false, 'photos');
+        scanFolder('Photos/Project Highlights/', 1, 12, ['jpg','jpeg','png','webp'], false, 'photos');
         scanFolder('Videos/', 1, 8, ['mp4','webm'], true, 'videos');
     }
     autoScanGithubFolders();
@@ -987,6 +1008,10 @@
     }
 
     function saveMedia(m){ let cur=JSON.parse(localStorage.getItem('bt_uploads')||'[]'); cur.push(m); localStorage.setItem('bt_uploads',JSON.stringify(cur)); }
+
+    /* ===== 12. INITIALIZATION ===== */
+    applyTheme();
+    applyLang();
     </script>
 </body>
 </html>
