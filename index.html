@@ -167,19 +167,47 @@
         #game1Canvas { background:linear-gradient(to bottom,#7fc7e8 0%,#bfe8f5 55%,#7fc97f 55%,#3f8f3f 100%); }
         .game-overlay { position:absolute; inset:0; background:rgba(15,23,42,0.88); display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; padding:30px; text-align:center; z-index:20; border-radius:var(--radius-md); }
 
-        /* GALLERY */
+        /* REVAMPED ALBUMS & GALLERY MASONRY */
         .upload-card { display:none; background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%); border:2px dashed var(--primary-blue); border-radius:var(--radius-lg); padding:32px 20px; text-align:center; margin-bottom:28px; }
         .upload-card.secret-active { display:block !important; }
         .upload-btn-label { background:linear-gradient(135deg,var(--primary-blue),#0369a1); color:#fff; padding:11px 26px; border-radius:30px; display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:14px; cursor:pointer; margin-top:12px; }
+        
         .gallery-controls { display:flex; justify-content:center; gap:10px; margin-bottom:32px; flex-wrap:wrap; }
-        .filter-btn { background:var(--surface-white); border:1px solid var(--border-color); padding:9px 18px; border-radius:30px; font-size:13.5px; font-weight:500; cursor:pointer; transition:var(--transition); color:var(--text-dark); }
-        .filter-btn:hover, .filter-btn.active { background:var(--primary-blue); color:#fff; border-color:var(--primary-blue); box-shadow:0 4px 12px rgba(2,132,199,0.3); }
-        .gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px; }
-        .gallery-item { position:relative; border-radius:var(--radius-md); overflow:hidden; height:250px; box-shadow:var(--shadow-sm); background-color:#0f172a; border:1px solid var(--border-color); cursor:pointer; }
-        .gallery-item img, .gallery-item video { width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease; }
-        .gallery-item:hover img, .gallery-item:hover video { transform:scale(1.08); }
-        .gallery-caption { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(15,23,42,0.92)); color:#fff; padding:20px 14px 12px; font-size:13.5px; display:flex; justify-content:space-between; align-items:flex-end; }
-        .vid-badge { position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.6); color:#fff; padding:4px 9px; border-radius:20px; font-size:11px; font-weight:600; }
+        .filter-btn { background:var(--surface-white); border:1px solid var(--border-color); padding:10px 20px; border-radius:30px; font-size:13.5px; font-weight:600; cursor:pointer; transition:var(--transition); color:var(--text-dark); display:inline-flex; align-items:center; gap:8px; }
+        .filter-btn:hover, .filter-btn.active { background:var(--primary-blue); color:#fff; border-color:var(--primary-blue); box-shadow:0 4px 14px rgba(2,132,199,0.35); transform:translateY(-2px); }
+
+        .album-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; margin-bottom:40px; }
+        .album-card { background:var(--surface-white); border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--border-color); box-shadow:var(--shadow-sm); transition:var(--transition); cursor:pointer; display:flex; flex-direction:column; position:relative; }
+        .album-card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); }
+        .album-preview { height:210px; width:100%; position:relative; overflow:hidden; background:#0f172a; display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+        .album-preview.single-img { grid-template-columns:1fr; }
+        .album-preview img, .album-preview video { width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease; }
+        .album-card:hover .album-preview img, .album-card:hover .album-preview video { transform:scale(1.08); }
+        .album-info { padding:20px; }
+        .album-info h3 { font-size:18px; font-weight:700; color:var(--text-dark); margin-bottom:6px; }
+        .album-info p { font-size:13px; color:var(--text-light); display:flex; align-items:center; justify-content:space-between; }
+        .album-tag { font-size:11px; text-transform:uppercase; font-weight:700; letter-spacing:1px; background:rgba(2,132,199,0.1); color:var(--primary-blue); padding:4px 10px; border-radius:20px; position:absolute; top:12px; left:12px; z-index:2; backdrop-filter:blur(6px); }
+
+        .gallery-grid { columns: 3 300px; column-gap: 20px; }
+        .gallery-item { break-inside: avoid; margin-bottom: 20px; position:relative; border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-sm); background-color:#0f172a; border:1px solid var(--border-color); cursor:pointer; }
+        .gallery-item img, .gallery-item video { width:100%; height:auto; display:block; object-fit:cover; transition:transform 0.4s ease; }
+        .gallery-item:hover img, .gallery-item:hover video { transform:scale(1.05); }
+        .gallery-caption { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(15,23,42,0.95)); color:#fff; padding:25px 16px 14px; font-size:13.5px; font-weight:500; display:flex; justify-content:space-between; align-items:flex-end; opacity:0; transition:var(--transition); }
+        .gallery-item:hover .gallery-caption { opacity:1; }
+        .vid-badge { position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.65); color:#fff; padding:5px 12px; border-radius:20px; font-size:11px; font-weight:600; backdrop-filter:blur(4px); z-index:2; }
+
+        /* LIGHTBOX REVAMP */
+        .lightbox-modal { position:fixed; inset:0; background:rgba(15,23,42,0.95); z-index:3000; display:none; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(15px); }
+        .lightbox-content { position:relative; max-width:1000px; width:100%; display:flex; flex-direction:column; align-items:center; }
+        .lightbox-media-wrapper { width:100%; max-height:75vh; display:flex; justify-content:center; align-items:center; overflow:hidden; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,0.15); box-shadow:var(--shadow-lg); }
+        .lightbox-media-wrapper img, .lightbox-media-wrapper video { max-width:100%; max-height:75vh; object-fit:contain; }
+        .lightbox-nav-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.15); color:#fff; border:none; width:48px; height:48px; border-radius:50%; cursor:pointer; font-size:20px; transition:var(--transition); display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px); }
+        .lightbox-nav-btn:hover { background:rgba(255,255,255,0.35); transform:translateY(-50%) scale(1.1); }
+        .lightbox-nav-btn.prev { left:-20px; }
+        .lightbox-nav-btn.next { right:-20px; }
+        .lightbox-close { position:absolute; top:-50px; right:0; color:#fff; font-size:28px; cursor:pointer; opacity:0.8; transition:var(--transition); }
+        .lightbox-close:hover { opacity:1; transform:rotate(90deg); }
+        .lightbox-caption { color:#fff; margin-top:16px; font-size:15px; font-weight:500; text-align:center; }
 
         /* CONTACT */
         .contact-box { background:var(--surface-white); border-radius:var(--radius-lg); padding:38px; box-shadow:var(--shadow-sm); border:1px solid var(--border-color); display:grid; grid-template-columns:1fr 1.2fr; gap:36px; }
@@ -230,6 +258,8 @@
             .header-controls .ctl-btn span { display:none; }
             .ctl-btn { padding:8px 10px; }
             .logo-text { display:none; }
+            .lightbox-nav-btn.prev { left:10px; }
+            .lightbox-nav-btn.next { right:10px; }
         }
         @media (max-width:520px) {
             .main-title { font-size:42px; }
@@ -237,6 +267,7 @@
             .inspire-quote-text { font-size:19px; }
             .game-wrapper { padding:14px; }
             .child-emoji { font-size:64px; }
+            .gallery-grid { columns: 1 100%; }
         }
     </style>
 </head>
@@ -495,9 +526,9 @@
         </div></div>
     </main>
 
-    <!-- GALLERY -->
+    <!-- GALLERY & ALBUMS -->
     <main id="page-gallery" class="page-view">
-        <div class="page-banner"><h1 data-en="Media Gallery" data-bn="মিডিয়া গ্যালারি">Media Gallery</h1><p data-en="Photos and Video Clips from Campaigns, Workshops, and Events" data-bn="ক্যাম্পেইন, ওয়ার্কশপ ও ইভেন্টের ছবি ও ভিডিও">Photos and Video Clips from Campaigns, Workshops, and Events</p></div>
+        <div class="page-banner"><h1 data-en="Media Gallery" data-bn="মিডিয়া গ্যালারি">Media Gallery</h1><p data-en="Explore Our Albums, Photos, and Campaigns" data-bn="আমাদের অ্যালবাম, ছবি এবং ক্যাম্পেইন গ্যালারি দেখুন">Explore Our Albums, Photos, and Campaigns</p></div>
         <div class="container">
             <div class="upload-card" id="secretUploadZone">
                 <i class="fa-solid fa-cloud-arrow-up" style="font-size:46px;color:var(--primary-blue);"></i>
@@ -506,13 +537,55 @@
                 <label for="mediaUpload" class="upload-btn-label"><i class="fa-solid fa-plus"></i> <span data-en="Select Photos / Videos" data-bn="ছবি/ভিডিও নির্বাচন">Select Photos / Videos</span></label>
                 <input type="file" id="mediaUpload" style="display:none;" accept="image/*,video/*" multiple>
             </div>
+            
             <div class="gallery-controls">
-                <button class="filter-btn active" onclick="filterGallery('all', this)" data-en="All Media" data-bn="সব মিডিয়া">All Media</button>
-                <button class="filter-btn" onclick="filterGallery('photos', this)" data-en="Photos" data-bn="ছবি">Photos</button>
-                <button class="filter-btn" onclick="filterGallery('videos', this)" data-en="Videos" data-bn="ভিডিও">Videos</button>
-                <button class="filter-btn" onclick="filterGallery('uploads', this)" data-en="My Uploads" data-bn="আমার আপলোড">My Uploads</button>
+                <button class="filter-btn active" onclick="switchGalleryView('albums', this)"><i class="fa-solid fa-folder-closed"></i> <span data-en="Featured Albums" data-bn="অ্যালবামসমূহ">Featured Albums</span></button>
+                <button class="filter-btn" onclick="switchGalleryView('all', this)"><i class="fa-solid fa-grip"></i> <span data-en="All Media" data-bn="সব মিডিয়া">All Media</span></button>
+                <button class="filter-btn" onclick="switchGalleryView('photos', this)"><i class="fa-solid fa-image"></i> <span data-en="Photos" data-bn="ছবি">Photos</span></button>
+                <button class="filter-btn" onclick="switchGalleryView('videos', this)"><i class="fa-solid fa-video"></i> <span data-en="Videos" data-bn="ভিডিও">Videos</span></button>
+                <button class="filter-btn" onclick="switchGalleryView('uploads', this)"><i class="fa-solid fa-user-gear"></i> <span data-en="My Uploads" data-bn="আমার আপলোড">My Uploads</span></button>
             </div>
-            <div class="gallery-grid" id="galleryContainer"></div>
+
+            <!-- ALBUMS GRID VIEW -->
+            <div class="album-grid" id="albumsContainer">
+                <div class="album-card" onclick="openAlbum('campaigns')">
+                    <span class="album-tag">Campaigns</span>
+                    <div class="album-preview">
+                        <img src="Beyond Thirst project cover.png" alt="School Drives">
+                        <img src="Photos/1.jpg" alt="Water Action" onerror="this.src='Beyond Thirst project cover.png'">
+                    </div>
+                    <div class="album-info">
+                        <h3 data-en="Community Outreach & School Drives" data-bn="কমিউনিটি আউটরিচ ও স্কুল ড্রাইভ">Community Outreach & School Drives</h3>
+                        <p><span><i class="fa-solid fa-images"></i> 6 Items</span> <i class="fa-solid fa-arrow-right" style="color:var(--primary-blue);"></i></p>
+                    </div>
+                </div>
+
+                <div class="album-card" onclick="openAlbum('workshops')">
+                    <span class="album-tag">Workshops</span>
+                    <div class="album-preview">
+                        <img src="Photos/2.jpg" alt="Student Workshops" onerror="this.src='Beyond Thirst project cover.png'">
+                        <img src="Photos/3.jpg" alt="Peer Training" onerror="this.src='Beyond Thirst project cover.png'">
+                    </div>
+                    <div class="album-info">
+                        <h3 data-en="Youth Audits & Peer Training" data-bn="যুব নিরীক্ষা ও প্রশিক্ষণ">Youth Audits & Peer Training</h3>
+                        <p><span><i class="fa-solid fa-images"></i> 5 Items</span> <i class="fa-solid fa-arrow-right" style="color:var(--primary-blue);"></i></p>
+                    </div>
+                </div>
+
+                <div class="album-card" onclick="openAlbum('videos')">
+                    <span class="album-tag">Videos</span>
+                    <div class="album-preview single-img">
+                        <video src="Videos/1.mp4" muted poster="Beyond Thirst project cover.png"></video>
+                    </div>
+                    <div class="album-info">
+                        <h3 data-en="Project Documentaries & Reels" data-bn="প্রকল্পের ডকু-ভিডিও ও রিলস">Project Documentaries & Reels</h3>
+                        <p><span><i class="fa-solid fa-video"></i> Video Highlights</span> <i class="fa-solid fa-arrow-right" style="color:var(--primary-blue);"></i></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MASONRY GALLERY CONTAINER -->
+            <div class="gallery-grid" id="galleryContainer" style="display:none;"></div>
         </div>
     </main>
 
@@ -548,10 +621,15 @@
         </div>
     </main>
 
-    <!-- LIGHTBOX -->
-    <div class="lightbox-modal" id="lightboxModal" style="position:fixed;inset:0;background:rgba(15,23,42,0.95);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(10px);">
-        <i class="fa-solid fa-xmark" style="position:absolute;top:25px;right:30px;color:#fff;font-size:32px;cursor:pointer;" onclick="closeLightbox()"></i>
-        <div id="lightboxTarget" style="max-width:90vw;max-height:85vh;border-radius:18px;overflow:hidden;"></div>
+    <!-- LIGHTBOX MODAL -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <div class="lightbox-content">
+            <i class="fa-solid fa-xmark lightbox-close" onclick="closeLightbox()"></i>
+            <button class="lightbox-nav-btn prev" onclick="navigateLightbox(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="lightbox-media-wrapper" id="lightboxTarget"></div>
+            <button class="lightbox-nav-btn next" onclick="navigateLightbox(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
     </div>
 
     <div class="toast" id="toast"><i class="fa-solid fa-circle-check" style="color:var(--accent-sky);font-size:20px;"></i> <span id="toastMsg">Done</span></div>
@@ -765,14 +843,83 @@
     pourBtn.addEventListener('touchend',stopPour);
     function quitGame2(){ document.getElementById('game2MainArea').style.display='none'; document.getElementById('game2IntroOverlay').style.display='flex'; }
 
-    /* ===== 8. LIGHTBOX ===== */
-    function openLightbox(src,caption,isVideo){
-        const modal=document.getElementById('lightboxModal');
-        const target=document.getElementById('lightboxTarget');
-        target.innerHTML=(isVideo?('<video src="'+src+'" controls autoplay style="max-width:90vw;max-height:80vh;">'):'<img src="'+src+'" alt="'+caption+'" style="max-width:90vw;max-height:80vh;border-radius:14px;">')+'<p style="color:#fff;text-align:center;padding:10px;">'+caption+'</p>';
-        modal.style.display='flex';
+    /* ===== 8. REVAMPED GALLERY & LIGHTBOX ===== */
+    let currentGalleryList = [];
+    let currentLightboxIndex = 0;
+
+    function openLightbox(index){
+        if(!currentGalleryList[index]) return;
+        currentLightboxIndex = index;
+        const item = currentGalleryList[index];
+        const modal = document.getElementById('lightboxModal');
+        const target = document.getElementById('lightboxTarget');
+        const caption = document.getElementById('lightboxCaption');
+
+        target.innerHTML = item.isVideo ? 
+            `<video src="${item.src}" controls autoplay style="max-width:100%;max-height:75vh;"></video>` : 
+            `<img src="${item.src}" alt="${item.name}">`;
+        
+        caption.innerText = item.name;
+        modal.style.display = 'flex';
     }
-    function closeLightbox(){ document.getElementById('lightboxModal').style.display='none'; document.getElementById('lightboxTarget').innerHTML=''; }
+
+    function navigateLightbox(direction){
+        currentLightboxIndex = (currentLightboxIndex + direction + currentGalleryList.length) % currentGalleryList.length;
+        openLightbox(currentLightboxIndex);
+    }
+
+    function closeLightbox(){ 
+        document.getElementById('lightboxModal').style.display='none'; 
+        document.getElementById('lightboxTarget').innerHTML=''; 
+    }
+
+    function makeItem(src, name, cat, isVideo, index){
+        const item = document.createElement('div');
+        item.className = 'gallery-item'; 
+        item.setAttribute('data-category', cat);
+        item.onclick = () => openLightbox(index);
+        item.innerHTML = (isVideo ? 
+            `<video src="${src}" muted></video><span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>` : 
+            `<img src="${src}" alt="${name}">`
+        ) + `<div class="gallery-caption"><span>${name}</span><i class="fa-solid fa-expand"></i></div>`;
+        return item;
+    }
+
+    function switchGalleryView(type, btn){
+        document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+
+        const albums = document.getElementById('albumsContainer');
+        const gallery = document.getElementById('galleryContainer');
+
+        if(type === 'albums'){
+            albums.style.display = 'grid';
+            gallery.style.display = 'none';
+        } else {
+            albums.style.display = 'none';
+            gallery.style.display = 'block';
+            filterGallery(type);
+        }
+    }
+
+    function openAlbum(albumType){
+        switchGalleryView(albumType, null);
+    }
+
+    function filterGallery(category){
+        const gallery = document.getElementById('galleryContainer');
+        gallery.innerHTML = '';
+        currentGalleryList = [];
+
+        allMediaItems.forEach(item => {
+            if(category === 'all' || item.cat === category || (category === 'campaigns' && item.cat === 'photos') || (category === 'workshops' && item.cat === 'photos')){
+                const index = currentGalleryList.length;
+                currentGalleryList.push(item);
+                const el = makeItem(item.src, item.name, item.cat, item.isVideo, index);
+                gallery.appendChild(el);
+            }
+        });
+    }
 
     /* ===== 9. FEEDBACK FORM ===== */
     function handleDirectFeedback(e){
@@ -787,53 +934,59 @@
         showToast(currentLang==='bn'?'ফিডব্যাক গৃহীত হয়েছে! ধন্যবাদ।':'Feedback Received! Thank you for your support.');
     }
 
-    /* ===== 10. GALLERY AUTO-LOADER ===== */
-    function makeItem(src,name,cat,isVideo){
-        const item=document.createElement('div');
-        item.className='gallery-item'; item.setAttribute('data-category',cat);
-        item.onclick=()=>openLightbox(src,name,isVideo);
-        item.innerHTML=(isVideo?'<video src="'+src+'" muted></video><span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>':'<img src="'+src+'" alt="'+name+'">')+'<div class="gallery-caption"><span>'+name+'</span><i class="fa-solid fa-expand"></i></div>';
-        return item;
-    }
-    function scanFolder(folder,start,max,exts,isVideo,cat){
-        const gallery=document.getElementById('galleryContainer');
-        const homePreview=document.getElementById('homeGalleryPreview');
-        for(let i=1;i<=max;i++){
-            exts.forEach(ext=>{
-                const src=folder+i+'.'+ext;
-                const test=isVideo?document.createElement('video'):new Image();
-                const ok=()=>{ const it=makeItem(src,(folder.replace('/','')+i),cat,isVideo); gallery.prepend(it); if(homePreview && homePreview.children.length<4 && !isVideo){ const hp=makeItem(src,(folder.replace('/','')+i),cat,false); hp.onclick=()=>showPage('gallery'); homePreview.appendChild(hp);} };
-                if(isVideo){ test.onloadeddata=ok; test.onerror=()=>{}; test.src=src; }
-                else { test.onload=ok; test.onerror=()=>{}; test.src=src; }
+    /* ===== 10. MEDIA DATA & SCANNERS ===== */
+    let allMediaItems = [];
+
+    function scanFolder(folder, start, max, exts, isVideo, cat){
+        const homePreview = document.getElementById('homeGalleryPreview');
+        for(let i=start; i<=max; i++){
+            exts.forEach(ext => {
+                const src = folder + i + '.' + ext;
+                const item = { src, name: folder.replace('/','') + ' #' + i, cat, isVideo };
+                
+                const test = isVideo ? document.createElement('video') : new Image();
+                test.onload = test.onloadeddata = () => {
+                    allMediaItems.push(item);
+                    if(homePreview && homePreview.children.length < 4 && !isVideo){
+                        const hp = makeItem(src, item.name, cat, false, 0);
+                        hp.onclick = () => showPage('gallery');
+                        homePreview.appendChild(hp);
+                    }
+                };
+                test.src = src;
             });
         }
     }
+
     function autoScanGithubFolders(){
-        scanFolder('Photos/',1,12,['jpg','jpeg','png','webp'],false,'photos');
-        scanFolder('Videos/',1,8,['mp4','webm'],true,'videos');
-        const gallery=document.getElementById('galleryContainer');
-        const cover=makeItem('Beyond Thirst project cover.png','Save Water, Save Life Cover','photos',false);
-        gallery.appendChild(cover);
-        const homePreview=document.getElementById('homeGalleryPreview');
-        if(homePreview.children.length===0){ const hc=makeItem('Beyond Thirst project cover.png','Save Water Cover','photos',false); hc.onclick=()=>showPage('gallery'); homePreview.appendChild(hc); }
+        allMediaItems.push({ src: 'Beyond Thirst project cover.png', name: 'Save Water Cover', cat: 'photos', isVideo: false });
+        scanFolder('Photos/', 1, 12, ['jpg','jpeg','png','webp'], false, 'photos');
+        scanFolder('Videos/', 1, 8, ['mp4','webm'], true, 'videos');
     }
     autoScanGithubFolders();
 
     /* ===== 11. MEDIA UPLOAD ===== */
     let isSecretAdmin=false;
     document.addEventListener('keydown',e=>{ if(e.shiftKey && (e.key==='U'||e.key==='u')){ isSecretAdmin=!isSecretAdmin; document.getElementById('secretUploadZone').classList.toggle('secret-active',isSecretAdmin); showToast(isSecretAdmin?'🔑 Team Admin Upload Active':'🔒 Public View Active'); } });
-    const mediaUpload=document.getElementById('mediaUpload');
-    if(mediaUpload){ mediaUpload.addEventListener('change',e=>{ Array.from(e.target.files).forEach(file=>{ const reader=new FileReader(); reader.onload=ev=>{ const isVid=file.type.startsWith('video/'); const m={id:Date.now()+Math.random(),type:isVid?'video':'image',src:ev.target.result,name:file.name}; saveMedia(m); renderMedia(m,true); }; reader.readAsDataURL(file); }); }); }
-    function saveMedia(m){ let cur=JSON.parse(localStorage.getItem('bt_uploads')||'[]'); cur.push(m); localStorage.setItem('bt_uploads',JSON.stringify(cur)); }
-    function renderMedia(m, prepend){ const item=makeItem(m.src,m.name,'uploads',m.type==='video'); const container=document.getElementById('galleryContainer'); if(prepend) container.prepend(item); else container.appendChild(item); }
-    function filterGallery(category, btn){
-        document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-        if(btn) btn.classList.add('active');
-        document.querySelectorAll('.gallery-item').forEach(item=>{
-            if(category==='all' || item.getAttribute('data-category')===category) item.style.display='block';
-            else item.style.display='none';
-        });
+    
+    const mediaUpload = document.getElementById('mediaUpload');
+    if(mediaUpload){ 
+        mediaUpload.addEventListener('change', e => { 
+            Array.from(e.target.files).forEach(file => { 
+                const reader = new FileReader(); 
+                reader.onload = ev => { 
+                    const isVid = file.type.startsWith('video/'); 
+                    const m = { src: ev.target.result, name: file.name, cat: 'uploads', isVideo: isVid }; 
+                    allMediaItems.unshift(m);
+                    saveMedia(m); 
+                    switchGalleryView('uploads', null);
+                }; 
+                reader.readAsDataURL(file); 
+            }); 
+        }); 
     }
+
+    function saveMedia(m){ let cur=JSON.parse(localStorage.getItem('bt_uploads')||'[]'); cur.push(m); localStorage.setItem('bt_uploads',JSON.stringify(cur)); }
     </script>
 </body>
 </html>
