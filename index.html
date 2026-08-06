@@ -1894,7 +1894,7 @@
         setInterval(quoteTick, 6000);
 
         // ════════════════════════════════════════════════════════════
-        //  6.  GAME 1
+        //  6.  GAME 1 (PLANT SAVER)
         // ════════════════════════════════════════════════════════════
         const g1cv = document.getElementById('game1Cv');
         const g1ctx = g1cv.getContext('2d');
@@ -2103,382 +2103,295 @@
             ov.innerHTML = '<h2 style="color:' + (type === 'over' ? '#ef4444' : '#38bdf8') + ';font-size:24px;margin-bottom:10px;">' + (type === 'over' ? 'Game Over — Water Wasted!' : 'Game Paused') + '</h2><p style="margin:12px 0;max-width:480px;font-style:italic;">' + t + '</p><button class="learn-more" onclick="startGame1()">Try Again</button>';
         }
 
-        function quitGame1() { endGame1('quit'); }
-
-        // ════════════════════════════════════════════════════════════
-        //  7.  GAME 2
-        // ════════════════════════════════════════════════════════════
-        let g2Filling = false, g2Level = 0, g2Target = 75, g2Timer = null, g2ValveAngle = 0, g2TargetAngle = 120, g2Wasted = 0, g2Aligned = false;
-
-        function updateG2UI() {
-            document.getElementById('g2TargetVal').innerText = g2Target + '%';
-            document.getElementById('g2CurrentVal').innerText = Math.floor(g2Level) + '%';
-            document.getElementById('g2Wasted').innerText = g2Wasted;
-            document.getElementById('g2WaterFill').style.height = g2Level + '%';
-            document.getElementById('g2TargetLine').style.bottom = g2Target + '%';
-            document.getElementById('valveTarget').style.transform = `translate(-50%, -100%) rotate(${g2TargetAngle}deg)`;
-            document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(${g2ValveAngle}deg)`;
-            
-            const dial = document.getElementById('valveDial');
-            if (dial) {
-                dial.style.background = `conic-gradient(#0284c7 ${g2ValveAngle}deg, #0f172a ${g2ValveAngle}deg)`;
-            }
+        function quitGame1() {
+            endGame1('quit');
         }
+
+        // ════════════════════════════════════════════════════════════
+        //  7.  GAME 2 (THIRSTY CHILD PUZZLE)
+        // ════════════════════════════════════════════════════════════
+        let g2Target = 75, g2Current = 0, g2Wasted = 0, g2Pouring = false, g2Interval = null;
+        let valveAngle = 0, targetValveAngle = 120, valveAligned = false;
 
         function startGame2() {
             document.getElementById('game2IntroOverlay').style.display = 'none';
             document.getElementById('game2MainArea').style.display = 'block';
-            g2Target = Math.floor(Math.random() * 30) + 60;
-            g2TargetAngle = Math.floor(Math.random() * 340) + 10;
-            g2ValveAngle = 0;
-            g2Level = 0;
-            g2Wasted = 0;
-            g2Aligned = false;
-            updateG2UI();
+            resetGame2Round();
         }
 
-        let isDraggingValve = false;
-        function handleValveRotate(e) {
-            if (!isDraggingValve) return;
-            const dial = document.getElementById('valveDial');
-            if (!dial) return;
-            const rect = dial.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            
-            let angle = Math.atan2(clientY - centerY, clientX - centerX) * (180 / Math.PI) + 90;
-            if (angle < 0) angle += 360;
-            g2ValveAngle = angle;
+        function resetGame2Round() {
+            g2Current = 0;
+            targetValveAngle = Math.floor(Math.random() * 260) + 40;
+            g2Target = Math.floor(Math.random() * 40) + 50;
+            valveAngle = 0;
+            valveAligned = false;
 
-            const diff = Math.abs(g2ValveAngle - g2TargetAngle);
-            g2Aligned = (diff <= 18 || diff >= 342);
-            updateG2UI();
-        }
-
-        const dialEl = document.getElementById('valveDial');
-        if (dialEl) {
-            dialEl.addEventListener('mousedown', () => isDraggingValve = true);
-            dialEl.addEventListener('touchstart', () => isDraggingValve = true);
-        }
-        window.addEventListener('mouseup', () => isDraggingValve = false);
-        window.addEventListener('touchend', () => isDraggingValve = false);
-        window.addEventListener('mousemove', handleValveRotate);
-        window.addEventListener('touchmove', handleValveRotate);
-
-        const pourBtn = document.getElementById('pourBtn');
-        function startPour() {
-            if (!g2Aligned) {
-                showToast(currentLang === 'bn' ? 'প্রথমে কাঁটা দুটি মিলান!' : 'Align the valve needles first!');
-                return;
-            }
-            g2Filling = true;
-            g2Timer = setInterval(() => {
-                if (g2Level < 100) {
-                    g2Level += 1.5;
-                    updateG2UI();
-                }
-            }, 50);
-        }
-
-        function stopPour() {
-            if (!g2Filling) return;
-            g2Filling = false;
-            clearInterval(g2Timer);
-
-            const diff = Math.abs(g2Level - g2Target);
-            if (diff <= 5) {
-                showToast(currentLang === 'bn' ? '🎉 দারুণ! আপনি ঠিকমতো পানি পূর্ণ করেছেন!' : '🎉 Great job! Perfect pour!');
-                setTimeout(() => {
-                    g2Target = Math.floor(Math.random() * 30) + 60;
-                    g2TargetAngle = Math.floor(Math.random() * 340) + 10;
-                    g2Level = 0;
-                    updateG2UI();
-                }, 1500);
-            } else {
-                g2Wasted++;
-                updateG2UI();
-                showToast(currentLang === 'bn' ? 'পানি অপচয় হয়েছে! আবার চেষ্টা করুন।' : 'Water wasted! Try again.');
-                if (g2Wasted >= 3) {
-                    setTimeout(() => quitGame2(), 1000);
-                } else {
-                    g2Level = 0;
-                    updateG2UI();
-                }
-            }
-        }
-
-        if (pourBtn) {
-            pourBtn.addEventListener('mousedown', startPour);
-            pourBtn.addEventListener('mouseup', stopPour);
-            pourBtn.addEventListener('mouseleave', stopPour);
-            pourBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startPour(); });
-            pourBtn.addEventListener('touchend', (e) => { e.preventDefault(); stopPour(); });
+            document.getElementById('valveTarget').style.transform = `translate(-50%, -100%) rotate(${targetValveAngle}deg)`;
+            document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(0deg)`;
+            document.getElementById('g2TargetLine').style.bottom = g2Target + '%';
+            document.getElementById('g2TargetVal').innerText = g2Target + '%';
+            document.getElementById('g2CurrentVal').innerText = '0%';
+            document.getElementById('g2WaterFill').style.height = '0%';
         }
 
         function quitGame2() {
-            clearInterval(g2Timer);
             document.getElementById('game2MainArea').style.display = 'none';
             document.getElementById('game2IntroOverlay').style.display = 'flex';
         }
 
-        function handleDirectFeedback(e) {
-            e.preventDefault();
-            showToast(currentLang === 'bn' ? 'আপনার বার্তা সফলভাবে পাঠানো হয়েছে!' : 'Your message has been sent successfully!');
-            e.target.reset();
+        const dial = document.getElementById('valveDial');
+        if (dial) {
+            let isDraggingValve = false;
+            const updateValve = (e) => {
+                if (!isDraggingValve) return;
+                const rect = dial.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const pageX = e.touches ? e.touches[0].clientX : e.clientX;
+                const pageY = e.touches ? e.touches[0].clientY : e.clientY;
+                let rad = Math.atan2(pageY - cy, pageX - cx);
+                let deg = rad * (180 / Math.PI) + 90;
+                if (deg < 0) deg += 360;
+                valveAngle = deg;
+                document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(${deg}deg)`;
+                valveAligned = Math.abs(valveAngle - targetValveAngle) < 18;
+            };
+            dial.addEventListener('mousedown', () => isDraggingValve = true);
+            dial.addEventListener('mousemove', updateValve);
+            window.addEventListener('mouseup', () => isDraggingValve = false);
+            dial.addEventListener('touchstart', () => isDraggingValve = true, { passive: true });
+            dial.addEventListener('touchmove', updateValve, { passive: true });
+            window.addEventListener('touchend', () => isDraggingValve = false);
         }
 
-        // ════════════════════════════════════════════════════════════
-        //  8.  GALLERY — DYNAMIC SUBFOLDER & ALBUM RENDERING
-        // ════════════════════════════════════════════════════════════
-
-        let allMediaItems = [];
-        let albumData = [];
-        let currentGalleryList = [];
-        let currentLightboxIndex = 0;
-        let activeAlbumFilter = null;
-
-        function isSubfolderFile(src) {
-            return src && src.includes('/');
-        }
-
-        async function loadGalleryManifest() {
-            try {
-                const res = await fetch('gallery-data.json?t=' + Date.now());
-                if (!res.ok) throw new Error('Manifest not found');
-                const data = await res.json();
+        const pourBtn = document.getElementById('pourBtn');
+        if (pourBtn) {
+            const startPour = (e) => {
+                e.preventDefault();
+                if (!valveAligned) {
+                    showToast('Align the green and white valve needles first!');
+                    return;
+                }
+                g2Pouring = true;
+                g2Interval = setInterval(() => {
+                    if (g2Current < 100) {
+                        g2Current += 1.5;
+                        document.getElementById('g2WaterFill').style.height = g2Current + '%';
+                        document.getElementById('g2CurrentVal').innerText = Math.round(g2Current) + '%';
+                    }
+                }, 50);
+            };
+            const stopPour = () => {
+                if (!g2Pouring) return;
+                g2Pouring = false;
+                clearInterval(g2Interval);
                 
-                albumData = data.albums || [];
-                allMediaItems = (data.media || []).filter(m => isSubfolderFile(m.src));
+                const diff = Math.abs(g2Current - g2Target);
+                if (diff <= 6) {
+                    showToast('Perfect! Water delivered safely! 🎉');
+                    setTimeout(resetGame2Round, 1500);
+                } else {
+                    g2Wasted++;
+                    document.getElementById('g2Wasted').innerText = g2Wasted;
+                    if (g2Wasted >= 3) {
+                        showToast('Too much water wasted! Try again.');
+                        setTimeout(() => { g2Wasted = 0; document.getElementById('g2Wasted').innerText = 0; resetGame2Round(); }, 1500);
+                    } else {
+                        showToast('Missed the target line! Try again.');
+                        setTimeout(resetGame2Round, 1200);
+                    }
+                }
+            };
+            pourBtn.addEventListener('mousedown', startPour);
+            pourBtn.addEventListener('mouseup', stopPour);
+            pourBtn.addEventListener('mouseleave', stopPour);
+            pourBtn.addEventListener('touchstart', startPour);
+            pourBtn.addEventListener('touchend', stopPour);
+        }
 
-                // Merge local session uploads if present
-                try {
-                    const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
-                    saved.forEach(m => {
-                        if (isSubfolderFile(m.src)) allMediaItems.unshift(m);
-                    });
-                } catch (e) {}
+        // ════════════════════════════════════════════════════════════
+        //  8.  DYNAMIC GALLERY & LIGHTBOX
+        // ════════════════════════════════════════════════════════════
+        let galleryData = { albums: [], media: [] };
+        let customUploads = [];
+        let currentLightboxList = [];
+        let currentLightboxIdx = 0;
 
-                buildAlbums();
-                buildHomePreview();
+        async function fetchGalleryData() {
+            try {
+                const res = await fetch('gallery-data.json');
+                if (res.ok) {
+                    galleryData = await res.json();
+                    renderAlbums();
+                    renderHomePreview();
+                }
             } catch (e) {
-                console.warn('Fallback scanning enabled:', e);
+                console.log('gallery-data.json pending generation.');
             }
         }
 
-        function buildAlbums() {
+        function renderAlbums() {
             const container = document.getElementById('albumsContainer');
             if (!container) return;
-            container.innerHTML = '';
-
-            if (albumData.length === 0) {
-                container.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:var(--text-light);">No subfolder albums found. Upload files into subfolders inside Photos/ or Videos/.</p>';
+            if (!galleryData.albums || galleryData.albums.length === 0) {
+                container.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:var(--text-light);">No subfolders found in Photos/ or Videos/ yet. Upload photos to generate your gallery!</p>';
                 return;
             }
-
-            albumData.forEach(album => {
-                const albumMedia = allMediaItems.filter(m => m.album === album.id);
-                const count = albumMedia.length || album.count;
-                const cover = album.cover || (albumMedia[0] ? albumMedia[0].src : 'Beyond Thirst project cover.png');
-
-                const card = document.createElement('div');
-                card.className = 'album-card';
-                card.onclick = () => openAlbum(album.id, album.title);
-
-                const isVid = cover.endsWith('.mp4') || cover.endsWith('.webm');
-                const mediaHTML = isVid 
-                    ? `<video src="${cover}" muted preload="metadata"></video>`
-                    : `<img src="${cover}" alt="${album.title}" loading="lazy" onerror="this.src='Beyond Thirst project cover.png'" />`;
-
-                card.innerHTML = `
-                    <div class="album-tag"><i class="fa-solid fa-folder"></i> ${count} Items</div>
-                    <div class="album-preview single-img">
-                        ${mediaHTML}
-                    </div>
-                    <div class="album-info">
-                        <h3>${album.title}</h3>
-                        <p><span>Click to view collection</span> <i class="fa-solid fa-arrow-right"></i></p>
+            container.innerHTML = galleryData.albums.map(album => {
+                const isVideo = album.cover.match(/\.(mp4|webm|mov|mkv)$/i);
+                const mediaTag = isVideo 
+                    ? `<video src="${album.cover}" muted preload="metadata"></video>`
+                    : `<img src="${album.cover}" alt="${album.title}" onerror="this.src='Beyond Thirst project cover.png'" />`;
+                
+                return `
+                    <div class="album-card" onclick="filterByAlbum('${album.id}')">
+                        <span class="album-tag">${album.count} items</span>
+                        <div class="album-preview single-img">
+                            ${mediaTag}
+                        </div>
+                        <div class="album-info">
+                            <h3>${album.title}</h3>
+                            <p><span>Explore Album</span> <i class="fa-solid fa-arrow-right"></i></p>
+                        </div>
                     </div>
                 `;
-                container.appendChild(card);
-            });
+            }).join('');
         }
 
-        function openAlbum(albumId, albumTitle) {
-            activeAlbumFilter = albumId;
-            const albumsGrid = document.getElementById('albumsContainer');
-            const galleryGrid = document.getElementById('galleryContainer');
-
-            albumsGrid.style.display = 'none';
-            galleryGrid.style.display = 'grid';
-
-            const filteredItems = allMediaItems.filter(m => m.album === albumId);
-            renderGallery(filteredItems, albumTitle);
+        function filterByAlbum(albumId) {
+            switchGalleryView('all', null);
+            const items = galleryData.media.filter(m => m.album === albumId);
+            renderGalleryItems(items);
         }
 
-        function renderGallery(items, albumTitle = '') {
-            currentGalleryList = items;
-            const container = document.getElementById('galleryContainer');
-            container.innerHTML = '';
-
-            let headerHTML = '';
-            if (activeAlbumFilter) {
-                headerHTML = `
-                    <div style="grid-column: 1/-1; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;">
-                        <button class="learn-more" onclick="backToAlbums()"><i class="fa-solid fa-arrow-left"></i> Back to Albums</button>
-                        <h3 style="color:var(--dark-blue); font-size:20px;">${albumTitle}</h3>
-                    </div>
-                `;
+        function switchGalleryView(view, btn) {
+            if (btn) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
             }
-
-            container.innerHTML = headerHTML;
-
-            if (items.length === 0) {
-                container.innerHTML += '<p style="grid-column:1/-1;text-align:center;color:var(--text-light);">No media items available in this category.</p>';
-                return;
-            }
-
-            items.forEach((item, idx) => {
-                const div = document.createElement('div');
-                div.className = 'gallery-item';
-                div.onclick = () => openLightbox(idx);
-
-                const isVid = item.type === 'video' || item.src.endsWith('.mp4') || item.src.endsWith('.webm');
-
-                div.innerHTML = `
-                    ${isVid ? '<div class="vid-badge"><i class="fa-solid fa-play"></i> Video</div>' : ''}
-                    ${isVid 
-                        ? `<video src="${item.src}" muted preload="metadata"></video>` 
-                        : `<img src="${item.src}" alt="${item.name}" loading="lazy" onerror="this.parentNode.style.display='none'" />`
-                    }
-                    <div class="gallery-caption">
-                        <span>${item.name || 'Water Action'}</span>
-                        <i class="fa-solid fa-expand"></i>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function backToAlbums() {
-            activeAlbumFilter = null;
-            document.getElementById('galleryContainer').style.display = 'none';
-            document.getElementById('albumsContainer').style.display = 'grid';
-            
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            const albumBtn = document.querySelector('.filter-btn');
-            if (albumBtn) albumBtn.classList.add('active');
-        }
-
-        function switchGalleryView(view, btnEl) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            if (btnEl) btnEl.classList.add('active');
-
-            const albumsGrid = document.getElementById('albumsContainer');
-            const galleryGrid = document.getElementById('galleryContainer');
+            const albumsDiv = document.getElementById('albumsContainer');
+            const galleryDiv = document.getElementById('galleryContainer');
 
             if (view === 'albums') {
-                backToAlbums();
+                albumsDiv.style.display = 'grid';
+                galleryDiv.style.display = 'none';
+                renderAlbums();
+            } else {
+                albumsDiv.style.display = 'none';
+                galleryDiv.style.display = 'block';
+                let filtered = [];
+                if (view === 'all') filtered = galleryData.media;
+                else if (view === 'photos') filtered = galleryData.media.filter(m => m.type === 'image');
+                else if (view === 'videos') filtered = galleryData.media.filter(m => m.type === 'video');
+                else if (view === 'uploads') filtered = customUploads;
+                
+                renderGalleryItems(filtered);
+            }
+        }
+
+        function renderGalleryItems(items) {
+            const container = document.getElementById('galleryContainer');
+            if (!container) return;
+            currentLightboxList = items;
+
+            if (!items || items.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:40px;">No media found in this section.</p>';
                 return;
             }
 
-            activeAlbumFilter = null;
-            albumsGrid.style.display = 'none';
-            galleryGrid.style.display = 'grid';
+            container.innerHTML = items.map((item, idx) => {
+                const isVid = item.type === 'video';
+                const mediaTag = isVid 
+                    ? `<video src="${item.src}" muted preload="metadata"></video><span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>`
+                    : `<img src="${item.src}" alt="${item.name}" onerror="this.src='Beyond Thirst project cover.png'" />`;
 
-            if (view === 'all') renderGallery(allMediaItems);
-            else if (view === 'photos') renderGallery(allMediaItems.filter(m => m.type === 'image' || !m.type));
-            else if (view === 'videos') renderGallery(allMediaItems.filter(m => m.type === 'video'));
-            else if (view === 'uploads') renderGallery(allMediaItems.filter(m => m.isUpload));
+                return `
+                    <div class="gallery-item" onclick="openLightbox(${idx})">
+                        ${mediaTag}
+                        <div class="gallery-caption">
+                            <span>${item.name}</span>
+                            <i class="fa-solid fa-expand"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
-        // Lightbox Handler
+        function renderHomePreview() {
+            const container = document.getElementById('homeGalleryPreview');
+            if (!container || !galleryData.media) return;
+            const previewItems = galleryData.media.slice(0, 3);
+            container.innerHTML = previewItems.map(item => `
+                <div class="gallery-item" onclick="showPage('gallery')">
+                    ${item.type === 'video' ? `<video src="${item.src}" muted></video>` : `<img src="${item.src}" alt="${item.name}" />`}
+                    <div class="gallery-caption">
+                        <span>${item.name}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
         function openLightbox(idx) {
-            currentLightboxIndex = idx;
+            currentLightboxIdx = idx;
             const modal = document.getElementById('lightboxModal');
-            const target = document.getElementById('lightboxTarget');
-            const caption = document.getElementById('lightboxCaption');
-
-            const item = currentGalleryList[idx];
-            if (!item) return;
-
-            const isVid = item.type === 'video' || item.src.endsWith('.mp4') || item.src.endsWith('.webm');
-            target.innerHTML = isVid 
-                ? `<video src="${item.src}" controls autoplay style="max-width:100%;max-height:75vh;"></video>`
-                : `<img src="${item.src}" alt="${item.name}" style="max-width:100%;max-height:75vh;object-fit:contain;" />`;
-
-            caption.innerText = item.name || '';
             modal.style.display = 'flex';
+            updateLightboxContent();
         }
 
         function closeLightbox() {
             document.getElementById('lightboxModal').style.display = 'none';
-            document.getElementById('lightboxTarget').innerHTML = '';
         }
 
         function navigateLightbox(dir) {
-            currentLightboxIndex = (currentLightboxIndex + dir + currentGalleryList.length) % currentGalleryList.length;
-            openLightbox(currentLightboxIndex);
+            if (currentLightboxList.length === 0) return;
+            currentLightboxIdx = (currentLightboxIdx + dir + currentLightboxList.length) % currentLightboxList.length;
+            updateLightboxContent();
         }
 
-        function buildHomePreview() {
-            const container = document.getElementById('homeGalleryPreview');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            const previews = allMediaItems.slice(0, 6);
-            previews.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'gallery-item';
-                div.onclick = () => showPage('gallery');
-                
-                const isVid = item.type === 'video' || item.src.endsWith('.mp4');
-                div.innerHTML = isVid 
-                    ? `<video src="${item.src}" muted></video>`
-                    : `<img src="${item.src}" alt="${item.name}" loading="lazy" />`;
-                container.appendChild(div);
-            });
-        }
+        function updateLightboxContent() {
+            const item = currentLightboxList[currentLightboxIdx];
+            if (!item) return;
+            const target = document.getElementById('lightboxTarget');
+            const caption = document.getElementById('lightboxCaption');
 
-        // Secret Admin Uploader Shortcut
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'u') {
-                const zone = document.getElementById('secretUploadZone');
-                if (zone) zone.classList.toggle('secret-active');
+            if (item.type === 'video') {
+                target.innerHTML = `<video src="${item.src}" controls autoplay style="max-width:100%;max-height:75vh;"></video>`;
+            } else {
+                target.innerHTML = `<img src="${item.src}" alt="${item.name}" style="max-width:100%;max-height:75vh;" />`;
             }
-        });
+            caption.innerText = item.name || '';
+        }
 
-        const uploadInput = document.getElementById('mediaUpload');
-        if (uploadInput) {
-            uploadInput.addEventListener('change', (e) => {
+        function handleDirectFeedback(e) {
+            e.preventDefault();
+            showToast('Thank you! Message sent successfully.');
+            e.target.reset();
+        }
+
+        const uploader = document.getElementById('mediaUpload');
+        if (uploader) {
+            uploader.addEventListener('change', (e) => {
                 const files = Array.from(e.target.files);
-                const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
-                files.forEach(f => {
-                    const url = URL.createObjectURL(f);
-                    const item = {
-                        src: 'Photos/' + f.name,
-                        name: f.name,
-                        type: f.type.startsWith('video') ? 'video' : 'image',
-                        isUpload: true,
-                        album: 'uploads'
-                    };
-                    allMediaItems.unshift(item);
-                    saved.unshift(item);
+                files.forEach(file => {
+                    const url = URL.createObjectURL(file);
+                    const isVid = file.type.startsWith('video');
+                    customUploads.push({
+                        src: url,
+                        name: file.name,
+                        album: 'uploads',
+                        type: isVid ? 'video' : 'image'
+                    });
                 });
-                try {
-                    localStorage.setItem('bt_uploads', JSON.stringify(saved));
-                } catch (err) {}
-                renderGallery(allMediaItems);
-                showToast('Uploaded ' + files.length + ' item(s)');
+                showToast(`Added ${files.length} file(s) for preview`);
+                switchGalleryView('uploads', null);
             });
         }
 
-        // Initialize on page load
+        // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
             applyLang();
             applyTheme();
-            loadGalleryManifest();
+            fetchGalleryData();
         });
     </script>
 </body>
