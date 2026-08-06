@@ -104,22 +104,12 @@
             animation: float2 20s ease-in-out infinite;
         }
         @keyframes float1 {
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(60px, 40px);
-            }
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(60px, 40px); }
         }
         @keyframes float2 {
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-            50% {
-                transform: translate(-50px, -30px);
-            }
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-50px, -30px); }
         }
 
         /* ── header / nav ── */
@@ -465,31 +455,17 @@
             font-size: 25px;
             margin-bottom: 18px;
         }
-        .c-blue .icon-box {
-            background: #e0f2fe;
-            color: var(--primary-blue);
-        }
-        .c-teal .icon-box {
-            background: #ccfbf1;
-            color: var(--accent-teal);
-        }
-        .c-green .icon-box {
-            background: #dcfce7;
-            color: #16a34a;
-        }
-        .c-orange .icon-box {
-            background: #ffedd5;
-            color: #ea580c;
-        }
+        .c-blue .icon-box { background: #e0f2fe; color: var(--primary-blue); }
+        .c-teal .icon-box { background: #ccfbf1; color: var(--accent-teal); }
+        .c-green .icon-box { background: #dcfce7; color: #16a34a; }
+        .c-orange .icon-box { background: #ffedd5; color: #ea580c; }
         .card h3 {
             font-size: 17.5px;
             color: var(--dark-blue);
             margin-bottom: 10px;
             font-weight: 700;
         }
-        [data-theme="dark"] .card h3 {
-            color: var(--text-dark);
-        }
+        [data-theme="dark"] .card h3 { color: var(--text-dark); }
         .card p {
             font-size: 13.5px;
             color: var(--text-light);
@@ -529,13 +505,8 @@
             animation: pulseDrop 2.5s infinite ease-in-out;
         }
         @keyframes pulseDrop {
-            0%,
-            100% {
-                transform: rotate(45deg) scale(1);
-            }
-            50% {
-                transform: rotate(45deg) scale(1.06);
-            }
+            0%, 100% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.06); }
         }
         .drop-content {
             transform: rotate(-45deg);
@@ -572,9 +543,7 @@
             font-weight: 800;
             margin-bottom: 10px;
         }
-        [data-theme="dark"] .section-title h2 {
-            color: var(--text-dark);
-        }
+        [data-theme="dark"] .section-title h2 { color: var(--text-dark); }
         .section-title p {
             color: var(--text-light);
             font-size: 15.5px;
@@ -622,9 +591,7 @@
             margin-bottom: 12px;
             font-weight: 700;
         }
-        [data-theme="dark"] .info-card h3 {
-            color: var(--text-dark);
-        }
+        [data-theme="dark"] .info-card h3 { color: var(--text-dark); }
         .info-card p {
             font-size: 14.5px;
             color: var(--text-light);
@@ -754,9 +721,7 @@
             font-size: 14px;
             color: var(--text-dark);
         }
-        .game-toolbar .stat b {
-            color: var(--primary-blue);
-        }
+        .game-toolbar .stat b { color: var(--primary-blue); }
         .game-canvas-container {
             position: relative;
             width: 100%;
@@ -1039,12 +1004,8 @@
             background: rgba(255, 255, 255, 0.35);
             transform: translateY(-50%) scale(1.1);
         }
-        .lightbox-nav-btn.prev {
-            left: -20px;
-        }
-        .lightbox-nav-btn.next {
-            right: -20px;
-        }
+        .lightbox-nav-btn.prev { left: -20px; }
+        .lightbox-nav-btn.next { right: -20px; }
         .lightbox-close {
             position: absolute;
             top: -50px;
@@ -1088,9 +1049,7 @@
             margin-bottom: 7px;
             color: var(--dark-blue);
         }
-        [data-theme="dark"] .form-group label {
-            color: var(--text-dark);
-        }
+        [data-theme="dark"] .form-group label { color: var(--text-dark); }
         .form-group input,
         .form-group textarea,
         .form-group select {
@@ -1728,7 +1687,7 @@
     <!-- ─── FOOTER ─── -->
     <footer>
         <div class="footer-content">
-            <div class="footer-logo">
+            <div class="footer-logo" id="footerLogoSecret">
                 <img src="logo.png" alt="Beyond Thirst Logo" onerror="this.style.display='none'" />
                 <b>Beyond Thirst</b>
             </div>
@@ -1783,8 +1742,7 @@
 
         function animateCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update();
-                p.draw(); });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animateCanvas);
         }
         animateCanvas();
@@ -1845,8 +1803,7 @@
 
         function applyTheme() {
             document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-            document.getElementById('themeToggleBtn').innerHTML = darkMode ? '<i class="fa-solid fa-sun"></i>' :
-                '<i class="fa-solid fa-moon"></i>';
+            document.getElementById('themeToggleBtn').innerHTML = darkMode ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
         }
 
         function toggleTheme() {
@@ -1878,8 +1835,7 @@
             { t: "When you drink water, remember the spring.", a: "Chinese Proverb" },
             { t: "Be like water: adaptable, essential, and relentless.", a: "Bruce Lee" }
         ];
-        let currentQuoteIdx = 0,
-            quoteShuffleOn = true;
+        let currentQuoteIdx = 0, quoteShuffleOn = true;
 
         function updateQuoteDisplay(peek) {
             const card = document.getElementById('quoteCard');
@@ -1934,14 +1890,7 @@
         // ════════════════════════════════════════════════════════════
         const g1cv = document.getElementById('game1Cv');
         const g1ctx = g1cv.getContext('2d');
-        let g1Score = 0,
-            g1Saved = 0,
-            g1Wasted = 0,
-            g1Active = false,
-            g1PotX = 0,
-            g1Health = 0,
-            g1Birds = [],
-            g1Drops = [];
+        let g1Score = 0, g1Saved = 0, g1Wasted = 0, g1Active = false, g1PotX = 0, g1Health = 0, g1Birds = [], g1Drops = [];
 
         function sizeG1() {
             const r = g1cv.parentElement.getBoundingClientRect();
@@ -1950,8 +1899,7 @@
         }
 
         function drawG1Scene() {
-            const w = g1cv.width,
-                h = g1cv.height;
+            const w = g1cv.width, h = g1cv.height;
             const sky = g1ctx.createLinearGradient(0, 0, 0, h * 0.6);
             sky.addColorStop(0, '#6bb6e3');
             sky.addColorStop(1, '#c9ecf7');
@@ -2002,8 +1950,7 @@
                 g1ctx.restore();
             });
 
-            const px = w / 2,
-                py = h * 0.62;
+            const px = w / 2, py = h * 0.62;
             g1ctx.save();
             g1ctx.translate(px, py);
             const grow = g1Health / 100;
@@ -2117,8 +2064,7 @@
             g1Drops = [];
             sizeG1();
             if (g1Birds.length < 3) {
-                g1Birds = [{ x: 50, y: 50, s: 1.1, p: 0 }, { x: 200, y: 80, s: 1.6, p: 1 }, { x: 400, y: 40, s: 0.9,
-                    p: 2 }];
+                g1Birds = [{ x: 50, y: 50, s: 1.1, p: 0 }, { x: 200, y: 80, s: 1.6, p: 1 }, { x: 400, y: 40, s: 0.9, p: 2 }];
             }
             document.getElementById('game1Score').innerText = 0;
             document.getElementById('game1Saved').innerText = 0;
@@ -2134,8 +2080,7 @@
             g1PotX = cx - r.left;
         }
         g1c.addEventListener('mousemove', e => g1Move(e.clientX));
-        g1c.addEventListener('touchmove', e => { e.preventDefault();
-            g1Move(e.touches[0].clientX); }, { passive: false });
+        g1c.addEventListener('touchmove', e => { e.preventDefault(); g1Move(e.touches[0].clientX); }, { passive: false });
 
         function endGame1(type) {
             g1Active = false;
@@ -2149,8 +2094,7 @@
             const t = tales[Math.floor(Math.random() * tales.length)];
             ov.innerHTML =
                 '<h2 style="color:' + (type === 'over' ? '#ef4444' : '#38bdf8') +
-                ';font-size:24px;margin-bottom:10px;">' + (type === 'over' ? 'Game Over — Water Wasted!' :
-                    'Game Paused') +
+                ';font-size:24px;margin-bottom:10px;">' + (type === 'over' ? 'Game Over — Water Wasted!' : 'Game Paused') +
                 '</h2><p style="margin:12px 0;max-width:480px;font-style:italic;">' + t +
                 '</p><button class="learn-more" onclick="startGame1()">Try Again</button>';
         }
@@ -2160,14 +2104,7 @@
         // ════════════════════════════════════════════════════════════
         //  7.  GAME 2
         // ════════════════════════════════════════════════════════════
-        let g2Filling = false,
-            g2Level = 0,
-            g2Target = 75,
-            g2Timer = null,
-            g2ValveAngle = 0,
-            g2TargetAngle = 120,
-            g2Wasted = 0,
-            g2Aligned = false;
+        let g2Filling = false, g2Level = 0, g2Target = 75, g2Timer = null, g2ValveAngle = 0, g2TargetAngle = 120, g2Wasted = 0, g2Aligned = false;
 
         function startGame2() {
             document.getElementById('game2IntroOverlay').style.display = 'none';
@@ -2183,8 +2120,7 @@
             document.getElementById('g2WaterFill').style.height = '0%';
             document.getElementById('g2CurrentVal').innerText = '0%';
             document.getElementById('g2Wasted').innerText = '0';
-            document.getElementById('valveTarget').style.transform = 'translate(-50%,-100%) rotate(' + g2TargetAngle +
-                'deg)';
+            document.getElementById('valveTarget').style.transform = 'translate(-50%,-100%) rotate(' + g2TargetAngle + 'deg)';
             document.getElementById('valveNeedle').style.transform = 'translate(-50%,-100%) rotate(0deg)';
         }
 
@@ -2203,16 +2139,11 @@
             document.getElementById('valveNeedle').style.background = g2Aligned ? '#22c55e' : '#fff';
         }
         let valveDragging = false;
-        valve.addEventListener('mousedown', e => { valveDragging = true;
-            valveMove(e.clientX, e.clientY); });
+        valve.addEventListener('mousedown', e => { valveDragging = true; valveMove(e.clientX, e.clientY); });
         document.addEventListener('mousemove', e => { if (valveDragging) valveMove(e.clientX, e.clientY); });
         document.addEventListener('mouseup', () => valveDragging = false);
-        valve.addEventListener('touchstart', e => { valveDragging = true;
-            valveMove(e.touches[0].clientX, e.touches[0].clientY);
-            e.preventDefault(); }, { passive: false });
-        valve.addEventListener('touchmove', e => { if (valveDragging) valveMove(e.touches[0].clientX, e.touches[0]
-                .clientY);
-            e.preventDefault(); }, { passive: false });
+        valve.addEventListener('touchstart', e => { valveDragging = true; valveMove(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, { passive: false });
+        valve.addEventListener('touchmove', e => { if (valveDragging) valveMove(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, { passive: false });
         valve.addEventListener('touchend', () => valveDragging = false);
 
         const pourBtn = document.getElementById('pourBtn');
@@ -2257,8 +2188,7 @@
         }
         pourBtn.addEventListener('mousedown', startPour);
         pourBtn.addEventListener('mouseup', stopPour);
-        pourBtn.addEventListener('touchstart', e => { e.preventDefault();
-            startPour(); }, { passive: false });
+        pourBtn.addEventListener('touchstart', e => { e.preventDefault(); startPour(); }, { passive: false });
         pourBtn.addEventListener('touchend', stopPour);
 
         function quitGame2() {
@@ -2270,21 +2200,16 @@
         //  8.  GALLERY — CORE LOGIC (JSON-driven, subfolder enforcement)
         // ════════════════════════════════════════════════════════════
 
-        // ── gallery data store ──
         let allMediaItems = [];
         let albumData = [];
         let currentGalleryList = [];
         let currentLightboxIndex = 0;
 
-        // Helper to determine if a file path belongs to a subfolder
         function isSubfolderFile(src) {
             if (!src) return false;
-            // Matches anything inside a subfolder, e.g., "Photos/img.jpg", "Videos/clip.mp4"
-            // Excludes root/main directory files like "Beyond Thirst project cover.png"
             return src.includes('/');
         }
 
-        // ── load manifest ──
         async function loadGalleryManifest() {
             try {
                 const res = await fetch('gallery-data.json?t=' + Date.now());
@@ -2292,10 +2217,8 @@
                 const data = await res.json();
                 if (data.albums) albumData = data.albums;
                 if (data.media) {
-                    // Strictly keep only items from subfolders
                     allMediaItems = data.media.filter(m => isSubfolderFile(m.src));
                 }
-                // also load any user uploads from localStorage
                 try {
                     const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
                     saved.forEach(m => {
@@ -2310,10 +2233,7 @@
             }
         }
 
-        // ── fallback: auto-scan subfolders with original filenames ──
         function fallbackScan() {
-            // Note: Main directory items (like "Beyond Thirst project cover.png") are excluded!
-
             const photoNames = [
                 'campaign1', 'campaign2', 'campaign3', 'event1', 'event2', 'workshop1', 'workshop2',
                 'community1', 'community2', 'school1', 'school2', 'action1', 'action2', 'rally1',
@@ -2324,7 +2244,6 @@
             const exts = ['jpg', 'jpeg', 'png', 'webp'];
             const vidExts = ['mp4', 'webm'];
 
-            // Photos subfolder
             photoNames.forEach(name => {
                 exts.forEach(ext => {
                     const src = 'Photos/' + name + '.' + ext;
@@ -2332,7 +2251,6 @@
                 });
             });
 
-            // Photos/Project Highlights/ subfolder
             photoNames.forEach(name => {
                 exts.forEach(ext => {
                     const src = 'Photos/Project Highlights/' + name + '.' + ext;
@@ -2340,7 +2258,6 @@
                 });
             });
 
-            // Videos subfolder
             videoNames.forEach(name => {
                 vidExts.forEach(ext => {
                     const src = 'Videos/' + name + '.' + ext;
@@ -2348,7 +2265,6 @@
                 });
             });
 
-            // Load user uploads (filtering for subfolders)
             try {
                 const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
                 saved.forEach(m => {
@@ -2365,57 +2281,37 @@
             if (!grid) return;
             grid.innerHTML = '';
 
-            // Filter out any media items that might be in the root directory
-            const validMedia = allMediaItems.filter(m => isSubfolderFile(m.src));
-
-            // Default albums if none in json
             if (albumData.length === 0) {
                 albumData = [
                     { id: 'campaigns', title: 'Community Campaigns', tag: 'Campaigns' },
-                    { id: 'workshops', title: 'School Workshops & Events', tag: 'Workshops' },
-                    { id: 'videos', title: 'Video Documentaries & Reels', tag: 'Videos' }
+                    { id: 'workshops', title: 'Educational Workshops', tag: 'Workshops' },
+                    { id: 'projects', title: 'Water Action Projects', tag: 'Projects' }
                 ];
             }
 
-            albumData.forEach(alb => {
-                const items = validMedia.filter(m => m.album === alb.id || (alb.id === 'videos' && m.type === 'video'));
-                if (items.length === 0) return;
-
+            albumData.forEach(album => {
+                const items = allMediaItems.filter(m => m.album === album.id || album.id === 'all');
                 const card = document.createElement('div');
                 card.className = 'album-card';
-                card.onclick = () => openAlbumMedia(alb.id);
-
-                const prevDiv = document.createElement('div');
-                prevDiv.className = 'album-preview' + (items.length === 1 ? ' single-img' : '');
-
-                // Grab up to 2 previews
-                items.slice(0, 2).forEach(item => {
-                    if (item.type === 'video') {
-                        const vid = document.createElement('video');
-                        vid.src = item.src;
-                        vid.muted = true;
-                        prevDiv.appendChild(vid);
-                    } else {
-                        const img = document.createElement('img');
-                        img.src = item.src;
-                        img.alt = item.name || alb.title;
-                        img.onerror = function() { this.style.display = 'none'; };
-                        prevDiv.appendChild(img);
-                    }
-                });
-
-                card.appendChild(prevDiv);
-
-                const tagSpan = document.createElement('span');
-                tagSpan.className = 'album-tag';
-                tagSpan.innerText = alb.tag || 'Album';
-                card.appendChild(tagSpan);
-
-                const info = document.createElement('div');
-                info.className = 'album-info';
-                info.innerHTML = '<h3>' + alb.title + '</h3><p><span>' + items.length + ' items</span> <i class="fa-solid fa-arrow-right"></i></p>';
-                card.appendChild(info);
-
+                
+                const previewImg = items.length > 0 ? items[0].src : 'Photos/campaign1.jpg';
+                const secondImg = items.length > 1 ? items[1].src : previewImg;
+                
+                card.innerHTML = `
+                    <div class="album-tag">${album.tag || 'Album'}</div>
+                    <div class="album-preview">
+                        <img src="${previewImg}" alt="${album.title}" onerror="this.src='https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?w=500&auto=format&fit=crop';" />
+                        <img src="${secondImg}" alt="${album.title}" onerror="this.src='https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=500&auto=format&fit=crop';" />
+                    </div>
+                    <div class="album-info">
+                        <h3>${album.title}</h3>
+                        <p><span>${items.length} Media items</span> <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                `;
+                card.onclick = () => {
+                    const btn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.textContent.includes(album.tag) || b.textContent.includes('All'));
+                    switchGalleryView(album.id, btn);
+                };
                 grid.appendChild(card);
             });
         }
@@ -2426,200 +2322,195 @@
                 btn.classList.add('active');
             }
 
-            const albGrid = document.getElementById('albumsContainer');
-            const galGrid = document.getElementById('galleryContainer');
-
-            // Filter out any media items from the root directory
-            const validMedia = allMediaItems.filter(m => isSubfolderFile(m.src));
+            const albumsGrid = document.getElementById('albumsContainer');
+            const galleryGrid = document.getElementById('galleryContainer');
 
             if (view === 'albums') {
-                albGrid.style.display = 'grid';
-                galGrid.style.display = 'none';
-                buildAlbums();
-            } else {
-                albGrid.style.display = 'none';
-                galGrid.style.display = 'block';
-
-                let filtered = [];
-                if (view === 'all') filtered = validMedia;
-                else if (view === 'photos') filtered = validMedia.filter(m => m.type !== 'video');
-                else if (view === 'videos') filtered = validMedia.filter(m => m.type === 'video');
-                else if (view === 'uploads') filtered = validMedia.filter(m => m.isUpload);
-
-                renderGalleryItems(filtered);
+                albumsGrid.style.display = 'grid';
+                galleryGrid.style.display = 'none';
+                return;
             }
+
+            albumsGrid.style.display = 'none';
+            galleryGrid.style.display = 'columns';
+            galleryGrid.style.display = 'block';
+
+            let filtered = [];
+            if (view === 'all') filtered = [...allMediaItems];
+            else if (view === 'photos') filtered = allMediaItems.filter(m => m.type !== 'video');
+            else if (view === 'videos') filtered = allMediaItems.filter(m => m.type === 'video');
+            else if (view === 'uploads') filtered = allMediaItems.filter(m => m.isUpload);
+            else filtered = allMediaItems.filter(m => m.album === view);
+
+            renderGalleryGrid(filtered);
         }
 
-        function openAlbumMedia(albId) {
-            const validMedia = allMediaItems.filter(m => isSubfolderFile(m.src));
-            const items = validMedia.filter(m => m.album === albId || (albId === 'videos' && m.type === 'video'));
-
-            document.getElementById('albumsContainer').style.display = 'none';
-            const galGrid = document.getElementById('galleryContainer');
-            galGrid.style.display = 'block';
-
-            renderGalleryItems(items);
-        }
-
-        function renderGalleryItems(items) {
+        function renderGalleryGrid(items) {
             currentGalleryList = items;
-            const galGrid = document.getElementById('galleryContainer');
-            galGrid.innerHTML = '';
+            const container = document.getElementById('galleryContainer');
+            if (!container) return;
+            container.innerHTML = '';
 
             if (items.length === 0) {
-                galGrid.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-light);">No items found in this category.</p>';
+                container.innerHTML = `<div style="text-align:center;padding:50px;color:var(--text-light);grid-column:1/-1;">No media items found in this section.</div>`;
                 return;
             }
 
             items.forEach((item, index) => {
-                const gItem = document.createElement('div');
-                gItem.className = 'gallery-item';
-                gItem.onclick = () => openLightbox(index);
-
+                const el = document.createElement('div');
+                el.className = 'gallery-item';
+                
                 if (item.type === 'video') {
-                    const vid = document.createElement('video');
-                    vid.src = item.src;
-                    vid.muted = true;
-                    gItem.appendChild(vid);
-
-                    const badge = document.createElement('span');
-                    badge.className = 'vid-badge';
-                    badge.innerHTML = '<i class="fa-solid fa-play"></i> Video';
-                    gItem.appendChild(badge);
+                    el.innerHTML = `
+                        <span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>
+                        <video src="${item.src}" muted preload="metadata" onerror="this.parentElement.style.display='none';"></video>
+                        <div class="gallery-caption">
+                            <span>${item.name || 'Video Clip'}</span>
+                            <i class="fa-solid fa-expand"></i>
+                        </div>
+                    `;
                 } else {
-                    const img = document.createElement('img');
-                    img.src = item.src;
-                    img.alt = item.name || 'Gallery Image';
-                    img.onerror = function() { gItem.style.display = 'none'; };
-                    gItem.appendChild(img);
+                    el.innerHTML = `
+                        <img src="${item.src}" alt="${item.name || 'Gallery Image'}" loading="lazy" onerror="this.parentElement.style.display='none';" />
+                        <div class="gallery-caption">
+                            <span>${item.name || 'Action Photo'}</span>
+                            <i class="fa-solid fa-expand"></i>
+                        </div>
+                    `;
                 }
-
-                const cap = document.createElement('div');
-                cap.className = 'gallery-caption';
-                cap.innerHTML = '<span>' + (item.name || 'Beyond Thirst') + '</span> <i class="fa-solid fa-expand"></i>';
-                gItem.appendChild(cap);
-
-                galGrid.appendChild(gItem);
+                el.onclick = () => openLightbox(index);
+                container.appendChild(el);
             });
         }
 
         function buildHomePreview() {
-            const container = document.getElementById('homeGalleryPreview');
-            if (!container) return;
-            container.innerHTML = '';
+            const previewContainer = document.getElementById('homeGalleryPreview');
+            if (!previewContainer) return;
+            previewContainer.innerHTML = '';
 
-            // Only grab photos from subfolders for home preview
-            const validPhotos = allMediaItems.filter(m => isSubfolderFile(m.src) && m.type !== 'video');
-            const previewSet = validPhotos.slice(0, 3);
-
-            previewSet.forEach((item, idx) => {
-                const gItem = document.createElement('div');
-                gItem.className = 'gallery-item';
-                gItem.onclick = () => {
+            const sample = allMediaItems.slice(0, 6);
+            sample.forEach((item, idx) => {
+                const el = document.createElement('div');
+                el.className = 'gallery-item';
+                el.innerHTML = `
+                    <img src="${item.src}" alt="Preview" onerror="this.src='https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?w=500&auto=format&fit=crop';" />
+                    <div class="gallery-caption">
+                        <span>${item.name || 'Action Moment'}</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                `;
+                el.onclick = () => {
                     showPage('gallery');
-                    switchGalleryView('photos');
+                    switchGalleryView('all');
+                    openLightbox(idx);
                 };
-
-                const img = document.createElement('img');
-                img.src = item.src;
-                img.alt = item.name || 'Preview';
-                img.onerror = function() { gItem.style.display = 'none'; };
-                gItem.appendChild(img);
-
-                container.appendChild(gItem);
+                previewContainer.appendChild(el);
             });
         }
 
-        // ── Lightbox Logic ──
+        // ════════════════════════════════════════════════════════════
+        //  9.  LIGHTBOX & UPLOADER & CONTACT
+        // ════════════════════════════════════════════════════════════
+
         function openLightbox(index) {
+            if (!currentGalleryList || currentGalleryList.length === 0) currentGalleryList = allMediaItems;
             currentLightboxIndex = index;
             const modal = document.getElementById('lightboxModal');
+            const target = document.getElementById('lightboxTarget');
+            const caption = document.getElementById('lightboxCaption');
+            
+            const item = currentGalleryList[currentLightboxIndex];
+            if (!item) return;
+
+            target.innerHTML = '';
+            if (item.type === 'video') {
+                target.innerHTML = `<video src="${item.src}" controls autoplay style="max-width:100%;max-height:75vh;"></video>`;
+            } else {
+                target.innerHTML = `<img src="${item.src}" alt="${item.name || ''}" style="max-width:100%;max-height:75vh;object-fit:contain;" />`;
+            }
+            caption.innerText = item.name || (item.type === 'video' ? 'Beyond Thirst Video' : 'Beyond Thirst Gallery');
+
             modal.style.display = 'flex';
-            updateLightboxContent();
         }
 
         function closeLightbox() {
             const modal = document.getElementById('lightboxModal');
+            const target = document.getElementById('lightboxTarget');
+            target.innerHTML = '';
             modal.style.display = 'none';
-            document.getElementById('lightboxTarget').innerHTML = '';
         }
 
         function navigateLightbox(dir) {
-            currentLightboxIndex += dir;
-            if (currentLightboxIndex < 0) currentLightboxIndex = currentGalleryList.length - 1;
-            if (currentLightboxIndex >= currentGalleryList.length) currentLightboxIndex = 0;
-            updateLightboxContent();
+            if (!currentGalleryList || currentGalleryList.length === 0) return;
+            currentLightboxIndex = (currentLightboxIndex + dir + currentGalleryList.length) % currentGalleryList.length;
+            openLightbox(currentLightboxIndex);
         }
 
-        function updateLightboxContent() {
-            const target = document.getElementById('lightboxTarget');
-            const caption = document.getElementById('lightboxCaption');
-            target.innerHTML = '';
-
-            const item = currentGalleryList[currentLightboxIndex];
-            if (!item) return;
-
-            if (item.type === 'video') {
-                const vid = document.createElement('video');
-                vid.src = item.src;
-                vid.controls = true;
-                vid.autoplay = true;
-                target.appendChild(vid);
-            } else {
-                const img = document.createElement('img');
-                img.src = item.src;
-                target.appendChild(img);
+        document.addEventListener('keydown', e => {
+            const modal = document.getElementById('lightboxModal');
+            if (modal.style.display === 'flex') {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
             }
+        });
 
-            caption.innerText = item.name || 'Beyond Thirst Media';
-        }
-
-        // ── Direct Feedback Form ──
-        function handleDirectFeedback(e) {
-            e.preventDefault();
-            showToast('✅ Thank you! Your message has been sent successfully.');
-            e.target.reset();
-        }
-
-        // ── Upload Handler ──
-        const uploadInput = document.getElementById('mediaUpload');
-        if (uploadInput) {
-            uploadInput.addEventListener('change', function(e) {
+        // Handle File Uploads
+        const mediaInput = document.getElementById('mediaUpload');
+        if (mediaInput) {
+            mediaInput.addEventListener('change', e => {
                 const files = Array.from(e.target.files);
-                let saved = [];
-                try { saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]'); } catch(err) {}
+                if (!files.length) return;
 
                 files.forEach(file => {
                     const url = URL.createObjectURL(file);
-                    // Standardize object structure for local session/user uploads
-                    // Assigned to a subfolder virtual path "Uploads/" to honor subfolder-only display rules
+                    const type = file.type.startsWith('video') ? 'video' : 'image';
                     const newItem = {
-                        src: 'Uploads/' + file.name,
+                        src: 'Uploads/' + file.name, // Marked as subfolder file
                         realUrl: url,
-                        name: file.name,
-                        type: file.type.startsWith('video') ? 'video' : 'image',
+                        name: file.name.split('.')[0].replace(/_/g, ' '),
+                        type: type,
                         album: 'uploads',
                         isUpload: true
                     };
-                    
-                    // Direct src override for runtime preview
-                    newItem.src = url; 
-
+                    newItem.src = url; // assign direct blob url for session rendering
                     allMediaItems.unshift(newItem);
-                    saved.unshift(newItem);
                 });
 
-                try { localStorage.setItem('bt_uploads', JSON.stringify(saved)); } catch(err) {}
-                showToast('Uploaded ' + files.length + ' file(s)');
+                showToast(`Successfully uploaded ${files.length} file(s)!`);
                 switchGalleryView('uploads');
             });
         }
 
-        // ── Init App ──
-        window.addEventListener('DOMContentLoaded', () => {
+        // Secret Admin Uploader Activation
+        let clickSecretCount = 0;
+        const footerLogo = document.getElementById('footerLogoSecret');
+        if (footerLogo) {
+            footerLogo.addEventListener('click', () => {
+                clickSecretCount++;
+                if (clickSecretCount >= 5) {
+                    const zone = document.getElementById('secretUploadZone');
+                    if (zone) zone.classList.toggle('secret-active');
+                    showToast('Team Uploader Mode Toggled');
+                    clickSecretCount = 0;
+                }
+            });
+        }
+
+        // Contact / Direct Feedback
+        function handleDirectFeedback(e) {
+            e.preventDefault();
+            const form = e.target;
+            showToast('Thank you! Your message has been sent successfully.');
+            form.reset();
+        }
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
             applyTheme();
             applyLang();
             loadGalleryManifest();
+            renderQuoteProgress();
         });
     </script>
 </body>
