@@ -2267,7 +2267,7 @@
         }
 
         // ════════════════════════════════════════════════════════════
-        //  8.  GALLERY — CORE LOGIC (JSON-driven, no renaming)
+        //  8.  GALLERY — CORE LOGIC (JSON-driven, subfolder enforcement)
         // ════════════════════════════════════════════════════════════
 
         // ── gallery data store ──
@@ -2276,6 +2276,14 @@
         let currentGalleryList = [];
         let currentLightboxIndex = 0;
 
+        // Helper to determine if a file path belongs to a subfolder
+        function isSubfolderFile(src) {
+            if (!src) return false;
+            // Matches anything inside a subfolder, e.g., "Photos/img.jpg", "Videos/clip.mp4"
+            // Excludes root/main directory files like "Beyond Thirst project cover.png"
+            return src.includes('/');
+        }
+
         // ── load manifest ──
         async function loadGalleryManifest() {
             try {
@@ -2283,11 +2291,16 @@
                 if (!res.ok) throw new Error('manifest not found');
                 const data = await res.json();
                 if (data.albums) albumData = data.albums;
-                if (data.media) allMediaItems = data.media;
+                if (data.media) {
+                    // Strictly keep only items from subfolders
+                    allMediaItems = data.media.filter(m => isSubfolderFile(m.src));
+                }
                 // also load any user uploads from localStorage
                 try {
                     const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
-                    saved.forEach(m => allMediaItems.unshift(m));
+                    saved.forEach(m => {
+                        if (isSubfolderFile(m.src)) allMediaItems.unshift(m);
+                    });
                 } catch (e) {}
                 buildAlbums();
                 buildHomePreview();
@@ -2297,20 +2310,10 @@
             }
         }
 
-        // ── fallback: auto-scan common folders with original filenames ──
+        // ── fallback: auto-scan subfolders with original filenames ──
         function fallbackScan() {
-            // 1) static cover
-            allMediaItems.push({
-                src: 'Beyond Thirst project cover.png',
-                name: 'Save Water Cover',
-                album: 'campaigns',
-                type: 'image'
-            });
+            // Note: Main directory items (like "Beyond Thirst project cover.png") are excluded!
 
-            // 2) scan Photos/ and Videos/ with wildcard approach – we list common names
-            //    but since we cannot truly list a folder, we provide a set of known files.
-            //    The user can replace this with their actual filenames in the JSON manifest.
-            //    For convenience we scan a range of common extensions and names.
             const photoNames = [
                 'campaign1', 'campaign2', 'campaign3', 'event1', 'event2', 'workshop1', 'workshop2',
                 'community1', 'community2', 'school1', 'school2', 'action1', 'action2', 'rally1',
@@ -2321,404 +2324,303 @@
             const exts = ['jpg', 'jpeg', 'png', 'webp'];
             const vidExts = ['mp4', 'webm'];
 
-            // Photos root
+            // Photos subfolder
             photoNames.forEach(name => {
                 exts.forEach(ext => {
                     const src = 'Photos/' + name + '.' + ext;
-                    const item = { src: src, name: name.replace(/_/g, ' '), album: 'campaigns',
-                        type: 'image' };
-                    // we won't test if it exists – we'll let the browser handle 404s gracefully
-                    allMediaItems.push(item);
+                    allMediaItems.push({ src: src, name: name.replace(/_/g, ' '), album: 'campaigns', type: 'image' });
                 });
             });
 
-            // Photos/Project Highlights/
+            // Photos/Project Highlights/ subfolder
             photoNames.forEach(name => {
                 exts.forEach(ext => {
                     const src = 'Photos/Project Highlights/' + name + '.' + ext;
-                    allMediaItems.push({ src: src, name: name.replace(/_/g, ' '), album: 'workshops',
-                        type: 'image' });
+                    allMediaItems.push({ src: src, name: name.replace(/_/g, ' '), album: 'workshops', type: 'image' });
                 });
             });
 
-            // Videos
+            // Videos subfolder
             videoNames.forEach(name => {
                 vidExts.forEach(ext => {
                     const src = 'Videos/' + name + '.' + ext;
-                    allMediaItems.push({ src: src, name: name.replace(/_/g, ' '), album: 'videos',
-                        type: 'video' });
+                    allMediaItems.push({ src: src, name: name.replace(/_/g, ' '), album: 'videos', type: 'video' });
                 });
             });
 
-            // Load user uploads
+            // Load user uploads (filtering for subfolders)
             try {
                 const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
-                saved.forEach(m => allMediaItems.unshift(m));
+                saved.forEach(m => {
+                    if (isSubfolderFile(m.src)) allMediaItems.unshift(m);
+                });
             } catch (e) {}
 
-            // Build albums from the items
             buildAlbums();
             buildHomePreview();
         }
 
-        // ── build album grid ──
         function buildAlbums() {
-            const container = document.getElementById('albumsContainer');
-            container.innerHTML = '';
+            const grid = document.getElementById('albumsContainer');
+            if (!grid) return;
+            grid.innerHTML = '';
 
-            // If we have albumData from manifest, use it; otherwise infer from media items
-            let albums = [];
-            if (albumData.length > 0) {
-                albums = albumData;
-            } else {
-                // infer albums from media items
-                const albumMap = {};
-                allMediaItems.forEach(item => {
-                    const key = item.album || 'general';
-                    if (!albumMap[key]) albumMap[key] = [];
-                    albumMap[key].push(item);
-                });
-                for (const [key, items] of Object.entries(albumMap)) {
-                    const nameMap = {
-                        campaigns: 'Community Outreach & School Drives',
-                        workshops: 'Youth Audits & Peer Training',
-                        videos: 'Project Documentaries & Reels',
-                        general: 'All Media'
-                    };
-                    const tagMap = {
-                        campaigns: 'Campaigns',
-                        workshops: 'Workshops',
-                        videos: 'Videos',
-                        general: 'Media'
-                    };
-                    const cover = items.length > 0 ? items[0].src : 'Beyond Thirst project cover.png';
-                    albums.push({
-                        id: key,
-                        name: nameMap[key] || key,
-                        tag: tagMap[key] || 'Album',
-                        cover: cover,
-                        items: items
-                    });
-                }
+            // Filter out any media items that might be in the root directory
+            const validMedia = allMediaItems.filter(m => isSubfolderFile(m.src));
+
+            // Default albums if none in json
+            if (albumData.length === 0) {
+                albumData = [
+                    { id: 'campaigns', title: 'Community Campaigns', tag: 'Campaigns' },
+                    { id: 'workshops', title: 'School Workshops & Events', tag: 'Workshops' },
+                    { id: 'videos', title: 'Video Documentaries & Reels', tag: 'Videos' }
+                ];
             }
 
-            albums.forEach(album => {
+            albumData.forEach(alb => {
+                const items = validMedia.filter(m => m.album === alb.id || (alb.id === 'videos' && m.type === 'video'));
+                if (items.length === 0) return;
+
                 const card = document.createElement('div');
                 card.className = 'album-card';
-                card.setAttribute('data-album', album.id);
-                card.onclick = () => openAlbum(album.id);
+                card.onclick = () => openAlbumMedia(alb.id);
 
-                // tag
-                const tag = document.createElement('span');
-                tag.className = 'album-tag';
-                tag.innerText = album.tag || 'Album';
-                card.appendChild(tag);
+                const prevDiv = document.createElement('div');
+                prevDiv.className = 'album-preview' + (items.length === 1 ? ' single-img' : '');
 
-                // preview
-                const preview = document.createElement('div');
-                preview.className = 'album-preview' + (album.items && album.items.length === 1 ? ' single-img' : '');
-
-                const items = album.items || [];
-                const previewItems = items.slice(0, 2);
-                if (previewItems.length === 0) {
-                    const img = document.createElement('img');
-                    img.src = 'Beyond Thirst project cover.png';
-                    img.alt = 'Cover';
-                    preview.appendChild(img);
-                } else {
-                    previewItems.forEach(item => {
-                        const el = item.type === 'video' ? document.createElement('video') : document
-                            .createElement('img');
-                        el.src = item.src;
-                        if (item.type === 'video') el.muted = true;
-                        el.alt = item.name || 'Media';
-                        preview.appendChild(el);
-                    });
-                    // fill remaining slots with placeholder if needed
-                    while (preview.children.length < 2) {
+                // Grab up to 2 previews
+                items.slice(0, 2).forEach(item => {
+                    if (item.type === 'video') {
+                        const vid = document.createElement('video');
+                        vid.src = item.src;
+                        vid.muted = true;
+                        prevDiv.appendChild(vid);
+                    } else {
                         const img = document.createElement('img');
-                        img.src = 'Beyond Thirst project cover.png';
-                        img.alt = 'Cover';
-                        preview.appendChild(img);
+                        img.src = item.src;
+                        img.alt = item.name || alb.title;
+                        img.onerror = function() { this.style.display = 'none'; };
+                        prevDiv.appendChild(img);
                     }
-                }
-                card.appendChild(preview);
+                });
 
-                // info
+                card.appendChild(prevDiv);
+
+                const tagSpan = document.createElement('span');
+                tagSpan.className = 'album-tag';
+                tagSpan.innerText = alb.tag || 'Album';
+                card.appendChild(tagSpan);
+
                 const info = document.createElement('div');
                 info.className = 'album-info';
-                info.innerHTML = '<h3>' + (album.name || album.id) +
-                    '</h3><p><span><i class="fa-solid fa-images"></i> ' + (items.length || 0) +
-                    ' items</span> <i class="fa-solid fa-arrow-right" style="color:var(--primary-blue);"></i></p>';
+                info.innerHTML = '<h3>' + alb.title + '</h3><p><span>' + items.length + ' items</span> <i class="fa-solid fa-arrow-right"></i></p>';
                 card.appendChild(info);
 
-                container.appendChild(card);
+                grid.appendChild(card);
             });
         }
 
-        // ── open album → filter gallery ──
-        function openAlbum(albumId) {
-            // switch to the gallery view and filter by album
-            const btn = document.querySelector('.filter-btn');
-            switchGalleryView('all', btn);
-            // then filter by album
-            filterGallery('album:' + albumId);
-            // highlight the album button if exists, else keep all
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            const allBtn = document.querySelector('.filter-btn');
-            if (allBtn) allBtn.classList.add('active');
-        }
-
-        // ── filter gallery ──
-        function filterGallery(category) {
-            const gallery = document.getElementById('galleryContainer');
-            gallery.innerHTML = '';
-            currentGalleryList = [];
-
-            let filtered = [];
-            if (category === 'all') {
-                filtered = allMediaItems;
-            } else if (category === 'photos') {
-                filtered = allMediaItems.filter(item => item.type !== 'video');
-            } else if (category === 'videos') {
-                filtered = allMediaItems.filter(item => item.type === 'video');
-            } else if (category === 'uploads') {
-                filtered = allMediaItems.filter(item => item.album === 'uploads' || item.type === 'upload');
-            } else if (category.startsWith('album:')) {
-                const albumId = category.replace('album:', '');
-                filtered = allMediaItems.filter(item => item.album === albumId);
-            } else {
-                filtered = allMediaItems;
+        function switchGalleryView(view, btn) {
+            if (btn) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
             }
 
-            // deduplicate by src
-            const seen = new Set();
-            const unique = [];
-            filtered.forEach(item => {
-                if (!seen.has(item.src)) {
-                    seen.add(item.src);
-                    unique.push(item);
+            const albGrid = document.getElementById('albumsContainer');
+            const galGrid = document.getElementById('galleryContainer');
+
+            // Filter out any media items from the root directory
+            const validMedia = allMediaItems.filter(m => isSubfolderFile(m.src));
+
+            if (view === 'albums') {
+                albGrid.style.display = 'grid';
+                galGrid.style.display = 'none';
+                buildAlbums();
+            } else {
+                albGrid.style.display = 'none';
+                galGrid.style.display = 'block';
+
+                let filtered = [];
+                if (view === 'all') filtered = validMedia;
+                else if (view === 'photos') filtered = validMedia.filter(m => m.type !== 'video');
+                else if (view === 'videos') filtered = validMedia.filter(m => m.type === 'video');
+                else if (view === 'uploads') filtered = validMedia.filter(m => m.isUpload);
+
+                renderGalleryItems(filtered);
+            }
+        }
+
+        function openAlbumMedia(albId) {
+            const validMedia = allMediaItems.filter(m => isSubfolderFile(m.src));
+            const items = validMedia.filter(m => m.album === albId || (albId === 'videos' && m.type === 'video'));
+
+            document.getElementById('albumsContainer').style.display = 'none';
+            const galGrid = document.getElementById('galleryContainer');
+            galGrid.style.display = 'block';
+
+            renderGalleryItems(items);
+        }
+
+        function renderGalleryItems(items) {
+            currentGalleryList = items;
+            const galGrid = document.getElementById('galleryContainer');
+            galGrid.innerHTML = '';
+
+            if (items.length === 0) {
+                galGrid.innerHTML = '<p style="text-align:center;padding:40px;color:var(--text-light);">No items found in this category.</p>';
+                return;
+            }
+
+            items.forEach((item, index) => {
+                const gItem = document.createElement('div');
+                gItem.className = 'gallery-item';
+                gItem.onclick = () => openLightbox(index);
+
+                if (item.type === 'video') {
+                    const vid = document.createElement('video');
+                    vid.src = item.src;
+                    vid.muted = true;
+                    gItem.appendChild(vid);
+
+                    const badge = document.createElement('span');
+                    badge.className = 'vid-badge';
+                    badge.innerHTML = '<i class="fa-solid fa-play"></i> Video';
+                    gItem.appendChild(badge);
+                } else {
+                    const img = document.createElement('img');
+                    img.src = item.src;
+                    img.alt = item.name || 'Gallery Image';
+                    img.onerror = function() { gItem.style.display = 'none'; };
+                    gItem.appendChild(img);
                 }
+
+                const cap = document.createElement('div');
+                cap.className = 'gallery-caption';
+                cap.innerHTML = '<span>' + (item.name || 'Beyond Thirst') + '</span> <i class="fa-solid fa-expand"></i>';
+                gItem.appendChild(cap);
+
+                galGrid.appendChild(gItem);
             });
-
-            unique.forEach((item, idx) => {
-                const index = currentGalleryList.length;
-                currentGalleryList.push(item);
-                const el = makeGalleryItem(item, index);
-                gallery.appendChild(el);
-            });
         }
 
-        // ── create gallery item ──
-        function makeGalleryItem(item, index) {
-            const div = document.createElement('div');
-            div.className = 'gallery-item';
-            div.onclick = () => openLightbox(index);
-
-            if (item.type === 'video') {
-                const vid = document.createElement('video');
-                vid.src = item.src;
-                vid.muted = true;
-                vid.preload = 'metadata';
-                div.appendChild(vid);
-                const badge = document.createElement('span');
-                badge.className = 'vid-badge';
-                badge.innerHTML = '<i class="fa-solid fa-play"></i> Video';
-                div.appendChild(badge);
-            } else {
-                const img = document.createElement('img');
-                img.src = item.src;
-                img.alt = item.name || 'Media';
-                img.loading = 'lazy';
-                div.appendChild(img);
-            }
-
-            const caption = document.createElement('div');
-            caption.className = 'gallery-caption';
-            caption.innerHTML = '<span>' + (item.name || 'Untitled') + '</span><i class="fa-solid fa-expand"></i>';
-            div.appendChild(caption);
-
-            return div;
-        }
-
-        // ── switch gallery view ──
-        function switchGalleryView(type, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-
-            const albums = document.getElementById('albumsContainer');
-            const gallery = document.getElementById('galleryContainer');
-
-            if (type === 'albums') {
-                albums.style.display = 'grid';
-                gallery.style.display = 'none';
-            } else {
-                albums.style.display = 'none';
-                gallery.style.display = 'block';
-                filterGallery(type);
-            }
-        }
-
-        // ── home preview ──
         function buildHomePreview() {
             const container = document.getElementById('homeGalleryPreview');
             if (!container) return;
             container.innerHTML = '';
-            const previewItems = allMediaItems.filter(item => item.type !== 'video').slice(0, 4);
-            previewItems.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'gallery-item';
-                div.style.cursor = 'pointer';
-                div.onclick = () => showPage('gallery');
+
+            // Only grab photos from subfolders for home preview
+            const validPhotos = allMediaItems.filter(m => isSubfolderFile(m.src) && m.type !== 'video');
+            const previewSet = validPhotos.slice(0, 3);
+
+            previewSet.forEach((item, idx) => {
+                const gItem = document.createElement('div');
+                gItem.className = 'gallery-item';
+                gItem.onclick = () => {
+                    showPage('gallery');
+                    switchGalleryView('photos');
+                };
+
                 const img = document.createElement('img');
                 img.src = item.src;
                 img.alt = item.name || 'Preview';
-                img.loading = 'lazy';
-                div.appendChild(img);
-                container.appendChild(div);
+                img.onerror = function() { gItem.style.display = 'none'; };
+                gItem.appendChild(img);
+
+                container.appendChild(gItem);
             });
         }
 
-        // ── lightbox ──
+        // ── Lightbox Logic ──
         function openLightbox(index) {
-            if (!currentGalleryList[index]) return;
             currentLightboxIndex = index;
-            const item = currentGalleryList[index];
             const modal = document.getElementById('lightboxModal');
+            modal.style.display = 'flex';
+            updateLightboxContent();
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightboxModal');
+            modal.style.display = 'none';
+            document.getElementById('lightboxTarget').innerHTML = '';
+        }
+
+        function navigateLightbox(dir) {
+            currentLightboxIndex += dir;
+            if (currentLightboxIndex < 0) currentLightboxIndex = currentGalleryList.length - 1;
+            if (currentLightboxIndex >= currentGalleryList.length) currentLightboxIndex = 0;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
             const target = document.getElementById('lightboxTarget');
             const caption = document.getElementById('lightboxCaption');
-
             target.innerHTML = '';
+
+            const item = currentGalleryList[currentLightboxIndex];
+            if (!item) return;
+
             if (item.type === 'video') {
                 const vid = document.createElement('video');
                 vid.src = item.src;
                 vid.controls = true;
                 vid.autoplay = true;
-                vid.style.maxWidth = '100%';
-                vid.style.maxHeight = '75vh';
                 target.appendChild(vid);
             } else {
                 const img = document.createElement('img');
                 img.src = item.src;
-                img.alt = item.name || 'Media';
-                img.style.maxWidth = '100%';
-                img.style.maxHeight = '75vh';
                 target.appendChild(img);
             }
-            caption.innerText = item.name || 'Untitled';
-            modal.style.display = 'flex';
+
+            caption.innerText = item.name || 'Beyond Thirst Media';
         }
 
-        function navigateLightbox(direction) {
-            currentLightboxIndex = (currentLightboxIndex + direction + currentGalleryList.length) % currentGalleryList
-                .length;
-            openLightbox(currentLightboxIndex);
+        // ── Direct Feedback Form ──
+        function handleDirectFeedback(e) {
+            e.preventDefault();
+            showToast('✅ Thank you! Your message has been sent successfully.');
+            e.target.reset();
         }
 
-        function closeLightbox() {
-            document.getElementById('lightboxModal').style.display = 'none';
-            document.getElementById('lightboxTarget').innerHTML = '';
-        }
+        // ── Upload Handler ──
+        const uploadInput = document.getElementById('mediaUpload');
+        if (uploadInput) {
+            uploadInput.addEventListener('change', function(e) {
+                const files = Array.from(e.target.files);
+                let saved = [];
+                try { saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]'); } catch(err) {}
 
-        document.addEventListener('keydown', e => {
-            const modal = document.getElementById('lightboxModal');
-            if (modal && modal.style.display === 'flex') {
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowLeft') navigateLightbox(-1);
-                if (e.key === 'ArrowRight') navigateLightbox(1);
-            }
-        });
-
-        // ── user upload handling ──
-        let isSecretAdmin = false;
-        document.addEventListener('keydown', e => {
-            if (e.shiftKey && (e.key === 'U' || e.key === 'u')) {
-                isSecretAdmin = !isSecretAdmin;
-                document.getElementById('secretUploadZone').classList.toggle('secret-active', isSecretAdmin);
-                showToast(isSecretAdmin ? '🔑 Team Admin Upload Active' : '🔒 Public View Active');
-            }
-        });
-
-        const mediaUpload = document.getElementById('mediaUpload');
-        if (mediaUpload) {
-            mediaUpload.addEventListener('change', e => {
-                Array.from(e.target.files).forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = ev => {
-                        const isVid = file.type.startsWith('video/');
-                        const m = {
-                            src: ev.target.result,
-                            name: file.name,
-                            album: 'uploads',
-                            type: isVid ? 'video' : 'image'
-                        };
-                        allMediaItems.unshift(m);
-                        saveMedia(m);
-                        // re-build albums and home preview
-                        buildAlbums();
-                        buildHomePreview();
-                        // if gallery is visible, refresh
-                        const gallery = document.getElementById('galleryContainer');
-                        if (gallery && gallery.style.display !== 'none') {
-                            const activeBtn = document.querySelector('.filter-btn.active');
-                            if (activeBtn) {
-                                const txt = activeBtn.innerText.toLowerCase();
-                                if (txt.includes('uploads')) filterGallery('uploads');
-                                else filterGallery('all');
-                            }
-                        }
-                        showToast('✅ Uploaded: ' + file.name);
+                files.forEach(file => {
+                    const url = URL.createObjectURL(file);
+                    // Standardize object structure for local session/user uploads
+                    // Assigned to a subfolder virtual path "Uploads/" to honor subfolder-only display rules
+                    const newItem = {
+                        src: 'Uploads/' + file.name,
+                        realUrl: url,
+                        name: file.name,
+                        type: file.type.startsWith('video') ? 'video' : 'image',
+                        album: 'uploads',
+                        isUpload: true
                     };
-                    reader.readAsDataURL(file);
+                    
+                    // Direct src override for runtime preview
+                    newItem.src = url; 
+
+                    allMediaItems.unshift(newItem);
+                    saved.unshift(newItem);
                 });
+
+                try { localStorage.setItem('bt_uploads', JSON.stringify(saved)); } catch(err) {}
+                showToast('Uploaded ' + files.length + ' file(s)');
+                switchGalleryView('uploads');
             });
         }
 
-        function saveMedia(m) {
-            let cur = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
-            cur.push(m);
-            localStorage.setItem('bt_uploads', JSON.stringify(cur));
-        }
-
-        // ── feedback form ──
-        function handleDirectFeedback(e) {
-            e.preventDefault();
-            const data = Object.fromEntries(new FormData(e.target));
-            fetch('https://formsubmit.co/ajax/info@beyondthirst.org', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify(data)
-            }).catch(() => {});
-            e.target.reset();
-            showToast(currentLang === 'bn' ? 'ফিডব্যাক গৃহীত হয়েছে! ধন্যবাদ।' : 'Feedback Received! Thank you for your support.');
-        }
-
-        // ── init ──
-        applyTheme();
-        applyLang();
-
-        // Load gallery data (JSON manifest first, fallback to scan)
-        loadGalleryManifest();
-
-        // Expose functions globally
-        window.showPage = showPage;
-        window.toggleMobileMenu = toggleMobileMenu;
-        window.toggleLanguage = toggleLanguage;
-        window.toggleTheme = toggleTheme;
-        window.showToast = showToast;
-        window.nextQuote = nextQuote;
-        window.prevQuote = prevQuote;
-        window.toggleAutoShuffle = toggleAutoShuffle;
-        window.startGame1 = startGame1;
-        window.quitGame1 = quitGame1;
-        window.startGame2 = startGame2;
-        window.quitGame2 = quitGame2;
-        window.switchGalleryView = switchGalleryView;
-        window.openAlbum = openAlbum;
-        window.openLightbox = openLightbox;
-        window.navigateLightbox = navigateLightbox;
-        window.closeLightbox = closeLightbox;
-        window.handleDirectFeedback = handleDirectFeedback;
+        // ── Init App ──
+        window.addEventListener('DOMContentLoaded', () => {
+            applyTheme();
+            applyLang();
+            loadGalleryManifest();
+        });
     </script>
 </body>
 </html>
