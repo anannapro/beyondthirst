@@ -1,31 +1,64 @@
 {
-  "mediaFolder": "assets/gallery/",
   "albums": [
     {
-      "id": "main-gallery",
-      "title": "Beyond Thirst Gallery",
-      "items": [
-        {
-          "src": "IMG_20260801_102432.jpg",
-          "caption": "Field Work Inspection",
-          "category": "photos"
-        },
-        {
-          "src": "VID_20260802_143011.mp4",
-          "caption": "Clean Water Testing Demo",
-          "category": "videos"
-        },
-        {
-          "src": "DSC_0042.PNG",
-          "caption": "Community Outreach Event",
-          "category": "photos"
-        },
-        {
-          "src": "CLIP_2026_HEVC.mov",
-          "caption": "Filtration Unit Assembly",
-          "category": "videos"
-        }
-      ]
+      "id": "campaigns",
+      "title": "Community Campaigns",
+      "tag": "Campaigns",
+      "description": "Awareness drives and student pledges across local communities",
+      "cover": "Beyond Thirst project cover.png"
+    },
+    {
+      "id": "workshops",
+      "title": "School Workshops & Audits",
+      "tag": "Workshops",
+      "description": "Leak-fix audits and peer training sessions in schools",
+      "cover": "Photos/workshop1.jpg"
+    },
+    {
+      "id": "events",
+      "title": "Youth Summits & Rallies",
+      "tag": "Events",
+      "description": "Community gatherings and student action events",
+      "cover": "Photos/event1.jpg"
+    },
+    {
+      "id": "videos",
+      "title": "Documentaries & Reels",
+      "tag": "Videos",
+      "description": "Short clips, project documentaries, and campaign highlights",
+      "cover": "Videos/doc1.mp4"
+    }
+  ],
+  "media": [
+    {
+      "src": "Beyond Thirst project cover.png",
+      "name": "Save Water Cover",
+      "album": "campaigns",
+      "type": "image"
+    },
+    {
+      "src": "Photos/campaign1.jpg",
+      "name": "Community Awareness Drive",
+      "album": "campaigns",
+      "type": "image"
+    },
+    {
+      "src": "Photos/workshop1.jpg",
+      "name": "Student Workshop Session",
+      "album": "workshops",
+      "type": "image"
+    },
+    {
+      "src": "Photos/event1.jpg",
+      "name": "Youth Water Action Event",
+      "album": "events",
+      "type": "image"
+    },
+    {
+      "src": "Videos/doc1.mp4",
+      "name": "Beyond Thirst Initiative Documentary",
+      "album": "videos",
+      "type": "video"
     }
   ]
 }
