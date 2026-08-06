@@ -8,55 +8,54 @@
       "cover": "Beyond Thirst project cover.png"
     },
     {
-      "id": "workshops",
-      "title": "School Workshops & Audits",
-      "tag": "Workshops",
-      "description": "Leak-fix audits and peer training sessions in schools",
-      "cover": "Photos/workshop1.jpg"
-    },
-    {
-      "id": "events",
-      "title": "Youth Summits & Rallies",
-      "tag": "Events",
-      "description": "Community gatherings and student action events",
-      "cover": "Photos/event1.jpg"
+      "id": "highlights",
+      "title": "Project Highlights",
+      "tag": "Highlights",
+      "description": "Key moments, school workshops, and team action photos",
+      "cover": "Photos/Project Highlights/WhatsApp Image 2026-08-03 at 1.00.00 PM.jpeg"
     },
     {
       "id": "videos",
-      "title": "Documentaries & Reels",
+      "title": "Documentaries & Clips",
       "tag": "Videos",
-      "description": "Short clips, project documentaries, and campaign highlights",
-      "cover": "Videos/doc1.mp4"
+      "description": "Short clips, project documentaries, and campaign video highlights",
+      "cover": "Videos/video1.mp4"
     }
   ],
   "media": [
     {
       "src": "Beyond Thirst project cover.png",
-      "name": "Save Water Cover",
+      "name": "Beyond Thirst Cover Image",
       "album": "campaigns",
       "type": "image"
     },
     {
-      "src": "Photos/campaign1.jpg",
-      "name": "Community Awareness Drive",
+      "src": "logo.png",
+      "name": "Beyond Thirst Logo",
       "album": "campaigns",
       "type": "image"
     },
     {
-      "src": "Photos/workshop1.jpg",
-      "name": "Student Workshop Session",
-      "album": "workshops",
+      "src": "Photos/Project Highlights/WhatsApp Image 2026-08-03 at 1.00.00 PM.jpeg",
+      "name": "Project Highlight Photo 1",
+      "album": "highlights",
       "type": "image"
     },
     {
-      "src": "Photos/event1.jpg",
-      "name": "Youth Water Action Event",
-      "album": "events",
+      "src": "Photos/Project Highlights/WhatsApp Image 2026-08-03 at 1.05.00 PM.jpeg",
+      "name": "Project Highlight Photo 2",
+      "album": "highlights",
       "type": "image"
     },
     {
-      "src": "Videos/doc1.mp4",
-      "name": "Beyond Thirst Initiative Documentary",
+      "src": "Photos/nfile",
+      "name": "Community Event Photo",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Videos/your-video-name.mp4",
+      "name": "Campaign Video",
       "album": "videos",
       "type": "video"
     }
