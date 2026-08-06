@@ -459,6 +459,7 @@
         .c-teal .icon-box { background: #ccfbf1; color: var(--accent-teal); }
         .c-green .icon-box { background: #dcfce7; color: #16a34a; }
         .c-orange .icon-box { background: #ffedd5; color: #ea580c; }
+        
         .card h3 {
             font-size: 17.5px;
             color: var(--dark-blue);
@@ -466,6 +467,7 @@
             font-weight: 700;
         }
         [data-theme="dark"] .card h3 { color: var(--text-dark); }
+        
         .card p {
             font-size: 13.5px;
             color: var(--text-light);
@@ -721,7 +723,9 @@
             font-size: 14px;
             color: var(--text-dark);
         }
-        .game-toolbar .stat b { color: var(--primary-blue); }
+        .game-toolbar .stat b {
+            color: var(--primary-blue);
+        }
         .game-canvas-container {
             position: relative;
             width: 100%;
@@ -1050,6 +1054,7 @@
             color: var(--dark-blue);
         }
         [data-theme="dark"] .form-group label { color: var(--text-dark); }
+        
         .form-group input,
         .form-group textarea,
         .form-group select {
@@ -1687,7 +1692,7 @@
     <!-- ─── FOOTER ─── -->
     <footer>
         <div class="footer-content">
-            <div class="footer-logo" id="footerLogoSecret">
+            <div class="footer-logo">
                 <img src="logo.png" alt="Beyond Thirst Logo" onerror="this.style.display='none'" />
                 <b>Beyond Thirst</b>
             </div>
@@ -1742,7 +1747,10 @@
 
         function animateCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
+            particles.forEach(p => { 
+                p.update();
+                p.draw(); 
+            });
             requestAnimationFrame(animateCanvas);
         }
         animateCanvas();
@@ -2092,11 +2100,7 @@
                 '"Water is the driving force of all nature." — Leonardo da Vinci'
             ];
             const t = tales[Math.floor(Math.random() * tales.length)];
-            ov.innerHTML =
-                '<h2 style="color:' + (type === 'over' ? '#ef4444' : '#38bdf8') +
-                ';font-size:24px;margin-bottom:10px;">' + (type === 'over' ? 'Game Over — Water Wasted!' : 'Game Paused') +
-                '</h2><p style="margin:12px 0;max-width:480px;font-style:italic;">' + t +
-                '</p><button class="learn-more" onclick="startGame1()">Try Again</button>';
+            ov.innerHTML = '<h2 style="color:' + (type === 'over' ? '#ef4444' : '#38bdf8') + ';font-size:24px;margin-bottom:10px;">' + (type === 'over' ? 'Game Over — Water Wasted!' : 'Game Paused') + '</h2><p style="margin:12px 0;max-width:480px;font-style:italic;">' + t + '</p><button class="learn-more" onclick="startGame1()">Try Again</button>';
         }
 
         function quitGame1() { endGame1('quit'); }
@@ -2105,6 +2109,21 @@
         //  7.  GAME 2
         // ════════════════════════════════════════════════════════════
         let g2Filling = false, g2Level = 0, g2Target = 75, g2Timer = null, g2ValveAngle = 0, g2TargetAngle = 120, g2Wasted = 0, g2Aligned = false;
+
+        function updateG2UI() {
+            document.getElementById('g2TargetVal').innerText = g2Target + '%';
+            document.getElementById('g2CurrentVal').innerText = Math.floor(g2Level) + '%';
+            document.getElementById('g2Wasted').innerText = g2Wasted;
+            document.getElementById('g2WaterFill').style.height = g2Level + '%';
+            document.getElementById('g2TargetLine').style.bottom = g2Target + '%';
+            document.getElementById('valveTarget').style.transform = `translate(-50%, -100%) rotate(${g2TargetAngle}deg)`;
+            document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(${g2ValveAngle}deg)`;
+            
+            const dial = document.getElementById('valveDial');
+            if (dial) {
+                dial.style.background = `conic-gradient(#0284c7 ${g2ValveAngle}deg, #0f172a ${g2ValveAngle}deg)`;
+            }
+        }
 
         function startGame2() {
             document.getElementById('game2IntroOverlay').style.display = 'none';
@@ -2115,402 +2134,351 @@
             g2Level = 0;
             g2Wasted = 0;
             g2Aligned = false;
-            document.getElementById('g2TargetVal').innerText = g2Target + '%';
-            document.getElementById('g2TargetLine').style.bottom = g2Target + '%';
-            document.getElementById('g2WaterFill').style.height = '0%';
-            document.getElementById('g2CurrentVal').innerText = '0%';
-            document.getElementById('g2Wasted').innerText = '0';
-            document.getElementById('valveTarget').style.transform = 'translate(-50%,-100%) rotate(' + g2TargetAngle + 'deg)';
-            document.getElementById('valveNeedle').style.transform = 'translate(-50%,-100%) rotate(0deg)';
+            updateG2UI();
         }
 
-        const valve = document.getElementById('valveDial');
+        let isDraggingValve = false;
+        function handleValveRotate(e) {
+            if (!isDraggingValve) return;
+            const dial = document.getElementById('valveDial');
+            if (!dial) return;
+            const rect = dial.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            let angle = Math.atan2(clientY - centerY, clientX - centerX) * (180 / Math.PI) + 90;
+            if (angle < 0) angle += 360;
+            g2ValveAngle = angle;
 
-        function valveMove(cx, cy) {
-            const r = valve.getBoundingClientRect();
-            const ang = Math.atan2(cy - (r.top + r.height / 2), cx - (r.left + r.width / 2));
-            let deg = ang * 180 / Math.PI + 90;
-            if (deg < 0) deg += 360;
-            g2ValveAngle = deg;
-            document.getElementById('valveNeedle').style.transform = 'translate(-50%,-100%) rotate(' + deg + 'deg)';
-            let diff = Math.abs(deg - g2TargetAngle);
-            diff = Math.min(diff, 360 - diff);
-            g2Aligned = diff < 18;
-            document.getElementById('valveNeedle').style.background = g2Aligned ? '#22c55e' : '#fff';
+            const diff = Math.abs(g2ValveAngle - g2TargetAngle);
+            g2Aligned = (diff <= 18 || diff >= 342);
+            updateG2UI();
         }
-        let valveDragging = false;
-        valve.addEventListener('mousedown', e => { valveDragging = true; valveMove(e.clientX, e.clientY); });
-        document.addEventListener('mousemove', e => { if (valveDragging) valveMove(e.clientX, e.clientY); });
-        document.addEventListener('mouseup', () => valveDragging = false);
-        valve.addEventListener('touchstart', e => { valveDragging = true; valveMove(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, { passive: false });
-        valve.addEventListener('touchmove', e => { if (valveDragging) valveMove(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, { passive: false });
-        valve.addEventListener('touchend', () => valveDragging = false);
+
+        const dialEl = document.getElementById('valveDial');
+        if (dialEl) {
+            dialEl.addEventListener('mousedown', () => isDraggingValve = true);
+            dialEl.addEventListener('touchstart', () => isDraggingValve = true);
+        }
+        window.addEventListener('mouseup', () => isDraggingValve = false);
+        window.addEventListener('touchend', () => isDraggingValve = false);
+        window.addEventListener('mousemove', handleValveRotate);
+        window.addEventListener('touchmove', handleValveRotate);
 
         const pourBtn = document.getElementById('pourBtn');
-
         function startPour() {
-            if (!g2Aligned) { showToast('⚠️ Align the valve first!'); return; }
+            if (!g2Aligned) {
+                showToast(currentLang === 'bn' ? 'প্রথমে কাঁটা দুটি মিলান!' : 'Align the valve needles first!');
+                return;
+            }
             g2Filling = true;
             g2Timer = setInterval(() => {
                 if (g2Level < 100) {
                     g2Level += 1.5;
-                    document.getElementById('g2WaterFill').style.height = g2Level + '%';
-                    document.getElementById('g2CurrentVal').innerText = Math.floor(g2Level) + '%';
+                    updateG2UI();
                 }
-            }, 40);
+            }, 50);
         }
 
         function stopPour() {
             if (!g2Filling) return;
             g2Filling = false;
             clearInterval(g2Timer);
+
             const diff = Math.abs(g2Level - g2Target);
-            if (diff <= 6) {
-                showToast('🎉 Perfect! You quenched the child\'s thirst!');
-                setTimeout(startGame2, 2200);
-            } else if (g2Level > g2Target + 6) {
-                g2Wasted++;
-                document.getElementById('g2Wasted').innerText = g2Wasted;
-                if (g2Wasted >= 3) {
-                    showToast('💧 Too much wasted! Try again.');
-                    setTimeout(startGame2, 2200);
-                } else {
-                    showToast('❌ Overfilled — water wasted!');
-                    setTimeout(() => {
-                        g2Level = 0;
-                        document.getElementById('g2WaterFill').style.height = '0%';
-                        document.getElementById('g2CurrentVal').innerText = '0%';
-                    }, 1500);
-                }
+            if (diff <= 5) {
+                showToast(currentLang === 'bn' ? '🎉 দারুণ! আপনি ঠিকমতো পানি পূর্ণ করেছেন!' : '🎉 Great job! Perfect pour!');
+                setTimeout(() => {
+                    g2Target = Math.floor(Math.random() * 30) + 60;
+                    g2TargetAngle = Math.floor(Math.random() * 340) + 10;
+                    g2Level = 0;
+                    updateG2UI();
+                }, 1500);
             } else {
-                showToast('⚠️ Not enough — hold longer.');
+                g2Wasted++;
+                updateG2UI();
+                showToast(currentLang === 'bn' ? 'পানি অপচয় হয়েছে! আবার চেষ্টা করুন।' : 'Water wasted! Try again.');
+                if (g2Wasted >= 3) {
+                    setTimeout(() => quitGame2(), 1000);
+                } else {
+                    g2Level = 0;
+                    updateG2UI();
+                }
             }
         }
-        pourBtn.addEventListener('mousedown', startPour);
-        pourBtn.addEventListener('mouseup', stopPour);
-        pourBtn.addEventListener('touchstart', e => { e.preventDefault(); startPour(); }, { passive: false });
-        pourBtn.addEventListener('touchend', stopPour);
+
+        if (pourBtn) {
+            pourBtn.addEventListener('mousedown', startPour);
+            pourBtn.addEventListener('mouseup', stopPour);
+            pourBtn.addEventListener('mouseleave', stopPour);
+            pourBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startPour(); });
+            pourBtn.addEventListener('touchend', (e) => { e.preventDefault(); stopPour(); });
+        }
 
         function quitGame2() {
+            clearInterval(g2Timer);
             document.getElementById('game2MainArea').style.display = 'none';
             document.getElementById('game2IntroOverlay').style.display = 'flex';
         }
 
+        function handleDirectFeedback(e) {
+            e.preventDefault();
+            showToast(currentLang === 'bn' ? 'আপনার বার্তা সফলভাবে পাঠানো হয়েছে!' : 'Your message has been sent successfully!');
+            e.target.reset();
+        }
+
         // ════════════════════════════════════════════════════════════
-        //  8.  GALLERY — CORE LOGIC (JSON-driven, subfolder enforcement)
+        //  8.  GALLERY — DYNAMIC SUBFOLDER & ALBUM RENDERING
         // ════════════════════════════════════════════════════════════
 
         let allMediaItems = [];
         let albumData = [];
         let currentGalleryList = [];
         let currentLightboxIndex = 0;
+        let activeAlbumFilter = null;
 
         function isSubfolderFile(src) {
-            if (!src) return false;
-            return src.includes('/');
+            return src && src.includes('/');
         }
 
         async function loadGalleryManifest() {
             try {
                 const res = await fetch('gallery-data.json?t=' + Date.now());
-                if (!res.ok) throw new Error('manifest not found');
+                if (!res.ok) throw new Error('Manifest not found');
                 const data = await res.json();
-                if (data.albums) albumData = data.albums;
-                if (data.media) {
-                    allMediaItems = data.media.filter(m => isSubfolderFile(m.src));
-                }
+                
+                albumData = data.albums || [];
+                allMediaItems = (data.media || []).filter(m => isSubfolderFile(m.src));
+
+                // Merge local session uploads if present
                 try {
                     const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
                     saved.forEach(m => {
                         if (isSubfolderFile(m.src)) allMediaItems.unshift(m);
                     });
                 } catch (e) {}
+
                 buildAlbums();
                 buildHomePreview();
             } catch (e) {
-                console.warn('No gallery manifest found, using fallback scans.');
-                fallbackScan();
+                console.warn('Fallback scanning enabled:', e);
             }
-        }
-
-        function fallbackScan() {
-            const photoNames = [
-                'campaign1', 'campaign2', 'campaign3', 'event1', 'event2', 'workshop1', 'workshop2',
-                'community1', 'community2', 'school1', 'school2', 'action1', 'action2', 'rally1',
-                'session1', 'session2', 'group1', 'group2', 'visit1', 'visit2'
-            ];
-            const videoNames = ['doc1', 'doc2', 'reel1', 'reel2', 'clip1', 'clip2', 'short1', 'short2'];
-
-            const exts = ['jpg', 'jpeg', 'png', 'webp'];
-            const vidExts = ['mp4', 'webm'];
-
-            photoNames.forEach(name => {
-                exts.forEach(ext => {
-                    const src = 'Photos/' + name + '.' + ext;
-                    allMediaItems.push({ src: src, name: name.replace(/_/g, ' '), album: 'campaigns', type: 'image' });
-                });
-            });
-
-            photoNames.forEach(name => {
-                exts.forEach(ext => {
-                    const src = 'Photos/Project Highlights/' + name + '.' + ext;
-                    allMediaItems.push({ src: src, name: name.replace(/_/g, ' '), album: 'workshops', type: 'image' });
-                });
-            });
-
-            videoNames.forEach(name => {
-                vidExts.forEach(ext => {
-                    const src = 'Videos/' + name + '.' + ext;
-                    allMediaItems.push({ src: src, name: name.replace(/_/g, ' '), album: 'videos', type: 'video' });
-                });
-            });
-
-            try {
-                const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
-                saved.forEach(m => {
-                    if (isSubfolderFile(m.src)) allMediaItems.unshift(m);
-                });
-            } catch (e) {}
-
-            buildAlbums();
-            buildHomePreview();
         }
 
         function buildAlbums() {
-            const grid = document.getElementById('albumsContainer');
-            if (!grid) return;
-            grid.innerHTML = '';
+            const container = document.getElementById('albumsContainer');
+            if (!container) return;
+            container.innerHTML = '';
 
             if (albumData.length === 0) {
-                albumData = [
-                    { id: 'campaigns', title: 'Community Campaigns', tag: 'Campaigns' },
-                    { id: 'workshops', title: 'Educational Workshops', tag: 'Workshops' },
-                    { id: 'projects', title: 'Water Action Projects', tag: 'Projects' }
-                ];
+                container.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:var(--text-light);">No subfolder albums found. Upload files into subfolders inside Photos/ or Videos/.</p>';
+                return;
             }
 
             albumData.forEach(album => {
-                const items = allMediaItems.filter(m => m.album === album.id || album.id === 'all');
+                const albumMedia = allMediaItems.filter(m => m.album === album.id);
+                const count = albumMedia.length || album.count;
+                const cover = album.cover || (albumMedia[0] ? albumMedia[0].src : 'Beyond Thirst project cover.png');
+
                 const card = document.createElement('div');
                 card.className = 'album-card';
-                
-                const previewImg = items.length > 0 ? items[0].src : 'Photos/campaign1.jpg';
-                const secondImg = items.length > 1 ? items[1].src : previewImg;
-                
+                card.onclick = () => openAlbum(album.id, album.title);
+
+                const isVid = cover.endsWith('.mp4') || cover.endsWith('.webm');
+                const mediaHTML = isVid 
+                    ? `<video src="${cover}" muted preload="metadata"></video>`
+                    : `<img src="${cover}" alt="${album.title}" loading="lazy" onerror="this.src='Beyond Thirst project cover.png'" />`;
+
                 card.innerHTML = `
-                    <div class="album-tag">${album.tag || 'Album'}</div>
-                    <div class="album-preview">
-                        <img src="${previewImg}" alt="${album.title}" onerror="this.src='https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?w=500&auto=format&fit=crop';" />
-                        <img src="${secondImg}" alt="${album.title}" onerror="this.src='https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=500&auto=format&fit=crop';" />
+                    <div class="album-tag"><i class="fa-solid fa-folder"></i> ${count} Items</div>
+                    <div class="album-preview single-img">
+                        ${mediaHTML}
                     </div>
                     <div class="album-info">
                         <h3>${album.title}</h3>
-                        <p><span>${items.length} Media items</span> <i class="fa-solid fa-arrow-right"></i></p>
+                        <p><span>Click to view collection</span> <i class="fa-solid fa-arrow-right"></i></p>
                     </div>
                 `;
-                card.onclick = () => {
-                    const btn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.textContent.includes(album.tag) || b.textContent.includes('All'));
-                    switchGalleryView(album.id, btn);
-                };
-                grid.appendChild(card);
+                container.appendChild(card);
             });
         }
 
-        function switchGalleryView(view, btn) {
-            if (btn) {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+        function openAlbum(albumId, albumTitle) {
+            activeAlbumFilter = albumId;
+            const albumsGrid = document.getElementById('albumsContainer');
+            const galleryGrid = document.getElementById('galleryContainer');
+
+            albumsGrid.style.display = 'none';
+            galleryGrid.style.display = 'grid';
+
+            const filteredItems = allMediaItems.filter(m => m.album === albumId);
+            renderGallery(filteredItems, albumTitle);
+        }
+
+        function renderGallery(items, albumTitle = '') {
+            currentGalleryList = items;
+            const container = document.getElementById('galleryContainer');
+            container.innerHTML = '';
+
+            let headerHTML = '';
+            if (activeAlbumFilter) {
+                headerHTML = `
+                    <div style="grid-column: 1/-1; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;">
+                        <button class="learn-more" onclick="backToAlbums()"><i class="fa-solid fa-arrow-left"></i> Back to Albums</button>
+                        <h3 style="color:var(--dark-blue); font-size:20px;">${albumTitle}</h3>
+                    </div>
+                `;
             }
+
+            container.innerHTML = headerHTML;
+
+            if (items.length === 0) {
+                container.innerHTML += '<p style="grid-column:1/-1;text-align:center;color:var(--text-light);">No media items available in this category.</p>';
+                return;
+            }
+
+            items.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.onclick = () => openLightbox(idx);
+
+                const isVid = item.type === 'video' || item.src.endsWith('.mp4') || item.src.endsWith('.webm');
+
+                div.innerHTML = `
+                    ${isVid ? '<div class="vid-badge"><i class="fa-solid fa-play"></i> Video</div>' : ''}
+                    ${isVid 
+                        ? `<video src="${item.src}" muted preload="metadata"></video>` 
+                        : `<img src="${item.src}" alt="${item.name}" loading="lazy" onerror="this.parentNode.style.display='none'" />`
+                    }
+                    <div class="gallery-caption">
+                        <span>${item.name || 'Water Action'}</span>
+                        <i class="fa-solid fa-expand"></i>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function backToAlbums() {
+            activeAlbumFilter = null;
+            document.getElementById('galleryContainer').style.display = 'none';
+            document.getElementById('albumsContainer').style.display = 'grid';
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            const albumBtn = document.querySelector('.filter-btn');
+            if (albumBtn) albumBtn.classList.add('active');
+        }
+
+        function switchGalleryView(view, btnEl) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
 
             const albumsGrid = document.getElementById('albumsContainer');
             const galleryGrid = document.getElementById('galleryContainer');
 
             if (view === 'albums') {
-                albumsGrid.style.display = 'grid';
-                galleryGrid.style.display = 'none';
+                backToAlbums();
                 return;
             }
 
+            activeAlbumFilter = null;
             albumsGrid.style.display = 'none';
-            galleryGrid.style.display = 'columns';
-            galleryGrid.style.display = 'block';
+            galleryGrid.style.display = 'grid';
 
-            let filtered = [];
-            if (view === 'all') filtered = [...allMediaItems];
-            else if (view === 'photos') filtered = allMediaItems.filter(m => m.type !== 'video');
-            else if (view === 'videos') filtered = allMediaItems.filter(m => m.type === 'video');
-            else if (view === 'uploads') filtered = allMediaItems.filter(m => m.isUpload);
-            else filtered = allMediaItems.filter(m => m.album === view);
-
-            renderGalleryGrid(filtered);
+            if (view === 'all') renderGallery(allMediaItems);
+            else if (view === 'photos') renderGallery(allMediaItems.filter(m => m.type === 'image' || !m.type));
+            else if (view === 'videos') renderGallery(allMediaItems.filter(m => m.type === 'video'));
+            else if (view === 'uploads') renderGallery(allMediaItems.filter(m => m.isUpload));
         }
 
-        function renderGalleryGrid(items) {
-            currentGalleryList = items;
-            const container = document.getElementById('galleryContainer');
-            if (!container) return;
-            container.innerHTML = '';
-
-            if (items.length === 0) {
-                container.innerHTML = `<div style="text-align:center;padding:50px;color:var(--text-light);grid-column:1/-1;">No media items found in this section.</div>`;
-                return;
-            }
-
-            items.forEach((item, index) => {
-                const el = document.createElement('div');
-                el.className = 'gallery-item';
-                
-                if (item.type === 'video') {
-                    el.innerHTML = `
-                        <span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>
-                        <video src="${item.src}" muted preload="metadata" onerror="this.parentElement.style.display='none';"></video>
-                        <div class="gallery-caption">
-                            <span>${item.name || 'Video Clip'}</span>
-                            <i class="fa-solid fa-expand"></i>
-                        </div>
-                    `;
-                } else {
-                    el.innerHTML = `
-                        <img src="${item.src}" alt="${item.name || 'Gallery Image'}" loading="lazy" onerror="this.parentElement.style.display='none';" />
-                        <div class="gallery-caption">
-                            <span>${item.name || 'Action Photo'}</span>
-                            <i class="fa-solid fa-expand"></i>
-                        </div>
-                    `;
-                }
-                el.onclick = () => openLightbox(index);
-                container.appendChild(el);
-            });
-        }
-
-        function buildHomePreview() {
-            const previewContainer = document.getElementById('homeGalleryPreview');
-            if (!previewContainer) return;
-            previewContainer.innerHTML = '';
-
-            const sample = allMediaItems.slice(0, 6);
-            sample.forEach((item, idx) => {
-                const el = document.createElement('div');
-                el.className = 'gallery-item';
-                el.innerHTML = `
-                    <img src="${item.src}" alt="Preview" onerror="this.src='https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?w=500&auto=format&fit=crop';" />
-                    <div class="gallery-caption">
-                        <span>${item.name || 'Action Moment'}</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </div>
-                `;
-                el.onclick = () => {
-                    showPage('gallery');
-                    switchGalleryView('all');
-                    openLightbox(idx);
-                };
-                previewContainer.appendChild(el);
-            });
-        }
-
-        // ════════════════════════════════════════════════════════════
-        //  9.  LIGHTBOX & UPLOADER & CONTACT
-        // ════════════════════════════════════════════════════════════
-
-        function openLightbox(index) {
-            if (!currentGalleryList || currentGalleryList.length === 0) currentGalleryList = allMediaItems;
-            currentLightboxIndex = index;
+        // Lightbox Handler
+        function openLightbox(idx) {
+            currentLightboxIndex = idx;
             const modal = document.getElementById('lightboxModal');
             const target = document.getElementById('lightboxTarget');
             const caption = document.getElementById('lightboxCaption');
-            
-            const item = currentGalleryList[currentLightboxIndex];
+
+            const item = currentGalleryList[idx];
             if (!item) return;
 
-            target.innerHTML = '';
-            if (item.type === 'video') {
-                target.innerHTML = `<video src="${item.src}" controls autoplay style="max-width:100%;max-height:75vh;"></video>`;
-            } else {
-                target.innerHTML = `<img src="${item.src}" alt="${item.name || ''}" style="max-width:100%;max-height:75vh;object-fit:contain;" />`;
-            }
-            caption.innerText = item.name || (item.type === 'video' ? 'Beyond Thirst Video' : 'Beyond Thirst Gallery');
+            const isVid = item.type === 'video' || item.src.endsWith('.mp4') || item.src.endsWith('.webm');
+            target.innerHTML = isVid 
+                ? `<video src="${item.src}" controls autoplay style="max-width:100%;max-height:75vh;"></video>`
+                : `<img src="${item.src}" alt="${item.name}" style="max-width:100%;max-height:75vh;object-fit:contain;" />`;
 
+            caption.innerText = item.name || '';
             modal.style.display = 'flex';
         }
 
         function closeLightbox() {
-            const modal = document.getElementById('lightboxModal');
-            const target = document.getElementById('lightboxTarget');
-            target.innerHTML = '';
-            modal.style.display = 'none';
+            document.getElementById('lightboxModal').style.display = 'none';
+            document.getElementById('lightboxTarget').innerHTML = '';
         }
 
         function navigateLightbox(dir) {
-            if (!currentGalleryList || currentGalleryList.length === 0) return;
             currentLightboxIndex = (currentLightboxIndex + dir + currentGalleryList.length) % currentGalleryList.length;
             openLightbox(currentLightboxIndex);
         }
 
-        document.addEventListener('keydown', e => {
-            const modal = document.getElementById('lightboxModal');
-            if (modal.style.display === 'flex') {
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowLeft') navigateLightbox(-1);
-                if (e.key === 'ArrowRight') navigateLightbox(1);
+        function buildHomePreview() {
+            const container = document.getElementById('homeGalleryPreview');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            const previews = allMediaItems.slice(0, 6);
+            previews.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.onclick = () => showPage('gallery');
+                
+                const isVid = item.type === 'video' || item.src.endsWith('.mp4');
+                div.innerHTML = isVid 
+                    ? `<video src="${item.src}" muted></video>`
+                    : `<img src="${item.src}" alt="${item.name}" loading="lazy" />`;
+                container.appendChild(div);
+            });
+        }
+
+        // Secret Admin Uploader Shortcut
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'u') {
+                const zone = document.getElementById('secretUploadZone');
+                if (zone) zone.classList.toggle('secret-active');
             }
         });
 
-        // Handle File Uploads
-        const mediaInput = document.getElementById('mediaUpload');
-        if (mediaInput) {
-            mediaInput.addEventListener('change', e => {
+        const uploadInput = document.getElementById('mediaUpload');
+        if (uploadInput) {
+            uploadInput.addEventListener('change', (e) => {
                 const files = Array.from(e.target.files);
-                if (!files.length) return;
-
-                files.forEach(file => {
-                    const url = URL.createObjectURL(file);
-                    const type = file.type.startsWith('video') ? 'video' : 'image';
-                    const newItem = {
-                        src: 'Uploads/' + file.name, // Marked as subfolder file
-                        realUrl: url,
-                        name: file.name.split('.')[0].replace(/_/g, ' '),
-                        type: type,
-                        album: 'uploads',
-                        isUpload: true
+                const saved = JSON.parse(localStorage.getItem('bt_uploads') || '[]');
+                files.forEach(f => {
+                    const url = URL.createObjectURL(f);
+                    const item = {
+                        src: 'Photos/' + f.name,
+                        name: f.name,
+                        type: f.type.startsWith('video') ? 'video' : 'image',
+                        isUpload: true,
+                        album: 'uploads'
                     };
-                    newItem.src = url; // assign direct blob url for session rendering
-                    allMediaItems.unshift(newItem);
+                    allMediaItems.unshift(item);
+                    saved.unshift(item);
                 });
-
-                showToast(`Successfully uploaded ${files.length} file(s)!`);
-                switchGalleryView('uploads');
+                try {
+                    localStorage.setItem('bt_uploads', JSON.stringify(saved));
+                } catch (err) {}
+                renderGallery(allMediaItems);
+                showToast('Uploaded ' + files.length + ' item(s)');
             });
         }
 
-        // Secret Admin Uploader Activation
-        let clickSecretCount = 0;
-        const footerLogo = document.getElementById('footerLogoSecret');
-        if (footerLogo) {
-            footerLogo.addEventListener('click', () => {
-                clickSecretCount++;
-                if (clickSecretCount >= 5) {
-                    const zone = document.getElementById('secretUploadZone');
-                    if (zone) zone.classList.toggle('secret-active');
-                    showToast('Team Uploader Mode Toggled');
-                    clickSecretCount = 0;
-                }
-            });
-        }
-
-        // Contact / Direct Feedback
-        function handleDirectFeedback(e) {
-            e.preventDefault();
-            const form = e.target;
-            showToast('Thank you! Your message has been sent successfully.');
-            form.reset();
-        }
-
-        // Initialize App
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            applyTheme();
             applyLang();
+            applyTheme();
             loadGalleryManifest();
-            renderQuoteProgress();
         });
     </script>
 </body>
