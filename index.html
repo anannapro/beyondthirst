@@ -2,23 +2,18 @@
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0f172a" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="format-detection" content="telephone=no" />
     <title>Beyond Thirst — Youth-Led Water Action</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Great+Vibes&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    
     <style>
         /* ── root variables ── */
         :root {
             --primary-blue: #0284c7;
             --primary-hover: #0369a1;
             --dark-blue: #0f172a;
-            --nav-bg: rgba(15, 23, 42, 0.92);
+            --nav-bg: rgba(15, 23, 42, 0.9);
             --accent-sky: #38bdf8;
             --accent-teal: #14b8a6;
             --accent-glow: #00f2fe;
@@ -59,7 +54,6 @@
         }
         html {
             scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%;
         }
         body {
             background: var(--bg-light);
@@ -70,7 +64,6 @@
             flex-direction: column;
             position: relative;
             transition: background 0.4s ease, color 0.4s ease;
-            padding-bottom: env(safe-area-inset-bottom);
         }
         [data-theme="dark"] body {
             background: radial-gradient(circle at 20% 10%, #0b1a33 0%, #060d1a 60%);
@@ -129,7 +122,7 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            padding: max(10px, env(safe-area-inset-top)) max(4%, env(safe-area-inset-right)) 10px max(4%, env(safe-area-inset-left));
+            padding: 10px 4%;
             transition: var(--transition);
         }
         nav {
@@ -148,7 +141,6 @@
             text-decoration: none;
             gap: 10px;
             flex-shrink: 0;
-            user-select: none;
         }
         .logo img {
             height: 46px;
@@ -190,7 +182,7 @@
             text-decoration: none;
             font-size: 13.5px;
             font-weight: 500;
-            padding: 10px 14px;
+            padding: 8px 14px;
             border-radius: 30px;
             transition: var(--transition);
             cursor: pointer;
@@ -198,7 +190,6 @@
             align-items: center;
             gap: 6px;
             white-space: nowrap;
-            min-height: 40px;
         }
         .nav-links a:hover,
         .nav-links a.active {
@@ -234,7 +225,7 @@
         }
         .dropdown-menu li a {
             color: var(--text-dark) !important;
-            padding: 12px 14px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -259,16 +250,16 @@
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.25);
             color: #fff;
-            padding: 10px 16px;
+            padding: 8px 14px;
             border-radius: 30px;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
             transition: var(--transition);
-            min-height: 42px;
+            min-height: 40px;
         }
         .ctl-btn:hover {
             background: rgba(255, 255, 255, 0.25);
@@ -282,9 +273,7 @@
             color: #fff;
             font-size: 24px;
             cursor: pointer;
-            padding: 8px;
-            min-width: 44px;
-            min-height: 44px;
+            padding: 6px;
         }
 
         /* ── page views ── */
@@ -456,6 +445,7 @@
             align-items: center;
             transition: var(--transition);
             border: 1px solid var(--border-color);
+            cursor: pointer;
         }
         .card:hover {
             transform: translateY(-10px);
@@ -500,7 +490,6 @@
             gap: 6px;
             cursor: pointer;
             color: var(--primary-blue);
-            padding: 6px 0;
         }
         .inspire-drop-container {
             flex: 1 1 230px;
@@ -685,16 +674,13 @@
             background: rgba(255, 255, 255, 0.22);
             border: 1px solid rgba(255, 255, 255, 0.45);
             color: #fff;
-            padding: 12px 22px;
+            padding: 11px 22px;
             border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
             transition: var(--transition);
             font-size: 14px;
             min-height: 44px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
         }
         .quote-btn:hover {
             background: #fff;
@@ -755,7 +741,6 @@
             overflow: hidden;
             cursor: crosshair;
             touch-action: none;
-            overscroll-behavior: contain;
         }
         #game1Canvas {
             background: linear-gradient(to bottom, #7fc7e8 0%, #bfe8f5 55%, #7fc97f 55%, #3f8f3f 100%);
@@ -791,7 +776,7 @@
         .upload-btn-label {
             background: linear-gradient(135deg, var(--primary-blue), #0369a1);
             color: #fff;
-            padding: 12px 26px;
+            padding: 11px 26px;
             border-radius: 30px;
             display: inline-flex;
             align-items: center;
@@ -822,7 +807,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            min-height: 42px;
+            min-height: 44px;
         }
         .filter-btn:hover,
         .filter-btn.active {
@@ -1043,7 +1028,6 @@
             cursor: pointer;
             opacity: 0.8;
             transition: var(--transition);
-            padding: 10px;
         }
         .lightbox-close:hover {
             opacity: 1;
@@ -1088,7 +1072,7 @@
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             outline: none;
-            font-size: 15px;
+            font-size: 14.5px;
             background: #f8fafc;
             transition: var(--transition);
             color: var(--text-dark);
@@ -1110,7 +1094,7 @@
         /* ── toast ── */
         .toast {
             position: fixed;
-            bottom: max(25px, env(safe-area-inset-bottom));
+            bottom: 25px;
             right: 25px;
             background: var(--dark-blue);
             color: #fff;
@@ -1138,7 +1122,7 @@
         footer {
             background-color: var(--dark-blue);
             color: #fff;
-            padding: 38px 5% max(24px, env(safe-area-inset-bottom));
+            padding: 38px 5% 24px;
             margin-top: auto;
         }
         .footer-content {
@@ -1173,8 +1157,6 @@
             opacity: 0.8;
             margin-left: 16px;
             transition: var(--transition);
-            display: inline-block;
-            padding: 6px;
         }
         .footer-socials a:hover {
             opacity: 1;
@@ -1191,8 +1173,6 @@
             border-radius: 20px;
             padding: 22px;
             color: #fff;
-            touch-action: none;
-            overscroll-behavior: contain;
         }
         .child-scene {
             display: flex;
@@ -1262,6 +1242,7 @@
             position: relative;
             margin: 10px auto;
             cursor: grab;
+            touch-action: none;
         }
         .valve-needle {
             position: absolute;
@@ -1288,7 +1269,7 @@
             opacity: 0.7;
         }
 
-        /* ── responsive & android adjustments ── */
+        /* ── responsive ── */
         @media (max-width: 900px) {
             .cards-container {
                 transform: translateY(-30px);
@@ -1317,8 +1298,6 @@
             }
             .nav-links a {
                 width: 100%;
-                min-height: 48px;
-                font-size: 15px;
             }
             .dropdown-menu {
                 position: static;
@@ -1329,11 +1308,9 @@
                 background: rgba(255, 255, 255, 0.06);
                 border: none;
                 padding: 6px 0 6px 16px;
-                width: 100%;
             }
             .dropdown-menu li a {
                 color: #fff !important;
-                min-height: 44px;
             }
             .mobile-menu-btn {
                 display: block;
@@ -1356,7 +1333,7 @@
                 display: none;
             }
             .ctl-btn {
-                padding: 8px 12px;
+                padding: 8px 10px;
             }
             .logo-text {
                 display: none;
@@ -1367,13 +1344,7 @@
             .lightbox-nav-btn.next {
                 right: 10px;
             }
-            .form-group input,
-            .form-group textarea,
-            .form-group select {
-                font-size: 16px; /* Prevents auto-zoom on mobile devices */
-            }
         }
-
         @media (max-width: 520px) {
             .main-title {
                 font-size: 42px;
@@ -1393,11 +1364,6 @@
             .gallery-grid {
                 columns: 1 100%;
             }
-            .toast {
-                right: 5%;
-                left: 5%;
-                width: 90%;
-            }
         }
     </style>
 </head>
@@ -1413,7 +1379,7 @@
                 <img src="logo.png" alt="Beyond Thirst Logo" onerror="this.style.display='none'" />
                 <span class="logo-text"><b>Beyond Thirst</b><span>Water Action</span></span>
             </a>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation Menu"><i class="fa-solid fa-bars"></i></button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars"></i></button>
             <ul class="nav-links" id="navLinks">
                 <li><a onclick="showPage('home')" id="nav-home" class="active"><i class="fa-solid fa-house"></i> <span data-en="Home" data-bn="হোম">Home</span></a></li>
                 <li class="dropdown" onclick="this.classList.toggle('open')">
@@ -1467,29 +1433,29 @@
         </section>
 
         <section class="cards-container">
-            <div class="card c-blue">
+            <div class="card c-blue" onclick="showPage('why-water-matters')">
                 <div class="icon-box"><i class="fa-solid fa-droplet"></i></div>
                 <h3 data-en="Why Water Matters" data-bn="পানি কেন গুরুত্বপূর্ণ">Why Water Matters</h3>
                 <p data-en="Understand how freshwater access shapes public health, ecosystems, and urban development." data-bn="জানুন কীভাবে সুপেয় পানি জনস্বাস্থ্য, পরিবেশ ও নগর উন্নয়ন গড়ে তোলে।">Understand how freshwater access shapes public health, ecosystems, and urban development.</p>
-                <a onclick="showPage('our-story')" class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+                <a class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
             </div>
-            <div class="card c-teal">
+            <div class="card c-teal" onclick="showPage('water-facts')">
                 <div class="icon-box"><i class="fa-solid fa-chart-pie"></i></div>
                 <h3 data-en="Water Facts" data-bn="পানির তথ্য">Water Facts</h3>
                 <p data-en="Learn key statistics regarding individual footprints and regional water security challenges." data-bn="ব্যক্তিগত পানির ব্যবহার ও আঞ্চলিক পানি নিরাপত্তা চ্যালেঞ্জ সংক্রান্ত তথ্য জানুন।">Learn key statistics regarding individual footprints and regional water security challenges.</p>
-                <a onclick="showPage('impact')" class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+                <a class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
             </div>
-            <div class="card c-green">
+            <div class="card c-green" onclick="showPage('save-every-drop')">
                 <div class="icon-box"><i class="fa-solid fa-leaf"></i></div>
                 <h3 data-en="Save Every Drop" data-bn="প্রতিটি ফোঁটা বাঁচান">Save Every Drop</h3>
                 <p data-en="Simple practical habits for students and families to minimize household water waste." data-bn="পানি অপচয় কমানোর সহজ ও কার্যকর পারিবারিক অভ্যাস।">Simple practical habits for students and families to minimize household water waste.</p>
-                <a onclick="showPage('projects')" class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+                <a class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
             </div>
-            <div class="card c-orange">
+            <div class="card c-orange" onclick="showPage('small-actions')">
                 <div class="icon-box"><i class="fa-solid fa-hand-holding-heart"></i></div>
                 <h3 data-en="Small Actions" data-bn="ছোট পদক্ষেপ">Small Actions</h3>
                 <p data-en="See how student-led micro-projects produce measurable long-term impact." data-bn="শিক্ষার্থীদের ছোট ছোট উদ্যোগ কীভাবে বড় পরিবর্তন আনে দেখুন।">See how student-led micro-projects produce measurable long-term impact.</p>
-                <a onclick="showPage('campaigns')" class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
+                <a class="explore-link"><span data-en="Explore" data-bn="আরও জানুন">Explore</span> <i class="fa-solid fa-arrow-right"></i></a>
             </div>
             <div class="inspire-drop-container">
                 <div class="inspire-drop" onclick="showPage('inspire')" title="Click for Inspiring Water Tales">
@@ -1510,6 +1476,102 @@
             <div class="gallery-grid" id="homeGalleryPreview" style="margin-bottom:26px;"></div>
             <div style="text-align:center;">
                 <button class="learn-more" onclick="showPage('gallery')"><i class="fa-solid fa-images"></i> <span data-en="See More Photos" data-bn="আরও ছবি দেখুন">See More Photos</span></button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ─── HIDDEN PAGE 1: WHY WATER MATTERS ─── -->
+    <main id="page-why-water-matters" class="page-view">
+        <div class="page-banner">
+            <h1 data-en="Why Water Matters" data-bn="পানি কেন গুরুত্বপূর্ণ">Why Water Matters</h1>
+            <p data-en="The Lifeline of Human Health, Ecosystems, and Urban Resilience" data-bn="স্বাস্থ্য, জীববৈচিত্র্য ও পরিবেশগত টেকসইতার মূলভিত্তি">The Lifeline of Human Health, Ecosystems, and Urban Resilience</p>
+        </div>
+        <div class="container">
+            <div class="info-card" style="margin-bottom: 24px;">
+                <i class="fa-solid fa-hand-holding-water"></i>
+                <h3 data-en="The Fundamental Essence of Life" data-bn="জীবনের প্রধান চালিকাশক্তি">The Fundamental Essence of Life</h3>
+                <p data-en="Freshwater is the core pillar of human survival, economic stability, and public health. Although water covers over 70% of the Earth's surface, less than 1% is accessible fresh water usable by humanity. Clean water guarantees disease prevention, supports food cultivation, and empowers communities to thrive safely and cleanly across generations." data-bn="সুপেয় পানি মানবজীবনের অস্তিত্ব, সামাজিক স্থায়িত্ব ও জনস্বাস্থ্যের অন্যতম প্রধান ভিত্তি। পৃথিবীর পরিধির ৭০ শতাংশের বেশি পানি হলেও মাত্র ১ শতাংশের কম অংশ মানুষের পানের উপযোগী। বিশুদ্ধ পানির প্রাপ্যতা রোগব্যাধি প্রতিরোধ করে, খাদ্য উৎপাদনে ভূমিকা রাখে এবং সমাজকে সুস্থ সুন্দর ও গতিশীল রাখে।">Freshwater is the core pillar of human survival, economic stability, and public health. Although water covers over 70% of the Earth's surface, less than 1% is accessible fresh water usable by humanity. Clean water guarantees disease prevention, supports food cultivation, and empowers communities to thrive safely and cleanly across generations.</p>
+            </div>
+            <div class="info-card" style="margin-bottom: 24px;">
+                <i class="fa-solid fa-tree"></i>
+                <h3 data-en="Ecosystem Harmony & Environmental Balance" data-bn="পরিবেশ ও জীববৈচিত্র্যের ভারসাম্য">Ecosystem Harmony & Environmental Balance</h3>
+                <p data-en="Healthy freshwater rivers, wetlands, and subterranean aquifers support intricate ecosystems and wildlife habitats. When rivers dry out or face urban chemical contamination, entire ecological systems collapse, triggering soil erosion and severe biodiversity decline. Conserving every freshwater drop helps buffer our surrounding climate and protects local flora and fauna." data-bn="নদী, জলাভূমি ও ভূগর্ভস্থ পানির স্বচ্ছ প্রবাহ প্রাকৃতিক জীববৈচিত্র্য রক্ষা করে। পানির উৎসগুলো দূষিত বা সংকুচিত হলে বাস্তুতন্ত্রের ভারসাম্য নষ্ট হয়, যার ফলে জীববৈচিত্র্য হ্রাস ও ভূমিক্ষয় ত্বরান্বিত হয়। পানির সুরক্ষা নিশ্চিত করলে তা জলবায়ুর ক্ষতিকর প্রভাব কমায় এবং প্রাকৃতিক ভারসাম্য টিকিয়ে রাখে।">Healthy freshwater rivers, wetlands, and subterranean aquifers support intricate ecosystems and wildlife habitats. When rivers dry out or face urban chemical contamination, entire ecological systems collapse, triggering soil erosion and severe biodiversity decline. Conserving every freshwater drop helps buffer our surrounding climate and protects local flora and fauna.</p>
+            </div>
+            <div style="text-align:center; margin-top:30px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                <button class="learn-more" onclick="showPage('home')"><i class="fa-solid fa-arrow-left"></i> <span data-en="Back to Home" data-bn="হোমে ফিরে যান">Back to Home</span></button>
+                <button class="btn-outline" style="color:var(--text-dark);" onclick="showPage('water-facts')"><span data-en="Explore Water Facts" data-bn="পানির তথ্য দেখুন">Explore Water Facts</span> <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ─── HIDDEN PAGE 2: WATER FACTS ─── -->
+    <main id="page-water-facts" class="page-view">
+        <div class="page-banner">
+            <h1 data-en="Water Facts & Insights" data-bn="পানির গুরুত্বপূর্ণ তথ্য">Water Facts & Insights</h1>
+            <p data-en="Understanding Global Footprints & Regional Security Challenges" data-bn="ব্যক্তিগত পানির ব্যবহার ও আঞ্চলিক নিরাপত্তার সংক্ষিপ্ত চিত্র">Understanding Global Footprints & Regional Security Challenges</p>
+        </div>
+        <div class="container">
+            <div class="info-card" style="margin-bottom: 24px;">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3 data-en="Understanding Individual Water Footprint" data-bn="ব্যক্তিগত ব্যবহার ও অপচয়ের বাস্তবতা">Understanding Individual Water Footprint</h3>
+                <p data-en="Most individuals are unaware of how much freshwater is consumed beyond daily cooking or drinking. Millions of gallons are lost globally each year through undetected pipeline leaks, inefficient irrigation, and unmonitored household taps. Recognizing where water is lost allows individuals to make mindful adjustments that accumulate into immense community-wide savings." data-bn="দৈনন্দিন পানীয় কিংবা রান্নার বাইরেও আমাদের অবচেতনে প্রচুর পানি ব্যবহৃত হয়। অদেখা পাইপলাইনের ফোঁটানি, ভুল সেচ ব্যবস্থা এবং দৈনন্দিন উদাসীনতায় প্রতি বছর লক্ষ লক্ষ গ্যালন সুপেয় পানি নষ্ট হয়। সঠিক তথ্য ও ব্যবহারের সঠিক পরিসংখ্যান জানলে সচেতনভাবে অপচয় বহুগুণ কমানো সম্ভব।">Most individuals are unaware of how much freshwater is consumed beyond daily cooking or drinking. Millions of gallons are lost globally each year through undetected pipeline leaks, inefficient irrigation, and unmonitored household taps. Recognizing where water is lost allows individuals to make mindful adjustments that accumulate into immense community-wide savings.</p>
+            </div>
+            <div class="info-card" style="margin-bottom: 24px;">
+                <i class="fa-solid fa-earth-americas"></i>
+                <h3 data-en="Regional Security & Future Scarcity" data-bn="আঞ্চলিক সংকট ও ভবিষ্যৎ চ্যালেঞ্জ">Regional Security & Future Scarcity</h3>
+                <p data-en="Climate shifts, rapid urbanization, and industrial expansion put unprecedented strain on groundwater tables worldwide. By understanding local hydrological data and footprint metrics, communities can proactively implement rainwater collection, graywater recycling, and protective policies before acute regional water shortages take hold." data-bn="জলবায়ু পরিবর্তন, দ্রুত নগরায়ন এবং শিল্পায়নের চাপে ভূগর্ভস্থ পানির স্তর আশঙ্কাজনকভাবে নিচে নেমে যাচ্ছে। আঞ্চলিক পানি নিরাপত্তার চিত্র পর্যবেক্ষণ করে বৃষ্টির পানি সঞ্চয় ও পুনর্ব্যবহার প্রযুক্তি ব্যবহারের মাধ্যমে আগামী দিনের বড় সংকট থেকে রক্ষা পাওয়া সম্ভব।">Climate shifts, rapid urbanization, and industrial expansion put unprecedented strain on groundwater tables worldwide. By understanding local hydrological data and footprint metrics, communities can proactively implement rainwater collection, graywater recycling, and protective policies before acute regional water shortages take hold.</p>
+            </div>
+            <div style="text-align:center; margin-top:30px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                <button class="learn-more" onclick="showPage('home')"><i class="fa-solid fa-arrow-left"></i> <span data-en="Back to Home" data-bn="হোমে ফিরে যান">Back to Home</span></button>
+                <button class="btn-outline" style="color:var(--text-dark);" onclick="showPage('save-every-drop')"><span data-en="Save Every Drop" data-bn="পানি বাঁচানোর উপায়">Save Every Drop</span> <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ─── HIDDEN PAGE 3: SAVE EVERY DROP ─── -->
+    <main id="page-save-every-drop" class="page-view">
+        <div class="page-banner">
+            <h1 data-en="Save Every Drop" data-bn="প্রতিটি ফোঁটা বাঁচান">Save Every Drop</h1>
+            <p data-en="Practical Daily Habits to Eliminate Household & Campus Water Waste" data-bn="বাসাবাড়ি ও ক্যাম্পাসে অপচয় বন্ধের সহজ সমাধান">Practical Daily Habits to Eliminate Household & Campus Water Waste</p>
+        </div>
+        <div class="container">
+            <div class="info-card" style="margin-bottom: 24px;">
+                <i class="fa-solid fa-house-chimney-window"></i>
+                <h3 data-en="Simple Household Action Steps" data-bn="দৈনন্দিন সহজের কিছু কার্যকর অভ্যাস">Simple Household Action Steps</h3>
+                <p data-en="Conserving freshwater starts with tiny, consistent choices at home. Turning off the faucet while brushing teeth saves up to 4 gallons per minute. Fixing a single dripping tap prevents over 3,000 gallons of clean water from vanishing down the drain each year. Using buckets for washing instead of running hoses creates instant results." data-bn="পানির সাশ্রয় শুরু হয় ঘরের ছোট ছোট ভালো অভ্যাস থেকে। দাঁত মাজার সময় কল বন্ধ রাখা প্রতি মিনিটে প্রায় ৪ গ্যালন পানি বাঁচায়। একটি সামান্য লিকেজ মেরামত করলে বছরে ৩,০০০ গ্যালনেরও বেশি সুপেয় পানি নষ্ট হওয়া থেকে বাঁচে। তাই অপ্রয়োজনীয় পানির ব্যবহার কমানো অতি সহজ কিন্তু কার্যকর।">Conserving freshwater starts with tiny, consistent choices at home. Turning off the faucet while brushing teeth saves up to 4 gallons per minute. Fixing a single dripping tap prevents over 3,000 gallons of clean water from vanishing down the drain each year. Using buckets for washing instead of running hoses creates instant results.</p>
+            </div>
+            <div class="info-card" style="margin-bottom: 24px;">
+                <i class="fa-solid fa-recycle"></i>
+                <h3 data-en="Campus & Community Water Stewardship" data-bn="ক্যাম্পাস ও সমাজে পানির অপচয় রোধ">Campus & Community Water Stewardship</h3>
+                <p data-en="Students and youth groups can easily champion water-saving initiatives in schools and neighborhood centers. Regular leak detection sweeps, installing aerators on faucets, and setting up basic rainwater collection barrels for school gardens dramatically curb institutional water demands while inspiring peers." data-bn="শিক্ষার্থী ও যুবসমাজ নিজেদের শিক্ষা প্রতিষ্ঠান এবং সমাজে লিডারশিপ নিয়ে পানির স্থায়িত্বে ভূমিকা রাখতে পারে। নিয়মিত স্কুল ক্যাম্পাসের ওয়াশরুম ও পানির সংযোগ পরীক্ষা করা এবং সাধারণ রেইনওয়াটার হার্ভেস্টিং ব্যবহারের মাধ্যমে প্রতিষ্ঠানভিত্তিক অপচয় রোধ করা যায়।">Students and youth groups can easily champion water-saving initiatives in schools and neighborhood centers. Regular leak detection sweeps, installing aerators on faucets, and setting up basic rainwater collection barrels for school gardens dramatically curb institutional water demands while inspiring peers.</p>
+            </div>
+            <div style="text-align:center; margin-top:30px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                <button class="learn-more" onclick="showPage('home')"><i class="fa-solid fa-arrow-left"></i> <span data-en="Back to Home" data-bn="হোমে ফিরে যান">Back to Home</span></button>
+                <button class="btn-outline" style="color:var(--text-dark);" onclick="showPage('small-actions')"><span data-en="Discover Small Actions" data-bn="ছোট পদক্ষেপের প্রভাব">Discover Small Actions</span> <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ─── HIDDEN PAGE 4: SMALL ACTIONS ─── -->
+    <main id="page-small-actions" class="page-view">
+        <div class="page-banner">
+            <h1 data-en="Small Actions, Big Impact" data-bn="ছোট পদক্ষেপ, বড় প্রভাব">Small Actions, Big Impact</h1>
+            <p data-en="How Micro-Initiatives Generate Measurable Positive Change" data-bn="ক্ষুদ্র প্রচেষ্টা কীভাবে বিশাল পরিবর্তন নিয়ে আসে">How Micro-Initiatives Generate Measurable Positive Change</p>
+        </div>
+        <div class="container">
+            <div class="info-card" style="margin-bottom: 24px;">
+                <i class="fa-solid fa-seedling"></i>
+                <h3 data-en="The Ripple Effect of Youth Micro-Projects" data-bn="যুবভিত্তিক ক্ষুদ্র উদ্যোগের ইতিবাচক প্রভাব">The Ripple Effect of Youth Micro-Projects</h3>
+                <p data-en="You do not need massive funding or complex machinery to solve freshwater issues. When one student fixes a leaking school tap or spreads conservation techniques to ten neighbors, it triggers a chain reaction of awareness. Over time, hundreds of small individual efforts compound into tens of thousands of gallons saved." data-bn="পানি সংরক্ষণে কাজ করার জন্য বিপুল অর্থের প্রয়োজন নেই। একজন শিক্ষার্থী যদি তার স্কুলের নজল মেরামত করে বা বন্ধুদের উদ্বুদ্ধ করে, তবে সেই একটি ছোট কাজ শত শত সচেতন নাগরিক তৈরির সূচনা করে। ছোট ছোট পরিবর্তনই বৃহৎ রূপ ধারণ করে হাজার হাজার গ্যালন পানি রক্ষা করে।">You do not need massive funding or complex machinery to solve freshwater issues. When one student fixes a leaking school tap or spreads conservation techniques to ten neighbors, it triggers a chain reaction of awareness. Over time, hundreds of small individual efforts compound into tens of thousands of gallons saved.</p>
+            </div>
+            <div class="info-card" style="margin-bottom: 24px;">
+                <i class="fa-solid fa-people-hold"></i>
+                <h3 data-en="Sustaining Long-Term Collective Change" data-bn="দীর্ঘমেয়াদী সামাজিক পরিবর্তন">Sustaining Long-Term Collective Change</h3>
+                <p data-en="Beyond Thirst demonstrates that student-driven micro-audits, peer educational workshops, and digital pledge campaigns directly influence local water usage habits. Every individual contribution matters — by taking responsibility today, youth are securing clean freshwater resources for generations to come." data-bn="বিয়ন্ড থার্স্ট প্রমাণ করেছে যে শিক্ষার্থীদের পর্যবেক্ষণ, সচেতনতা সেমিনার এবং প্রতিশ্রুতি কার্যক্রম সরাসরি স্থানীয় সমাজকে প্রভাবিত করে। প্রত্যেকে নিজের দায়িত্ব অনুধাবন করলে এবং একযোগে এগিয়ে আসলে সুপেয় পানির উজ্জ্বল ভবিষ্যত সুনিশ্চিত হবে।">Beyond Thirst demonstrates that student-driven micro-audits, peer educational workshops, and digital pledge campaigns directly influence local water usage habits. Every individual contribution matters — by taking responsibility today, youth are securing clean freshwater resources for generations to come.</p>
+            </div>
+            <div style="text-align:center; margin-top:30px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                <button class="learn-more" onclick="showPage('home')"><i class="fa-solid fa-arrow-left"></i> <span data-en="Back to Home" data-bn="হোমে ফিরে যান">Back to Home</span></button>
+                <button class="btn-outline" style="color:var(--text-dark);" onclick="showPage('inspire')"><span data-en="Words that Inspire" data-bn="অনুপ্রেরণামূলক বাণী">Words that Inspire</span> <i class="fa-solid fa-quote-right"></i></button>
             </div>
         </div>
     </main>
@@ -1741,10 +1803,10 @@
                 <b>Beyond Thirst</b>
             </div>
             <div class="footer-socials">
-                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.facebook.com/profile.php?id=61591584513349" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61591584513349" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
             </div>
         </div>
         <div id="footerCopy" style="text-align:center;font-size:13px;opacity:0.75;">&copy; 2026 Beyond Thirst Initiative. <span data-en="Student-Led Water Conservation Project." data-bn="শিক্ষার্থী-নেতৃত্বাধীন পানি সংরক্ষণ প্রকল্প।">Student-Led Water Conservation Project.</span></div>
@@ -1822,6 +1884,7 @@
             document.getElementById('navLinks').classList.remove('mobile-open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (pageId === 'inspire') renderQuoteProgress();
+            applyLang();
         }
 
         function toggleMobileMenu() {
@@ -1949,7 +2012,6 @@
             g1cv.width = r.width;
             g1cv.height = r.height;
         }
-        window.addEventListener('resize', sizeG1);
 
         function drawG1Scene() {
             const w = g1cv.width, h = g1cv.height;
@@ -2212,7 +2274,7 @@
         const pourBtn = document.getElementById('pourBtn');
         if (pourBtn) {
             const startPour = (e) => {
-                if (e.cancelable) e.preventDefault();
+                e.preventDefault();
                 if (!valveAligned) {
                     showToast('Align the green and white valve needles first!');
                     return;
@@ -2279,11 +2341,11 @@
             const container = document.getElementById('albumsContainer');
             if (!container) return;
             if (!galleryData.albums || galleryData.albums.length === 0) {
-                container.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:var(--text-light);padding:20px;">No subfolders found in Photos/ or Videos/ yet. Upload photos to generate your gallery!</p>';
+                container.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:var(--text-light);">No subfolders found in Photos/ or Videos/ yet. Upload photos to generate your gallery!</p>';
                 return;
             }
             container.innerHTML = galleryData.albums.map(album => {
-                const isVideo = album.cover && album.cover.match(/\.(mp4|webm|mov|mkv)$/i);
+                const isVideo = album.cover.match(/\.(mp4|webm|mov|mkv)$/i);
                 const mediaTag = isVideo 
                     ? `<video src="${album.cover}" muted preload="metadata"></video>`
                     : `<img src="${album.cover}" alt="${album.title}" onerror="this.src='Beyond Thirst project cover.png'" />`;
@@ -2346,15 +2408,15 @@
 
             container.innerHTML = items.map((item, idx) => {
                 const isVid = item.type === 'video';
-                const mediaTag = isVid 
+                const mediaTag = isVid
                     ? `<video src="${item.src}" muted preload="metadata"></video><span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>`
-                    : `<img src="${item.src}" alt="${item.name}" onerror="this.src='Beyond Thirst project cover.png'" />`;
+                    : `<img src="${item.src}" alt="${item.title || 'Media'}" onerror="this.src='Beyond Thirst project cover.png'" />`;
 
                 return `
                     <div class="gallery-item" onclick="openLightbox(${idx})">
                         ${mediaTag}
                         <div class="gallery-caption">
-                            <span>${item.name}</span>
+                            <span>${item.title || 'Action Shot'}</span>
                             <i class="fa-solid fa-expand"></i>
                         </div>
                     </div>
@@ -2363,17 +2425,25 @@
         }
 
         function renderHomePreview() {
-            const container = document.getElementById('homeGalleryPreview');
-            if (!container || !galleryData.media) return;
-            const previewItems = galleryData.media.slice(0, 3);
-            container.innerHTML = previewItems.map(item => `
-                <div class="gallery-item" onclick="showPage('gallery')">
-                    ${item.type === 'video' ? `<video src="${item.src}" muted></video>` : `<img src="${item.src}" alt="${item.name}" />`}
-                    <div class="gallery-caption">
-                        <span>${item.name}</span>
+            const homeContainer = document.getElementById('homeGalleryPreview');
+            if (!homeContainer || !galleryData.media) return;
+            const items = galleryData.media.slice(0, 6);
+            homeContainer.innerHTML = items.map((item, idx) => {
+                const isVid = item.type === 'video';
+                const mediaTag = isVid
+                    ? `<video src="${item.src}" muted preload="metadata"></video><span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>`
+                    : `<img src="${item.src}" alt="${item.title || 'Media'}" onerror="this.src='Beyond Thirst project cover.png'" />`;
+
+                return `
+                    <div class="gallery-item" onclick="openLightbox(${idx})">
+                        ${mediaTag}
+                        <div class="gallery-caption">
+                            <span>${item.title || 'Action Moment'}</span>
+                            <i class="fa-solid fa-expand"></i>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function openLightbox(idx) {
@@ -2384,83 +2454,38 @@
         }
 
         function closeLightbox() {
-            const modal = document.getElementById('lightboxModal');
-            modal.style.display = 'none';
-            const target = document.getElementById('lightboxTarget');
-            target.innerHTML = '';
+            document.getElementById('lightboxModal').style.display = 'none';
         }
 
         function navigateLightbox(dir) {
-            if (!currentLightboxList || currentLightboxList.length === 0) return;
             currentLightboxIdx = (currentLightboxIdx + dir + currentLightboxList.length) % currentLightboxList.length;
             updateLightboxContent();
         }
 
         function updateLightboxContent() {
-            const item = currentLightboxList[currentLightboxIdx];
-            if (!item) return;
             const target = document.getElementById('lightboxTarget');
             const caption = document.getElementById('lightboxCaption');
-            
+            const item = currentLightboxList[currentLightboxIdx];
+            if (!item) return;
+
             if (item.type === 'video') {
                 target.innerHTML = `<video src="${item.src}" controls autoplay style="max-width:100%;max-height:75vh;"></video>`;
             } else {
-                target.innerHTML = `<img src="${item.src}" alt="${item.name}" style="max-width:100%;max-height:75vh;object-fit:contain;" />`;
+                target.innerHTML = `<img src="${item.src}" alt="${item.title || 'Full View'}" style="max-width:100%;max-height:75vh;" />`;
             }
-            caption.innerText = item.name || '';
-        }
-
-        // Secret Admin upload zone unlocker (Click logo 5 times)
-        let logoClickCount = 0;
-        const logoEl = document.querySelector('.logo');
-        if (logoEl) {
-            logoEl.addEventListener('click', (e) => {
-                logoClickCount++;
-                if (logoClickCount >= 5) {
-                    const zone = document.getElementById('secretUploadZone');
-                    if (zone) {
-                        zone.classList.toggle('secret-active');
-                        showToast(zone.classList.contains('secret-active') ? 'Secret Uploader Enabled' : 'Uploader Disabled');
-                    }
-                    logoClickCount = 0;
-                }
-            });
-        }
-
-        const mediaUploadInput = document.getElementById('mediaUpload');
-        if (mediaUploadInput) {
-            mediaUploadInput.addEventListener('change', (e) => {
-                const files = Array.from(e.target.files);
-                files.forEach(file => {
-                    const url = URL.createObjectURL(file);
-                    const isVid = file.type.startsWith('video');
-                    customUploads.push({
-                        id: 'upload-' + Date.now() + Math.random(),
-                        name: file.name,
-                        src: url,
-                        type: isVid ? 'video' : 'image',
-                        album: 'uploads'
-                    });
-                });
-                showToast(`Added ${files.length} custom file(s)`);
-                switchGalleryView('uploads', null);
-            });
+            caption.innerText = item.title || 'Beyond Thirst Action Moment';
         }
 
         function handleDirectFeedback(e) {
             e.preventDefault();
-            const form = e.target;
-            const name = form.name.value;
-            showToast(`Thank you, ${name}! Message sent successfully.`);
-            form.reset();
+            showToast('Thank you! Your message has been sent successfully.');
+            e.target.reset();
         }
 
-        // Initialize theme, language and gallery on load
-        window.addEventListener('DOMContentLoaded', () => {
-            applyLang();
-            applyTheme();
-            fetchGalleryData();
-        });
+        // Initialize Page
+        applyLang();
+        applyTheme();
+        fetchGalleryData();
     </script>
 </body>
 </html>
