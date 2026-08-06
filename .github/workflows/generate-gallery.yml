@@ -1,19 +1,26 @@
-name: Generate Gallery JSON
+name: Auto Generate Gallery Data
 
 on:
   push:
-    branches: [ main, master ]
-  workflow_dispatch: # Allows manual triggering from GitHub Actions tab
+    branches:
+      - main
+      - master
+    paths:
+      - 'Photos/**'
+      - 'Videos/**'
+      - 'Video/**'
+      - '.github/workflows/generate-gallery.yml'
+  workflow_dispatch:
 
 permissions:
-  contents: write # Grants permission to commit gallery.json back to your repo
+  contents: write
 
 jobs:
-  build-gallery-json:
+  generate-gallery-json:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -21,43 +28,83 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Scan media folders and update gallery.json
+      - name: Scan Subfolders and Build gallery-data.json
         run: |
           python -c "
-          import os, json
+          import os
+          import json
 
-          # Supported extensions
-          IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'}
-          VIDEO_EXTS = {'.mp4', '.webm', '.mov'}
+          IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg'}
+          VIDEO_EXTS = {'.mp4', '.webm', '.mov', '.mkv'}
 
-          gallery_items = []
+          base_dirs = ['Photos', 'Videos', 'Video']
+          albums = {}
+          media_items = []
 
-          # Recursively scan all subfolders
-          for root, dirs, files in os.walk('.'):
-              # Skip hidden folders like .git and .github
-              dirs[:] = [d for d in dirs if not d.startswith('.')]
-              
-              for file in files:
-                  ext = os.path.splitext(file)[1].lower()
-                  # Normalizing file paths for web usage (forward slashes)
-                  rel_path = os.path.relpath(os.path.join(root, file), '.').replace('\\\\', '/')
-                  
-                  # Ignore files sitting directly in root directory; focus on subfolder media
-                  if '/' in rel_path:
-                      if ext in IMAGE_EXTS:
-                          gallery_items.append({'src': rel_path, 'type': 'image', 'title': file})
-                      elif ext in VIDEO_EXTS:
-                          gallery_items.append({'src': rel_path, 'type': 'video', 'title': file})
+          def clean_title(text):
+              return text.replace('_', ' ').replace('-', ' ').title()
 
-          # Write out to gallery.json
-          with open('gallery.json', 'w') as f:
-              json.dump(gallery_items, f, indent=2)
+          for base in base_dirs:
+              if not os.path.exists(base):
+                  continue
 
-          print(f'Successfully updated gallery.json with {len(gallery_items)} items.')
+              for root, dirs, files in os.walk(base):
+                  rel_path = os.path.relpath(root, '.').replace('\\\\', '/')
+                  parts = [p for p in rel_path.split('/') if p]
+
+                  # Exclude root directory standalone files if needed; focus on folders
+                  if len(parts) == 1:
+                      album_id = parts[0].lower()
+                      album_title = clean_title(parts[0])
+                  else:
+                      album_id = parts[1].lower().replace(' ', '-').replace('_', '-')
+                      album_title = clean_title(parts[1])
+
+                  # Initialize album if not present
+                  if album_id not in albums:
+                      albums[album_id] = {
+                          'id': album_id,
+                          'title': album_title,
+                          'cover': '',
+                          'count': 0
+                      }
+
+                  for file in sorted(files):
+                      ext = os.path.splitext(file)[1].lower()
+                      if ext in IMAGE_EXTS or ext in VIDEO_EXTS:
+                          full_path = f'{rel_path}/{file}'
+                          media_type = 'image' if ext in IMAGE_EXTS else 'video'
+
+                          # Set first media item as album cover if empty
+                          if not albums[album_id]['cover']:
+                              albums[album_id]['cover'] = full_path
+
+                          albums[album_id]['count'] += 1
+
+                          media_items.append({
+                              'src': full_path,
+                              'name': clean_title(os.path.splitext(file)[0]),
+                              'album': album_id,
+                              'type': media_type
+                          })
+
+          # Only include albums with content
+          active_albums = [album for album in albums.values() if album['count'] > 0]
+
+          data = {
+              'albums': active_albums,
+              'media': media_items
+          }
+
+          with open('gallery-data.json', 'w', encoding='utf-8') as f:
+              json.dump(data, f, indent=2, ensure_ascii=False)
+
+          print(f'Generated gallery-data.json with {len(active_albums)} albums and {len(media_items)} items.')
           "
 
-      - name: Commit and push gallery.json
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "auto: update gallery.json with latest media assets"
-          file_pattern: "gallery.json"
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gallery-data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "auto: scan subfolders & update gallery-data.json [skip ci]" && git push)
