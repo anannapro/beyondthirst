@@ -1,0 +1,285 @@
+{
+  "albums": [
+    {
+      "id": "campaigns",
+      "title": "Community Campaigns",
+      "tag": "Campaigns",
+      "description": "Awareness drives and student pledges",
+      "cover": "Beyond Thirst project cover.png"
+    },
+    {
+      "id": "project-highlights",
+      "title": "Project Highlights",
+      "tag": "Highlights",
+      "description": "Key moments and team action photos",
+      "cover": "Photos/Awareness/nfile.txt"
+    },
+    {
+      "id": "videos",
+      "title": "Videos & Reels",
+      "tag": "Videos",
+      "description": "Documentaries and clips",
+      "cover": "Videos/nbeta"
+    }
+  ],
+  "media": [
+    {
+      "src": "Beyond Thirst project cover.png",
+      "name": "Beyond Thirst Cover Image",
+      "album": "campaigns",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Postering for awareness (1).jpeg",
+      "name": "Postering for awareness (1)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Postering for awareness (2).jpeg",
+      "name": "Postering for awareness (2)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Postering for awareness (3).jpeg",
+      "name": "Postering for awareness (3)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Postering for awareness (4).jpeg",
+      "name": "Postering for awareness (4)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Postering for awareness (5).jpeg",
+      "name": "Postering for awareness (5)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/Postering for awareness (1).jpeg",
+      "name": "Postering for awareness (1)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/Postering for awareness (2).jpeg",
+      "name": "Postering for awareness (2)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/Postering for awareness (3).jpeg",
+      "name": "Postering for awareness (3)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/Postering for awareness (4).jpeg",
+      "name": "Postering for awareness (4)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/Postering for awareness (5).jpeg",
+      "name": "Postering for awareness (5)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/Team members when after completed the project successfully.jpeg",
+      "name": "Team members when after completed the project successfully",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/educating to students 1.jpeg",
+      "name": "educating to students 1",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/educating to students.jpeg",
+      "name": "educating to students",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/educating to vendors (1).jpeg",
+      "name": "educating to vendors (1)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/educating to vendors (2).jpeg",
+      "name": "educating to vendors (2)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/educating to vendors (3).jpeg",
+      "name": "educating to vendors (3)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/educating to vendors (4).jpeg",
+      "name": "educating to vendors (4)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/educating to vendors (5).jpeg",
+      "name": "educating to vendors (5)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/educating to vendors (6).jpeg",
+      "name": "educating to vendors (6)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/educating to vendors (7).jpeg",
+      "name": "educating to vendors (7)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/giving awareness Leaflets to vendors (1).jpeg",
+      "name": "giving awareness Leaflets to vendors (1)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/giving awareness Leaflets to vendors (2).jpeg",
+      "name": "giving awareness Leaflets to vendors (2)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/spreading awareness Leaflets to DUES as an organization.jpeg",
+      "name": "spreading awareness Leaflets to DUES as an organization",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/spreading awareness Leaflets to students (2).jpeg",
+      "name": "spreading awareness Leaflets to students (2)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/spreading awareness Leaflets to students (3).jpeg",
+      "name": "spreading awareness Leaflets to students (3)",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Project Highlights/spreading awareness Leaflets to students.jpeg",
+      "name": "spreading awareness Leaflets to students",
+      "album": "project-highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/Team members when after completed the project successfully.jpeg",
+      "name": "Team members when after completed the project successfully",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/educating to students 1.jpeg",
+      "name": "educating to students 1",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/educating to students.jpeg",
+      "name": "educating to students",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/educating to vendors (1).jpeg",
+      "name": "educating to vendors (1)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/educating to vendors (2).jpeg",
+      "name": "educating to vendors (2)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/educating to vendors (3).jpeg",
+      "name": "educating to vendors (3)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/educating to vendors (4).jpeg",
+      "name": "educating to vendors (4)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/educating to vendors (5).jpeg",
+      "name": "educating to vendors (5)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/educating to vendors (6).jpeg",
+      "name": "educating to vendors (6)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/educating to vendors (7).jpeg",
+      "name": "educating to vendors (7)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/giving awareness Leaflets to vendors (1).jpeg",
+      "name": "giving awareness Leaflets to vendors (1)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/giving awareness Leaflets to vendors (2).jpeg",
+      "name": "giving awareness Leaflets to vendors (2)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/spreading awareness Leaflets to DUES as an organization.jpeg",
+      "name": "spreading awareness Leaflets to DUES as an organization",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/spreading awareness Leaflets to students (2).jpeg",
+      "name": "spreading awareness Leaflets to students (2)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/spreading awareness Leaflets to students (3).jpeg",
+      "name": "spreading awareness Leaflets to students (3)",
+      "album": "highlights",
+      "type": "image"
+    },
+    {
+      "src": "Photos/spreading awareness Leaflets to students.jpeg",
+      "name": "spreading awareness Leaflets to students",
+      "album": "highlights",
+      "type": "image"
+    }
+  ]
+}
