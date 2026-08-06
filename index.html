@@ -30,9 +30,6 @@
             --radius-lg: 28px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --hero-img: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(2, 132, 199, 0.8));
-            --inspire-bg: linear-gradient(135deg, #0284c7 0%, #0ea5e9 35%, #06b6d4 70%, #0f172a 100%);
-            --inspire-author: #38bdf8;
-            --inspire-text: #ffffff;
         }
         [data-theme="dark"] {
             --text-dark: #e2e8f0;
@@ -44,9 +41,6 @@
             --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
             --shadow-lg: 0 20px 35px -10px rgba(0, 0, 0, 0.6);
             --bg-light-card: #0f1b30;
-            --inspire-bg: linear-gradient(135deg, #06152d 0%, #092540 40%, #0d3859 70%, #020914 100%);
-            --inspire-author: #7dd3fc;
-            --inspire-text: #f8fafc;
         }
 
         /* ── reset & mobile optimizations ── */
@@ -83,8 +77,8 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            z-index: 999;
-            opacity: 0.75;
+            z-index: 0;
+            opacity: 0.5;
         }
         .aurora {
             position: fixed;
@@ -614,7 +608,7 @@
 
         /* ── inspire page ── */
         .inspire-page-bg {
-            background: var(--inspire-bg);
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 35%, #06b6d4 70%, #0f172a 100%);
             min-height: 100vh;
             position: relative;
             overflow: hidden;
@@ -622,45 +616,24 @@
             align-items: center;
             justify-content: center;
             padding: 60px 20px;
-            color: var(--inspire-text);
-            transition: background 0.4s ease;
+            color: #fff;
         }
-
-        /* Colorful floating water bubbles effect for Water That Inspires */
-        .inspire-bubble {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: floatUp 12s infinite linear;
-            opacity: 0.6;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0.6); opacity: 0; }
-            20% { opacity: 0.7; }
-            80% { opacity: 0.7; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-        }
-
         .inspire-quote-card {
-            background: rgba(15, 23, 42, 0.45);
+            background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border: 2px solid rgba(56, 189, 248, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: var(--radius-lg);
             padding: 50px 40px;
             max-width: 820px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(56, 189, 248, 0.2);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 2;
             transform: scale(0.85);
             opacity: 0;
             transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        [data-theme="light"] .inspire-quote-card {
-            background: rgba(255, 255, 255, 0.25);
-            border: 2px solid rgba(255, 255, 255, 0.6);
         }
         .inspire-quote-card.show {
             opacity: 1;
@@ -673,32 +646,22 @@
             font-size: 52px;
             color: var(--accent-sky);
             margin-bottom: 18px;
-            filter: drop-shadow(0 2px 8px rgba(0, 242, 254, 0.4));
         }
         .inspire-quote-text {
             font-size: 25px;
             font-weight: 600;
             line-height: 1.6;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             min-height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         .inspire-quote-author {
-            font-size: 20px;
-            color: #facc15;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.7), 0 0 12px rgba(250, 204, 21, 0.5);
-            background: rgba(15, 23, 42, 0.6);
-            padding: 8px 18px;
-            border-radius: 30px;
-            display: inline-block;
-            border: 1px solid rgba(250, 204, 21, 0.4);
+            font-size: 16.5px;
+            color: var(--accent-sky);
+            font-weight: 700;
+            letter-spacing: 1px;
         }
         .quote-controls {
             display: flex;
@@ -708,8 +671,8 @@
             flex-wrap: wrap;
         }
         .quote-btn {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(2, 132, 199, 0.6));
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.45);
             color: #fff;
             padding: 11px 22px;
             border-radius: 30px;
@@ -718,7 +681,6 @@
             transition: var(--transition);
             font-size: 14px;
             min-height: 44px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         .quote-btn:hover {
             background: #fff;
@@ -735,14 +697,13 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.35);
             transition: var(--transition);
         }
         .quote-dot.active {
-            background: #facc15;
+            background: #fff;
             width: 22px;
             border-radius: 4px;
-            box-shadow: 0 0 8px #facc15;
         }
 
         /* ── games ── */
@@ -1618,13 +1579,6 @@
     <!-- ─── INSPIRE ─── -->
     <main id="page-inspire" class="page-view">
         <div class="inspire-page-bg">
-            <!-- Colorful floating water droplets/bubbles -->
-            <div class="inspire-bubble" style="width: 40px; height: 40px; background: rgba(56, 189, 248, 0.6); left: 10%; animation-delay: 0s;"></div>
-            <div class="inspire-bubble" style="width: 60px; height: 60px; background: rgba(20, 184, 166, 0.5); left: 25%; animation-delay: 2s;"></div>
-            <div class="inspire-bubble" style="width: 30px; height: 30px; background: rgba(250, 204, 21, 0.6); left: 45%; animation-delay: 4s;"></div>
-            <div class="inspire-bubble" style="width: 50px; height: 50px; background: rgba(236, 72, 153, 0.5); left: 65%; animation-delay: 1.5s;"></div>
-            <div class="inspire-bubble" style="width: 70px; height: 70px; background: rgba(59, 130, 246, 0.5); left: 85%; animation-delay: 3s;"></div>
-
             <div class="inspire-quote-card show" id="quoteCard">
                 <i class="fa-solid fa-quote-left quote-icon-large"></i>
                 <div class="inspire-quote-text" id="quoteDisplayText">"Water is the driving force of all nature."</div>
@@ -1860,7 +1814,7 @@
 
     <script>
         // ════════════════════════════════════════════════════════════
-        //  1.  BACKGROUND RAIN (REALISTIC STREAK RAIN EFFECT ACROSS ALL PAGES)
+        //  1.  BACKGROUND RAIN
         // ════════════════════════════════════════════════════════════
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
@@ -1880,9 +1834,9 @@
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height - canvas.height;
-                this.length = Math.random() * 20 + 15;
-                this.speed = Math.random() * 8 + 12;
-                this.alpha = Math.random() * 0.4 + 0.2;
+                this.speed = Math.random() * 3 + 2;
+                this.radius = Math.random() * 1.6 + 0.8;
+                this.alpha = Math.random() * 0.4 + 0.15;
             }
             update() {
                 this.y += this.speed;
@@ -1890,14 +1844,12 @@
             }
             draw() {
                 ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.x - 2, this.y + this.length);
-                ctx.strokeStyle = 'rgba(56,189,248,' + this.alpha + ')';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(56,189,248,' + this.alpha + ')';
+                ctx.fill();
             }
         }
-        for (let i = 0; i < (isMobile ? 60 : 140); i++) particles.push(new Drop());
+        for (let i = 0; i < (isMobile ? 28 : 60); i++) particles.push(new Drop());
 
         function animateCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1976,8 +1928,6 @@
             applyTheme();
             showToast(darkMode ? 'Dark mode on' : 'Light mode on');
         }
-
-        applyTheme();
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
@@ -2110,6 +2060,25 @@
             g1Birds.push({ x: Math.random() * 600, y: 30 + Math.random() * 80, s: 1 + Math.random() * 1.5, p: Math.random() * 5 });
         }
 
+        function drawCan(cx, cy) {
+            g1ctx.save();
+            g1ctx.translate(cx, cy);
+            g1ctx.fillStyle = '#0284c7';
+            g1ctx.beginPath();
+            g1ctx.roundRect(-25, -15, 50, 30, 8);
+            g1ctx.fill();
+            g1ctx.strokeStyle = '#0369a1';
+            g1ctx.lineWidth = 4;
+            g1ctx.beginPath();
+            g1ctx.arc(-22, 0, 12, Math.PI * 0.5, Math.PI * 1.5);
+            g1ctx.stroke();
+            g1ctx.beginPath();
+            g1ctx.moveTo(25, -5);
+            g1ctx.lineTo(40, -18);
+            g1ctx.stroke();
+            g1ctx.restore();
+        }
+
         function drawG1Scene() {
             if (!g1cv.width) sizeG1();
             const w = g1cv.width, h = g1cv.height;
@@ -2192,35 +2161,357 @@
                 }
             }
             g1ctx.restore();
+
+            if (g1Active) { drawCan(g1PotX, 70); }
+
+            // Update & Render drops
+            for (let i = g1Drops.length - 1; i >= 0; i--) {
+                const d = g1Drops[i];
+                d.y += d.vy;
+                g1ctx.fillStyle = '#38bdf8';
+                g1ctx.beginPath();
+                g1ctx.arc(d.x, d.y, 6, 0, Math.PI * 2);
+                g1ctx.fill();
+
+                if (d.y >= py - 10 && Math.abs(d.x - px) < 45) {
+                    g1Health = Math.min(100, g1Health + 8);
+                    g1Score += 10;
+                    if (g1Health >= 100) {
+                        g1Saved++;
+                        g1Health = 25;
+                        showToast('Plant Healthy! Saved another!');
+                    }
+                    g1Drops.splice(i, 1);
+                    updateG1UI();
+                } else if (d.y > h * 0.8) {
+                    g1Wasted++;
+                    g1Drops.splice(i, 1);
+                    updateG1UI();
+                    if (g1Wasted >= 5) endG1();
+                }
+            }
+            if (g1Active) requestAnimationFrame(drawG1Scene);
         }
 
+        const gameContainer = document.getElementById('game1Canvas');
+        function handleG1Move(e) {
+            if (!g1Active) return;
+            const r = g1cv.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            g1PotX = Math.max(30, Math.min(g1cv.width - 30, clientX - r.left));
+        }
+        gameContainer.addEventListener('mousemove', handleG1Move);
+        gameContainer.addEventListener('touchmove', handleG1Move);
+
+        let dropTimer = null;
         function startGame1() {
-            document.getElementById('game1Overlay').style.display = 'none';
-            g1Score = 0; g1Saved = 0; g1Wasted = 0; g1Health = 20; g1Active = true;
-            updateG1Stats();
             sizeG1();
-            requestAnimationFrame(game1Loop);
+            g1Active = true;
+            g1Score = 0; g1Saved = 0; g1Wasted = 0; g1Health = 25; g1Drops = [];
+            updateG1UI();
+            document.getElementById('game1Overlay').style.display = 'none';
+            if (dropTimer) clearInterval(dropTimer);
+            dropTimer = setInterval(() => {
+                if (g1Active) g1Drops.push({ x: g1PotX + 38, y: 55, vy: 4.5 });
+            }, 600);
+            drawG1Scene();
         }
 
-        function quitGame1() {
-            g1Active = false;
-            document.getElementById('game1Overlay').style.display = 'flex';
-        }
-
-        function updateG1Stats() {
+        function updateG1UI() {
             document.getElementById('game1Score').innerText = g1Score;
             document.getElementById('game1Saved').innerText = g1Saved;
             document.getElementById('game1Wasted').innerText = g1Wasted;
         }
 
-        function game1Loop() {
-            if (!g1Active) return;
-            drawG1Scene();
-            requestAnimationFrame(game1Loop);
+        function endG1() {
+            g1Active = false;
+            if (dropTimer) clearInterval(dropTimer);
+            document.getElementById('game1Overlay').style.display = 'flex';
+            document.getElementById('game1Overlay').innerHTML = `
+                <h2 style="font-size:26px;color:#ef4444;margin-bottom:10px;">Game Over</h2>
+                <p style="margin-bottom:20px;">You wasted too much water! Saved <b>${g1Saved}</b> plants.</p>
+                <button class="learn-more" onclick="startGame1()">Try Again</button>
+            `;
         }
 
-        // Initialize Language
-        applyLang();
+        function quitGame1() {
+            g1Active = false;
+            if (dropTimer) clearInterval(dropTimer);
+            document.getElementById('game1Overlay').style.display = 'flex';
+            showPage('home');
+        }
+
+        // ════════════════════════════════════════════════════════════
+        //  7.  GAME 2 (THIRSTY CHILD PUZZLE)
+        // ════════════════════════════════════════════════════════════
+        let g2Target = 75, g2Current = 0, g2WastedVal = 0, valveAngle = 0, targetAngle = 120, pouring = false, pourInterval = null;
+
+        function startGame2() {
+            document.getElementById('game2IntroOverlay').style.display = 'none';
+            document.getElementById('game2MainArea').style.display = 'block';
+            resetG2Round();
+        }
+
+        function resetG2Round() {
+            g2Target = Math.floor(Math.random() * 40) + 50;
+            targetAngle = Math.floor(Math.random() * 260) + 40;
+            g2Current = 0;
+            valveAngle = 0;
+            document.getElementById('g2TargetVal').innerText = g2Target + '%';
+            document.getElementById('g2CurrentVal').innerText = '0%';
+            document.getElementById('g2TargetLine').style.bottom = g2Target + '%';
+            document.getElementById('g2WaterFill').style.height = '0%';
+            document.getElementById('valveTarget').style.transform = `translate(-50%, -100%) rotate(${targetAngle}deg)`;
+            document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(0deg)`;
+        }
+
+        const dial = document.getElementById('valveDial');
+        let isDraggingDial = false;
+        function rotateValve(e) {
+            if (!isDraggingDial) return;
+            const r = dial.getBoundingClientRect();
+            const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            let deg = Math.atan2(clientY - cy, clientX - cx) * (180 / Math.PI) + 90;
+            if (deg < 0) deg += 360;
+            valveAngle = deg;
+            document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(${deg}deg)`;
+        }
+
+        dial.addEventListener('mousedown', () => isDraggingDial = true);
+        dial.addEventListener('touchstart', () => isDraggingDial = true);
+        window.addEventListener('mouseup', () => isDraggingDial = false);
+        window.addEventListener('touchend', () => isDraggingDial = false);
+        window.addEventListener('mousemove', rotateValve);
+        window.addEventListener('touchmove', rotateValve);
+
+        const pourBtn = document.getElementById('pourBtn');
+        function startPouring() {
+            if (Math.abs(valveAngle - targetAngle) > 20) {
+                showToast('Align the green and white needles first!');
+                return;
+            }
+            pouring = true;
+            pourInterval = setInterval(() => {
+                if (!pouring) return;
+                g2Current += 1.5;
+                document.getElementById('g2CurrentVal').innerText = Math.floor(g2Current) + '%';
+                document.getElementById('g2WaterFill').style.height = Math.min(100, g2Current) + '%';
+                if (g2Current > 100) stopPouring();
+            }, 50);
+        }
+
+        function stopPouring() {
+            if (!pouring) return;
+            pouring = false;
+            clearInterval(pourInterval);
+            const diff = Math.abs(g2Current - g2Target);
+            if (diff <= 6) {
+                showToast('Perfect! The child is happy!');
+                setTimeout(resetG2Round, 1500);
+            } else {
+                g2WastedVal++;
+                document.getElementById('g2Wasted').innerText = g2WastedVal;
+                showToast(g2Current > g2Target ? 'Overfilled! Water wasted.' : 'Too little water!');
+                if (g2WastedVal >= 3) {
+                    showToast('Game over! Try again.');
+                    g2WastedVal = 0;
+                    document.getElementById('g2Wasted').innerText = 0;
+                }
+                setTimeout(resetG2Round, 1500);
+            }
+        }
+
+        pourBtn.addEventListener('mousedown', startPouring);
+        pourBtn.addEventListener('touchstart', startPouring);
+        window.addEventListener('mouseup', stopPouring);
+        window.addEventListener('touchend', stopPouring);
+
+        function quitGame2() {
+            document.getElementById('game2MainArea').style.display = 'none';
+            document.getElementById('game2IntroOverlay').style.display = 'flex';
+            showPage('home');
+        }
+
+        // ════════════════════════════════════════════════════════════
+        //  8.  MEDIA GALLERY & ALBUMS SYSTEM
+        // ════════════════════════════════════════════════════════════
+        const albumsData = [
+            { id: 'alb1', title: 'Campus Water Audits', tag: 'Audits', count: '12 Photos', preview: ['Beyond Thirst project cover.png', 'logo.png'] },
+            { id: 'alb2', title: 'Community Workshops', tag: 'Workshops', count: '8 Photos', preview: ['Beyond Thirst project cover.png'] },
+            { id: 'alb3', title: 'Youth Summit Highlights', tag: 'Summit', count: '15 Photos', preview: ['logo.png', 'Beyond Thirst project cover.png'] }
+        ];
+
+        let galleryMedia = [
+            { type: 'image', src: 'Beyond Thirst project cover.png', caption: 'Student Audit Team inspecting campus waterlines', cat: 'photos', album: 'alb1' },
+            { type: 'image', src: 'logo.png', caption: 'Beyond Thirst Official Emblem', cat: 'photos', album: 'alb1' },
+            { type: 'image', src: 'Beyond Thirst project cover.png', caption: 'Youth Water Action Workshop session', cat: 'photos', album: 'alb2' },
+            { type: 'image', src: 'Beyond Thirst project cover.png', caption: 'Rainwater harvesting system setup', cat: 'photos', album: 'alb3' }
+        ];
+
+        let lightboxIdx = 0;
+        let currentFilteredMedia = [];
+
+        function renderAlbums() {
+            const container = document.getElementById('albumsContainer');
+            if (!container) return;
+            container.innerHTML = albumsData.map(alb => `
+                <div class="album-card" onclick="viewAlbum('${alb.id}')">
+                    <span class="album-tag">${alb.tag}</span>
+                    <div class="album-preview ${alb.preview.length === 1 ? 'single-img' : ''}">
+                        ${alb.preview.map(img => `<img src="${img}" alt="${alb.title}" onerror="this.src='logo.png'" />`).join('')}
+                    </div>
+                    <div class="album-info">
+                        <h3>${alb.title}</h3>
+                        <p><span>${alb.count}</span> <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderGallery(filter) {
+            const container = document.getElementById('galleryContainer');
+            if (!container) return;
+
+            let list = [];
+            if (filter === 'all') list = galleryMedia;
+            else if (filter === 'photos') list = galleryMedia.filter(m => m.type === 'image');
+            else if (filter === 'videos') list = galleryMedia.filter(m => m.type === 'video');
+            else if (filter === 'uploads') list = galleryMedia.filter(m => m.isUpload);
+            else list = galleryMedia.filter(m => m.album === filter);
+
+            currentFilteredMedia = list;
+
+            if (list.length === 0) {
+                container.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-light);">No media found for this category.</p>`;
+                return;
+            }
+
+            container.innerHTML = list.map((item, idx) => `
+                <div class="gallery-item" onclick="openLightbox(${idx})">
+                    ${item.type === 'video' ? '<span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>' : ''}
+                    ${item.type === 'video' 
+                        ? `<video src="${item.src}" muted loop></video>` 
+                        : `<img src="${item.src}" alt="${item.caption}" onerror="this.src='Beyond Thirst project cover.png'" />`}
+                    <div class="gallery-caption">
+                        <span>${item.caption}</span>
+                        <i class="fa-solid fa-expand"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function switchGalleryView(view, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const albums = document.getElementById('albumsContainer');
+            const gallery = document.getElementById('galleryContainer');
+
+            if (view === 'albums') {
+                albums.style.display = 'grid';
+                gallery.style.display = 'none';
+            } else {
+                albums.style.display = 'none';
+                gallery.style.display = 'columns';
+                renderGallery(view);
+            }
+        }
+
+        function viewAlbum(albId) {
+            const albums = document.getElementById('albumsContainer');
+            const gallery = document.getElementById('galleryContainer');
+            albums.style.display = 'none';
+            gallery.style.display = 'columns';
+            renderGallery(albId);
+        }
+
+        function populateHomeGalleryPreview() {
+            const previewContainer = document.getElementById('homeGalleryPreview');
+            if (!previewContainer) return;
+            previewContainer.innerHTML = galleryMedia.slice(0, 3).map((item, idx) => `
+                <div class="gallery-item" onclick="showPage('gallery')">
+                    <img src="${item.src}" alt="${item.caption}" onerror="this.src='Beyond Thirst project cover.png'" />
+                    <div class="gallery-caption">
+                        <span>${item.caption}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Secret Admin Uploader (Press 'Ctrl + Shift + U' to reveal)
+        window.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'u') {
+                const zone = document.getElementById('secretUploadZone');
+                zone.classList.toggle('secret-active');
+                showToast('Admin Upload Zone Toggled');
+            }
+        });
+
+        document.getElementById('mediaUpload').addEventListener('change', function (e) {
+            const files = Array.from(e.target.files);
+            files.forEach(file => {
+                const url = URL.createObjectURL(file);
+                const isVid = file.type.startsWith('video/');
+                galleryMedia.unshift({
+                    type: isVid ? 'video' : 'image',
+                    src: url,
+                    caption: file.name,
+                    cat: isVid ? 'videos' : 'photos',
+                    isUpload: true
+                });
+            });
+            showToast(`${files.length} file(s) added to My Uploads`);
+            switchGalleryView('uploads');
+        });
+
+        // Lightbox Modal Functions
+        function openLightbox(idx) {
+            lightboxIdx = idx;
+            const modal = document.getElementById('lightboxModal');
+            modal.style.display = 'flex';
+            updateLightboxContent();
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').style.display = 'none';
+        }
+
+        function navigateLightbox(dir) {
+            lightboxIdx = (lightboxIdx + dir + currentFilteredMedia.length) % currentFilteredMedia.length;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            const item = currentFilteredMedia[lightboxIdx];
+            if (!item) return;
+            const target = document.getElementById('lightboxTarget');
+            document.getElementById('lightboxCaption').innerText = item.caption;
+            target.innerHTML = item.type === 'video'
+                ? `<video src="${item.src}" controls autoplay style="max-height:75vh;width:100%;"></video>`
+                : `<img src="${item.src}" alt="${item.caption}" style="max-height:75vh;object-fit:contain;" />`;
+        }
+
+        // ════════════════════════════════════════════════════════════
+        //  9.  FORM & DIRECT FEEDBACK HANDLER
+        // ════════════════════════════════════════════════════════════
+        function handleDirectFeedback(e) {
+            e.preventDefault();
+            const form = e.target;
+            showToast('Thank you! Your feedback was delivered.');
+            form.reset();
+        }
+
+        // ════════════════════════════════════════════════════════════
+        //  10. INITIALIZATION
+        // ════════════════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTheme();
+            applyLang();
+            renderAlbums();
+            populateHomeGalleryPreview();
+        });
     </script>
 </body>
 </html>
