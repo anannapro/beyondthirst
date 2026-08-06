@@ -1902,7 +1902,6 @@
                 const t = el.getAttribute('data-' + currentLang);
                 if (t) el.innerHTML = t;
             });
-            updateQuoteDisplay(false);
         }
 
         function toggleLanguage() {
@@ -1937,57 +1936,19 @@
         }
 
         // ════════════════════════════════════════════════════════════
-        //  5.  INSPIRE QUOTES & BENGALI PROVERBS
+        //  5.  INSPIRE QUOTES
         // ════════════════════════════════════════════════════════════
         const quotesList = [
-            { 
-                t_en: "Bindu bindu jole sindhu hoy — Drop by drop, water forms an ocean.", 
-                t_bn: "বিন্দু বিন্দু জলে সিন্ধু হয় — ছোট ছোট প্রচেষ্টায় বিশাল সাফল্য আসে।", 
-                a_en: "Bengali Proverb", 
-                a_bn: "বাংলা প্রবাদ" 
-            },
-            { 
-                t_en: "Panir opor nam jibon — Another name for water is life.", 
-                t_bn: "পানির অপর নাম জীবন — প্রতিটি ফোঁটা সংরক্ষণে তৈরি হয় নতুন সম্ভাবনা।", 
-                a_en: "Bengali Proverb", 
-                a_bn: "বাংলা প্রবাদ" 
-            },
-            { 
-                t_en: "Iccha thakle upay hoy — Where there is a will, there is a way.", 
-                t_bn: "ইচ্ছা থাকলে উপায় হয় — সংকল্প থাকলে শুভ কাজ সহজ হয়।", 
-                a_en: "Bengali Proverb", 
-                a_bn: "বাংলা প্রবাদ" 
-            },
-            { 
-                t_en: "Ekotay bol — Unity is strength.", 
-                t_bn: "একতায় বল — আমরা সবাই মিলে পানির নিরাপত্তা অর্জন করতে পারি।", 
-                a_en: "Bengali Proverb", 
-                a_bn: "বাংলা প্রবাদ" 
-            },
-            { 
-                t_en: "Water is the driving force of all nature.", 
-                t_bn: "পানিই হলো সকল প্রকৃতির মূল চালিকাশক্তি।", 
-                a_en: "Leonardo da Vinci", 
-                a_bn: "লিওনার্দো দ্য ভিঞ্চি" 
-            },
-            { 
-                t_en: "Thousands have lived without love, not one without water.", 
-                t_bn: "ভালোবাসা ছাড়া হাজার মানুষ বেঁচেছে, কিন্তু পানি ছাড়া একজনও নয়।", 
-                a_en: "W. H. Auden", 
-                a_bn: "ডব্লিউ. এইচ. অডেন" 
-            },
-            { 
-                t_en: "We never know the worth of water till the well is dry.", 
-                t_bn: "কুয়া না শুকানো পর্যন্ত আমরা পানির প্রকৃত মূল্য বুঝি না।", 
-                a_en: "Thomas Fuller", 
-                a_bn: "থমাস ফুলার" 
-            },
-            { 
-                t_en: "Sobure mewa phole — Patience and persistence yield sweet fruit.", 
-                t_bn: "সবুরে মেওয়া ফলে — ধারাবাহিক প্রচেষ্টায় পানির সুরক্ষা নিশ্চিত হবে।", 
-                a_en: "Bengali Proverb", 
-                a_bn: "বাংলা প্রবাদ" 
-            }
+            { t: "Water is the driving force of all nature.", a: "Leonardo da Vinci" },
+            { t: "Thousands have lived without love, not one without water.", a: "W. H. Auden" },
+            { t: "We never know the worth of water till the well is dry.", a: "Thomas Fuller" },
+            { t: "No water, no life. No blue, no green.", a: "Sylvia Earle" },
+            { t: "Pure water is the world's first and foremost medicine.", a: "Slovakian Proverb" },
+            { t: "Water is life's matter and matrix, mother and medium.", a: "Albert Szent-Gyorgyi" },
+            { t: "Save water today for a better tomorrow.", a: "Beyond Thirst" },
+            { t: "A drop of water is worth more than a sack of gold to a thirsty man.", a: "Uzbek Proverb" },
+            { t: "When you drink water, remember the spring.", a: "Chinese Proverb" },
+            { t: "Be like water: adaptable, essential, and relentless.", a: "Bruce Lee" }
         ];
         let currentQuoteIdx = 0, quoteShuffleOn = true;
 
@@ -1998,10 +1959,8 @@
             card.classList.remove('peek');
             setTimeout(() => {
                 const q = quotesList[currentQuoteIdx];
-                const text = currentLang === 'bn' ? q.t_bn : q.t_en;
-                const author = currentLang === 'bn' ? q.a_bn : q.a_en;
-                document.getElementById('quoteDisplayText').innerText = '"' + text + '"';
-                document.getElementById('quoteDisplayAuthor').innerText = '— ' + author;
+                document.getElementById('quoteDisplayText').innerText = '"' + q.t + '"';
+                document.getElementById('quoteDisplayAuthor').innerText = '— ' + q.a;
                 card.classList.add('show');
                 if (peek) setTimeout(() => card.classList.add('peek'), 400);
                 renderQuoteProgress();
@@ -2023,9 +1982,10 @@
             if (!bar) return;
             bar.innerHTML = '';
             const total = quotesList.length;
-            for (let i = 0; i < total; i++) {
+            const dots = Math.min(total, 12);
+            for (let i = 0; i < dots; i++) {
                 const d = document.createElement('div');
-                d.className = 'quote-dot' + (i === currentQuoteIdx ? ' active' : '');
+                d.className = 'quote-dot' + (i === Math.floor(currentQuoteIdx / total * dots) ? ' active' : '');
                 bar.appendChild(d);
             }
         }
@@ -2045,45 +2005,16 @@
         // ════════════════════════════════════════════════════════════
         const g1cv = document.getElementById('game1Cv');
         const g1ctx = g1cv.getContext('2d');
-        let g1Score = 0, g1Saved = 0, g1Wasted = 0, g1Active = false, g1PotX = 0, g1Health = 20, g1Birds = [], g1Drops = [];
+        let g1Score = 0, g1Saved = 0, g1Wasted = 0, g1Active = false, g1PotX = 0, g1Health = 0, g1Birds = [], g1Drops = [];
 
         function sizeG1() {
-            if (!g1cv.parentElement) return;
             const r = g1cv.parentElement.getBoundingClientRect();
-            g1cv.width = r.width || 800;
-            g1cv.height = r.height || 480;
-            g1PotX = g1cv.width / 2;
-        }
-        window.addEventListener('resize', sizeG1);
-
-        for (let i = 0; i < 4; i++) {
-            g1Birds.push({ x: Math.random() * 600, y: 30 + Math.random() * 80, s: 1 + Math.random() * 1.5, p: Math.random() * 5 });
-        }
-
-        function drawCan(cx, cy) {
-            g1ctx.save();
-            g1ctx.translate(cx, cy);
-            g1ctx.fillStyle = '#0284c7';
-            g1ctx.beginPath();
-            g1ctx.roundRect(-25, -15, 50, 30, 8);
-            g1ctx.fill();
-            g1ctx.strokeStyle = '#0369a1';
-            g1ctx.lineWidth = 4;
-            g1ctx.beginPath();
-            g1ctx.arc(-22, 0, 12, Math.PI * 0.5, Math.PI * 1.5);
-            g1ctx.stroke();
-            g1ctx.beginPath();
-            g1ctx.moveTo(25, -5);
-            g1ctx.lineTo(40, -18);
-            g1ctx.stroke();
-            g1ctx.restore();
+            g1cv.width = r.width;
+            g1cv.height = r.height;
         }
 
         function drawG1Scene() {
-            if (!g1cv.width) sizeG1();
             const w = g1cv.width, h = g1cv.height;
-            g1ctx.clearRect(0, 0, w, h);
-
             const sky = g1ctx.createLinearGradient(0, 0, 0, h * 0.6);
             sky.addColorStop(0, '#6bb6e3');
             sky.addColorStop(1, '#c9ecf7');
@@ -2100,6 +2031,17 @@
             g1ctx.arc(w - 90, 70, 70, 0, Math.PI * 2);
             g1ctx.fill();
             g1ctx.restore();
+
+            g1ctx.fillStyle = '#5fae5f';
+            g1ctx.beginPath();
+            g1ctx.moveTo(0, h * 0.6);
+            for (let x = 0; x <= w; x += 20) {
+                g1ctx.lineTo(x, h * 0.55 + Math.sin(x * 0.02) * 12);
+            }
+            g1ctx.lineTo(w, h);
+            g1ctx.lineTo(0, h);
+            g1ctx.closePath();
+            g1ctx.fill();
 
             const gr = g1ctx.createLinearGradient(0, h * 0.6, 0, h);
             gr.addColorStop(0, '#4f8f3f');
@@ -2123,7 +2065,7 @@
                 g1ctx.restore();
             });
 
-            const px = w / 2, py = h * 0.65;
+            const px = w / 2, py = h * 0.62;
             g1ctx.save();
             g1ctx.translate(px, py);
             const grow = g1Health / 100;
@@ -2163,312 +2105,349 @@
             g1ctx.restore();
 
             if (g1Active) { drawCan(g1PotX, 70); }
+            g1Drops.forEach(d => {
+                d.y += 6;
+                g1ctx.fillStyle = 'rgba(56,189,248,0.9)';
+                g1ctx.beginPath();
+                g1ctx.ellipse(d.x, d.y, 4, 7, 0, 0, Math.PI * 2);
+                g1ctx.fill();
+            });
 
-            // Update & Render drops
+            const plantBaseY = h * 0.62;
             for (let i = g1Drops.length - 1; i >= 0; i--) {
                 const d = g1Drops[i];
-                d.y += d.vy;
-                g1ctx.fillStyle = '#38bdf8';
-                g1ctx.beginPath();
-                g1ctx.arc(d.x, d.y, 6, 0, Math.PI * 2);
-                g1ctx.fill();
-
-                if (d.y >= py - 10 && Math.abs(d.x - px) < 45) {
-                    g1Health = Math.min(100, g1Health + 8);
-                    g1Score += 10;
-                    if (g1Health >= 100) {
-                        g1Saved++;
-                        g1Health = 25;
-                        showToast('Plant Healthy! Saved another!');
+                if (d.y >= plantBaseY) {
+                    if (Math.abs(d.x - px) < 45) {
+                        g1Health = Math.min(100, g1Health + 8);
+                        g1Score += 10;
+                        document.getElementById('game1Score').innerText = g1Score;
+                        if (g1Health >= 100) bloomPlant();
+                    } else {
+                        g1Wasted++;
+                        document.getElementById('game1Wasted').innerText = g1Wasted;
+                        if (g1Wasted >= 5) endGame1('over');
                     }
                     g1Drops.splice(i, 1);
-                    updateG1UI();
-                } else if (d.y > h * 0.8) {
-                    g1Wasted++;
+                } else if (d.y > h) {
                     g1Drops.splice(i, 1);
-                    updateG1UI();
-                    if (g1Wasted >= 5) endG1();
                 }
             }
-            if (g1Active) requestAnimationFrame(drawG1Scene);
+            if (g1Active && Math.random() < 0.12) g1Drops.push({ x: g1PotX, y: 90 });
         }
 
-        const gameContainer = document.getElementById('game1Canvas');
-        function handleG1Move(e) {
-            if (!g1Active) return;
-            const r = g1cv.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            g1PotX = Math.max(30, Math.min(g1cv.width - 30, clientX - r.left));
-        }
-        gameContainer.addEventListener('mousemove', handleG1Move);
-        gameContainer.addEventListener('touchmove', handleG1Move);
-
-        let dropTimer = null;
-        function startGame1() {
-            sizeG1();
-            g1Active = true;
-            g1Score = 0; g1Saved = 0; g1Wasted = 0; g1Health = 25; g1Drops = [];
-            updateG1UI();
-            document.getElementById('game1Overlay').style.display = 'none';
-            if (dropTimer) clearInterval(dropTimer);
-            dropTimer = setInterval(() => {
-                if (g1Active) g1Drops.push({ x: g1PotX + 38, y: 55, vy: 4.5 });
-            }, 600);
-            drawG1Scene();
+        function drawCan(x, y) {
+            g1ctx.save();
+            g1ctx.translate(x, y);
+            g1ctx.fillStyle = '#94a3b8';
+            g1ctx.strokeStyle = '#475569';
+            g1ctx.lineWidth = 2;
+            g1ctx.beginPath();
+            g1ctx.roundRect(-22, -14, 44, 28, 6);
+            g1ctx.fill();
+            g1ctx.stroke();
+            g1ctx.beginPath();
+            g1ctx.moveTo(-22, 14);
+            g1ctx.lineTo(-34, 30);
+            g1ctx.lineTo(-30, 36);
+            g1ctx.lineTo(-14, 24);
+            g1ctx.fill();
+            g1ctx.stroke();
+            g1ctx.fillStyle = '#64748b';
+            g1ctx.fillRect(-6, -26, 12, 14);
+            g1ctx.restore();
         }
 
-        function updateG1UI() {
-            document.getElementById('game1Score').innerText = g1Score;
+        function bloomPlant() {
+            g1Saved++;
             document.getElementById('game1Saved').innerText = g1Saved;
-            document.getElementById('game1Wasted').innerText = g1Wasted;
+            showToast('🌱 Plant bloomed! +1 saved');
+            setTimeout(() => { g1Health = 0; }, 800);
         }
 
-        function endG1() {
+        function g1Loop() {
+            if (g1Active) drawG1Scene();
+            requestAnimationFrame(g1Loop);
+        }
+        g1Loop();
+
+        function startGame1() {
+            g1Score = 0;
+            g1Saved = 0;
+            g1Wasted = 0;
+            g1Health = 0;
+            g1Active = true;
+            g1Drops = [];
+            sizeG1();
+            if (g1Birds.length < 3) {
+                g1Birds = [{ x: 50, y: 50, s: 1.1, p: 0 }, { x: 200, y: 80, s: 1.6, p: 1 }, { x: 400, y: 40, s: 0.9, p: 2 }];
+            }
+            document.getElementById('game1Score').innerText = 0;
+            document.getElementById('game1Saved').innerText = 0;
+            document.getElementById('game1Wasted').innerText = 0;
+            document.getElementById('game1Overlay').style.display = 'none';
+        }
+
+        const g1c = document.getElementById('game1Canvas');
+
+        function g1Move(cx) {
+            if (!g1Active) return;
+            const r = g1c.getBoundingClientRect();
+            g1PotX = cx - r.left;
+        }
+        g1c.addEventListener('mousemove', e => g1Move(e.clientX));
+        g1c.addEventListener('touchmove', e => { e.preventDefault(); g1Move(e.touches[0].clientX); }, { passive: false });
+
+        function endGame1(type) {
             g1Active = false;
-            if (dropTimer) clearInterval(dropTimer);
-            document.getElementById('game1Overlay').style.display = 'flex';
-            document.getElementById('game1Overlay').innerHTML = `
-                <h2 style="font-size:26px;color:#ef4444;margin-bottom:10px;">Game Over</h2>
-                <p style="margin-bottom:20px;">You wasted too much water! Saved <b>${g1Saved}</b> plants.</p>
-                <button class="learn-more" onclick="startGame1()">Try Again</button>
-            `;
+            const ov = document.getElementById('game1Overlay');
+            ov.style.display = 'flex';
+            const tales = [
+                '"We never know the worth of water till the well is dry." — Thomas Fuller',
+                '"Every drop you save secures a greener tomorrow." — Beyond Thirst',
+                '"Water is the driving force of all nature." — Leonardo da Vinci'
+            ];
+            const t = tales[Math.floor(Math.random() * tales.length)];
+            ov.innerHTML = '<h2 style="color:' + (type === 'over' ? '#ef4444' : '#38bdf8') + ';font-size:24px;margin-bottom:10px;">' + (type === 'over' ? 'Game Over — Water Wasted!' : 'Game Paused') + '</h2><p style="margin:12px 0;max-width:480px;font-style:italic;">' + t + '</p><button class="learn-more" onclick="startGame1()">Try Again</button>';
         }
 
         function quitGame1() {
-            g1Active = false;
-            if (dropTimer) clearInterval(dropTimer);
-            document.getElementById('game1Overlay').style.display = 'flex';
-            showPage('home');
+            endGame1('quit');
         }
 
         // ════════════════════════════════════════════════════════════
         //  7.  GAME 2 (THIRSTY CHILD PUZZLE)
         // ════════════════════════════════════════════════════════════
-        let g2Target = 75, g2Current = 0, g2WastedVal = 0, valveAngle = 0, targetAngle = 120, pouring = false, pourInterval = null;
+        let g2Target = 75, g2Current = 0, g2Wasted = 0, g2Pouring = false, g2Interval = null;
+        let valveAngle = 0, targetValveAngle = 120, valveAligned = false;
 
         function startGame2() {
             document.getElementById('game2IntroOverlay').style.display = 'none';
             document.getElementById('game2MainArea').style.display = 'block';
-            resetG2Round();
+            resetGame2Round();
         }
 
-        function resetG2Round() {
-            g2Target = Math.floor(Math.random() * 40) + 50;
-            targetAngle = Math.floor(Math.random() * 260) + 40;
+        function resetGame2Round() {
             g2Current = 0;
+            targetValveAngle = Math.floor(Math.random() * 260) + 40;
+            g2Target = Math.floor(Math.random() * 40) + 50;
             valveAngle = 0;
+            valveAligned = false;
+
+            document.getElementById('valveTarget').style.transform = `translate(-50%, -100%) rotate(${targetValveAngle}deg)`;
+            document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(0deg)`;
+            document.getElementById('g2TargetLine').style.bottom = g2Target + '%';
             document.getElementById('g2TargetVal').innerText = g2Target + '%';
             document.getElementById('g2CurrentVal').innerText = '0%';
-            document.getElementById('g2TargetLine').style.bottom = g2Target + '%';
             document.getElementById('g2WaterFill').style.height = '0%';
-            document.getElementById('valveTarget').style.transform = `translate(-50%, -100%) rotate(${targetAngle}deg)`;
-            document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(0deg)`;
         }
-
-        const dial = document.getElementById('valveDial');
-        let isDraggingDial = false;
-        function rotateValve(e) {
-            if (!isDraggingDial) return;
-            const r = dial.getBoundingClientRect();
-            const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            let deg = Math.atan2(clientY - cy, clientX - cx) * (180 / Math.PI) + 90;
-            if (deg < 0) deg += 360;
-            valveAngle = deg;
-            document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(${deg}deg)`;
-        }
-
-        dial.addEventListener('mousedown', () => isDraggingDial = true);
-        dial.addEventListener('touchstart', () => isDraggingDial = true);
-        window.addEventListener('mouseup', () => isDraggingDial = false);
-        window.addEventListener('touchend', () => isDraggingDial = false);
-        window.addEventListener('mousemove', rotateValve);
-        window.addEventListener('touchmove', rotateValve);
-
-        const pourBtn = document.getElementById('pourBtn');
-        function startPouring() {
-            if (Math.abs(valveAngle - targetAngle) > 20) {
-                showToast('Align the green and white needles first!');
-                return;
-            }
-            pouring = true;
-            pourInterval = setInterval(() => {
-                if (!pouring) return;
-                g2Current += 1.5;
-                document.getElementById('g2CurrentVal').innerText = Math.floor(g2Current) + '%';
-                document.getElementById('g2WaterFill').style.height = Math.min(100, g2Current) + '%';
-                if (g2Current > 100) stopPouring();
-            }, 50);
-        }
-
-        function stopPouring() {
-            if (!pouring) return;
-            pouring = false;
-            clearInterval(pourInterval);
-            const diff = Math.abs(g2Current - g2Target);
-            if (diff <= 6) {
-                showToast('Perfect! The child is happy!');
-                setTimeout(resetG2Round, 1500);
-            } else {
-                g2WastedVal++;
-                document.getElementById('g2Wasted').innerText = g2WastedVal;
-                showToast(g2Current > g2Target ? 'Overfilled! Water wasted.' : 'Too little water!');
-                if (g2WastedVal >= 3) {
-                    showToast('Game over! Try again.');
-                    g2WastedVal = 0;
-                    document.getElementById('g2Wasted').innerText = 0;
-                }
-                setTimeout(resetG2Round, 1500);
-            }
-        }
-
-        pourBtn.addEventListener('mousedown', startPouring);
-        pourBtn.addEventListener('touchstart', startPouring);
-        window.addEventListener('mouseup', stopPouring);
-        window.addEventListener('touchend', stopPouring);
 
         function quitGame2() {
             document.getElementById('game2MainArea').style.display = 'none';
             document.getElementById('game2IntroOverlay').style.display = 'flex';
-            showPage('home');
+        }
+
+        const dial = document.getElementById('valveDial');
+        if (dial) {
+            let isDraggingValve = false;
+            const updateValve = (e) => {
+                if (!isDraggingValve) return;
+                const rect = dial.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const pageX = e.touches ? e.touches[0].clientX : e.clientX;
+                const pageY = e.touches ? e.touches[0].clientY : e.clientY;
+                let rad = Math.atan2(pageY - cy, pageX - cx);
+                let deg = rad * (180 / Math.PI) + 90;
+                if (deg < 0) deg += 360;
+                valveAngle = deg;
+                document.getElementById('valveNeedle').style.transform = `translate(-50%, -100%) rotate(${deg}deg)`;
+                valveAligned = Math.abs(valveAngle - targetValveAngle) < 18;
+            };
+            dial.addEventListener('mousedown', () => isDraggingValve = true);
+            dial.addEventListener('mousemove', updateValve);
+            window.addEventListener('mouseup', () => isDraggingValve = false);
+            dial.addEventListener('touchstart', () => isDraggingValve = true, { passive: true });
+            dial.addEventListener('touchmove', updateValve, { passive: true });
+            window.addEventListener('touchend', () => isDraggingValve = false);
+        }
+
+        const pourBtn = document.getElementById('pourBtn');
+        if (pourBtn) {
+            const startPour = (e) => {
+                e.preventDefault();
+                if (!valveAligned) {
+                    showToast('Align the green and white valve needles first!');
+                    return;
+                }
+                g2Pouring = true;
+                g2Interval = setInterval(() => {
+                    if (g2Current < 100) {
+                        g2Current += 1.5;
+                        document.getElementById('g2WaterFill').style.height = g2Current + '%';
+                        document.getElementById('g2CurrentVal').innerText = Math.round(g2Current) + '%';
+                    }
+                }, 50);
+            };
+            const stopPour = () => {
+                if (!g2Pouring) return;
+                g2Pouring = false;
+                clearInterval(g2Interval);
+                
+                const diff = Math.abs(g2Current - g2Target);
+                if (diff <= 6) {
+                    showToast('Perfect! Water delivered safely! 🎉');
+                    setTimeout(resetGame2Round, 1500);
+                } else {
+                    g2Wasted++;
+                    document.getElementById('g2Wasted').innerText = g2Wasted;
+                    if (g2Wasted >= 3) {
+                        showToast('Too much water wasted! Try again.');
+                        setTimeout(() => { g2Wasted = 0; document.getElementById('g2Wasted').innerText = 0; resetGame2Round(); }, 1500);
+                    } else {
+                        showToast('Missed the target line! Try again.');
+                        setTimeout(resetGame2Round, 1200);
+                    }
+                }
+            };
+            pourBtn.addEventListener('mousedown', startPour);
+            pourBtn.addEventListener('mouseup', stopPour);
+            pourBtn.addEventListener('mouseleave', stopPour);
+            pourBtn.addEventListener('touchstart', startPour);
+            pourBtn.addEventListener('touchend', stopPour);
         }
 
         // ════════════════════════════════════════════════════════════
-        //  8.  MEDIA GALLERY & ALBUMS SYSTEM
+        //  8.  DYNAMIC GALLERY & LIGHTBOX
         // ════════════════════════════════════════════════════════════
-        const albumsData = [
-            { id: 'alb1', title: 'Campus Water Audits', tag: 'Audits', count: '12 Photos', preview: ['Beyond Thirst project cover.png', 'logo.png'] },
-            { id: 'alb2', title: 'Community Workshops', tag: 'Workshops', count: '8 Photos', preview: ['Beyond Thirst project cover.png'] },
-            { id: 'alb3', title: 'Youth Summit Highlights', tag: 'Summit', count: '15 Photos', preview: ['logo.png', 'Beyond Thirst project cover.png'] }
-        ];
+        let galleryData = { albums: [], media: [] };
+        let customUploads = [];
+        let currentLightboxList = [];
+        let currentLightboxIdx = 0;
 
-        let galleryMedia = [
-            { type: 'image', src: 'Beyond Thirst project cover.png', caption: 'Student Audit Team inspecting campus waterlines', cat: 'photos', album: 'alb1' },
-            { type: 'image', src: 'logo.png', caption: 'Beyond Thirst Official Emblem', cat: 'photos', album: 'alb1' },
-            { type: 'image', src: 'Beyond Thirst project cover.png', caption: 'Youth Water Action Workshop session', cat: 'photos', album: 'alb2' },
-            { type: 'image', src: 'Beyond Thirst project cover.png', caption: 'Rainwater harvesting system setup', cat: 'photos', album: 'alb3' }
-        ];
-
-        let lightboxIdx = 0;
-        let currentFilteredMedia = [];
+        async function fetchGalleryData() {
+            try {
+                const res = await fetch('gallery-data.json');
+                if (res.ok) {
+                    galleryData = await res.json();
+                    renderAlbums();
+                    renderHomePreview();
+                }
+            } catch (e) {
+                console.log('gallery-data.json pending generation.');
+            }
+        }
 
         function renderAlbums() {
             const container = document.getElementById('albumsContainer');
             if (!container) return;
-            container.innerHTML = albumsData.map(alb => `
-                <div class="album-card" onclick="viewAlbum('${alb.id}')">
-                    <span class="album-tag">${alb.tag}</span>
-                    <div class="album-preview ${alb.preview.length === 1 ? 'single-img' : ''}">
-                        ${alb.preview.map(img => `<img src="${img}" alt="${alb.title}" onerror="this.src='logo.png'" />`).join('')}
-                    </div>
-                    <div class="album-info">
-                        <h3>${alb.title}</h3>
-                        <p><span>${alb.count}</span> <i class="fa-solid fa-arrow-right"></i></p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderGallery(filter) {
-            const container = document.getElementById('galleryContainer');
-            if (!container) return;
-
-            let list = [];
-            if (filter === 'all') list = galleryMedia;
-            else if (filter === 'photos') list = galleryMedia.filter(m => m.type === 'image');
-            else if (filter === 'videos') list = galleryMedia.filter(m => m.type === 'video');
-            else if (filter === 'uploads') list = galleryMedia.filter(m => m.isUpload);
-            else list = galleryMedia.filter(m => m.album === filter);
-
-            currentFilteredMedia = list;
-
-            if (list.length === 0) {
-                container.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-light);">No media found for this category.</p>`;
+            if (!galleryData.albums || galleryData.albums.length === 0) {
+                container.innerHTML = '<p style="text-align:center;grid-column:1/-1;color:var(--text-light);">No subfolders found in Photos/ or Videos/ yet. Upload photos to generate your gallery!</p>';
                 return;
             }
-
-            container.innerHTML = list.map((item, idx) => `
-                <div class="gallery-item" onclick="openLightbox(${idx})">
-                    ${item.type === 'video' ? '<span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>' : ''}
-                    ${item.type === 'video' 
-                        ? `<video src="${item.src}" muted loop></video>` 
-                        : `<img src="${item.src}" alt="${item.caption}" onerror="this.src='Beyond Thirst project cover.png'" />`}
-                    <div class="gallery-caption">
-                        <span>${item.caption}</span>
-                        <i class="fa-solid fa-expand"></i>
+            container.innerHTML = galleryData.albums.map(album => {
+                const isVideo = album.cover.match(/\.(mp4|webm|mov|mkv)$/i);
+                const mediaTag = isVideo 
+                    ? `<video src="${album.cover}" muted preload="metadata"></video>`
+                    : `<img src="${album.cover}" alt="${album.title}" onerror="this.src='Beyond Thirst project cover.png'" />`;
+                
+                return `
+                    <div class="album-card" onclick="filterByAlbum('${album.id}')">
+                        <span class="album-tag">${album.count} items</span>
+                        <div class="album-preview single-img">
+                            ${mediaTag}
+                        </div>
+                        <div class="album-info">
+                            <h3>${album.title}</h3>
+                            <p><span>Explore Album</span> <i class="fa-solid fa-arrow-right"></i></p>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
+        }
+
+        function filterByAlbum(albumId) {
+            switchGalleryView('all', null);
+            const items = galleryData.media.filter(m => m.album === albumId);
+            renderGalleryItems(items);
         }
 
         function switchGalleryView(view, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-
-            const albums = document.getElementById('albumsContainer');
-            const gallery = document.getElementById('galleryContainer');
+            if (btn) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            const albumsDiv = document.getElementById('albumsContainer');
+            const galleryDiv = document.getElementById('galleryContainer');
 
             if (view === 'albums') {
-                albums.style.display = 'grid';
-                gallery.style.display = 'none';
+                albumsDiv.style.display = 'grid';
+                galleryDiv.style.display = 'none';
+                renderAlbums();
             } else {
-                albums.style.display = 'none';
-                gallery.style.display = 'columns';
-                renderGallery(view);
+                albumsDiv.style.display = 'none';
+                galleryDiv.style.display = 'block';
+                let filtered = [];
+                if (view === 'all') filtered = galleryData.media;
+                else if (view === 'photos') filtered = galleryData.media.filter(m => m.type === 'image');
+                else if (view === 'videos') filtered = galleryData.media.filter(m => m.type === 'video');
+                else if (view === 'uploads') filtered = customUploads;
+                
+                renderGalleryItems(filtered);
             }
         }
 
-        function viewAlbum(albId) {
-            const albums = document.getElementById('albumsContainer');
-            const gallery = document.getElementById('galleryContainer');
-            albums.style.display = 'none';
-            gallery.style.display = 'columns';
-            renderGallery(albId);
-        }
+        function renderGalleryItems(items) {
+            const container = document.getElementById('galleryContainer');
+            if (!container) return;
+            currentLightboxList = items;
 
-        function populateHomeGalleryPreview() {
-            const previewContainer = document.getElementById('homeGalleryPreview');
-            if (!previewContainer) return;
-            previewContainer.innerHTML = galleryMedia.slice(0, 3).map((item, idx) => `
-                <div class="gallery-item" onclick="showPage('gallery')">
-                    <img src="${item.src}" alt="${item.caption}" onerror="this.src='Beyond Thirst project cover.png'" />
-                    <div class="gallery-caption">
-                        <span>${item.caption}</span>
+            if (!items || items.length === 0) {
+                container.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:40px;">No media found in this section.</p>';
+                return;
+            }
+
+            container.innerHTML = items.map((item, idx) => {
+                const isVid = item.type === 'video';
+                const mediaTag = isVid
+                    ? `<video src="${item.src}" muted preload="metadata"></video><span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>`
+                    : `<img src="${item.src}" alt="${item.title || 'Media'}" onerror="this.src='Beyond Thirst project cover.png'" />`;
+
+                return `
+                    <div class="gallery-item" onclick="openLightbox(${idx})">
+                        ${mediaTag}
+                        <div class="gallery-caption">
+                            <span>${item.title || 'Action Shot'}</span>
+                            <i class="fa-solid fa-expand"></i>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        // Secret Admin Uploader (Press 'Ctrl + Shift + U' to reveal)
-        window.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'u') {
-                const zone = document.getElementById('secretUploadZone');
-                zone.classList.toggle('secret-active');
-                showToast('Admin Upload Zone Toggled');
-            }
-        });
+        function renderHomePreview() {
+            const homeContainer = document.getElementById('homeGalleryPreview');
+            if (!homeContainer || !galleryData.media) return;
+            const items = galleryData.media.slice(0, 6);
+            homeContainer.innerHTML = items.map((item, idx) => {
+                const isVid = item.type === 'video';
+                const mediaTag = isVid
+                    ? `<video src="${item.src}" muted preload="metadata"></video><span class="vid-badge"><i class="fa-solid fa-play"></i> Video</span>`
+                    : `<img src="${item.src}" alt="${item.title || 'Media'}" onerror="this.src='Beyond Thirst project cover.png'" />`;
 
-        document.getElementById('mediaUpload').addEventListener('change', function (e) {
-            const files = Array.from(e.target.files);
-            files.forEach(file => {
-                const url = URL.createObjectURL(file);
-                const isVid = file.type.startsWith('video/');
-                galleryMedia.unshift({
-                    type: isVid ? 'video' : 'image',
-                    src: url,
-                    caption: file.name,
-                    cat: isVid ? 'videos' : 'photos',
-                    isUpload: true
-                });
-            });
-            showToast(`${files.length} file(s) added to My Uploads`);
-            switchGalleryView('uploads');
-        });
+                return `
+                    <div class="gallery-item" onclick="openLightbox(${idx})">
+                        ${mediaTag}
+                        <div class="gallery-caption">
+                            <span>${item.title || 'Action Moment'}</span>
+                            <i class="fa-solid fa-expand"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
-        // Lightbox Modal Functions
         function openLightbox(idx) {
-            lightboxIdx = idx;
+            currentLightboxIdx = idx;
             const modal = document.getElementById('lightboxModal');
             modal.style.display = 'flex';
             updateLightboxContent();
@@ -2479,39 +2458,34 @@
         }
 
         function navigateLightbox(dir) {
-            lightboxIdx = (lightboxIdx + dir + currentFilteredMedia.length) % currentFilteredMedia.length;
+            currentLightboxIdx = (currentLightboxIdx + dir + currentLightboxList.length) % currentLightboxList.length;
             updateLightboxContent();
         }
 
         function updateLightboxContent() {
-            const item = currentFilteredMedia[lightboxIdx];
-            if (!item) return;
             const target = document.getElementById('lightboxTarget');
-            document.getElementById('lightboxCaption').innerText = item.caption;
-            target.innerHTML = item.type === 'video'
-                ? `<video src="${item.src}" controls autoplay style="max-height:75vh;width:100%;"></video>`
-                : `<img src="${item.src}" alt="${item.caption}" style="max-height:75vh;object-fit:contain;" />`;
+            const caption = document.getElementById('lightboxCaption');
+            const item = currentLightboxList[currentLightboxIdx];
+            if (!item) return;
+
+            if (item.type === 'video') {
+                target.innerHTML = `<video src="${item.src}" controls autoplay style="max-width:100%;max-height:75vh;"></video>`;
+            } else {
+                target.innerHTML = `<img src="${item.src}" alt="${item.title || 'Full View'}" style="max-width:100%;max-height:75vh;" />`;
+            }
+            caption.innerText = item.title || 'Beyond Thirst Action Moment';
         }
 
-        // ════════════════════════════════════════════════════════════
-        //  9.  FORM & DIRECT FEEDBACK HANDLER
-        // ════════════════════════════════════════════════════════════
         function handleDirectFeedback(e) {
             e.preventDefault();
-            const form = e.target;
-            showToast('Thank you! Your feedback was delivered.');
-            form.reset();
+            showToast('Thank you! Your message has been sent successfully.');
+            e.target.reset();
         }
 
-        // ════════════════════════════════════════════════════════════
-        //  10. INITIALIZATION
-        // ════════════════════════════════════════════════════════════
-        document.addEventListener('DOMContentLoaded', () => {
-            applyTheme();
-            applyLang();
-            renderAlbums();
-            populateHomeGalleryPreview();
-        });
+        // Initialize Page
+        applyLang();
+        applyTheme();
+        fetchGalleryData();
     </script>
 </body>
 </html>
