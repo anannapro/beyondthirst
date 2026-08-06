@@ -1,103 +1,57 @@
-name: Auto Generate Gallery JSON
+name: Auto-Generate Gallery JSON
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - main
+      - main  # Change to 'master' if your default branch is named master
     paths:
-      - 'Photos/**'
-      - 'Videos/**'
+      - 'photos/**'
+
+permissions:
+  contents: write
 
 jobs:
-  update-gallery:
+  build-gallery:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '20'
+          python-version: '3.x'
 
-      - name: Build gallery-data.json
+      - name: Scan Sub-folders & Generate gallery.json
         run: |
-          node -e '
-          const fs = require("fs");
-          const path = require("path");
+          python -c "
+          import os, json
 
-          function scanFolder(dir) {
-            if (!fs.existsSync(dir)) return [];
-            let files = [];
-            const items = fs.readdirSync(dir, { withFileTypes: true });
-            for (const item of items) {
-              const fullPath = path.join(dir, item.name).replace(/\\/g, "/");
-              if (item.isDirectory()) {
-                files = files.concat(scanFolder(fullPath));
-              } else if (!item.name.startsWith(".") && item.name !== "nfile") {
-                files.push(fullPath);
-              }
-            }
-            return files;
-          }
+          PHOTO_DIR = 'photos'
+          SUPPORTED_EXTS = ('.jpg', '.jpeg', '.png', '.gif', '.webp', '.avif')
+          gallery = {}
 
-          const photoFiles = scanFolder("Photos");
-          const videoFiles = scanFolder("Videos");
-          const media = [];
+          if os.path.exists(PHOTO_DIR):
+              for album_name in sorted(os.listdir(PHOTO_DIR)):
+                  album_path = os.path.join(PHOTO_DIR, album_name)
+                  if os.path.isdir(album_path):
+                      images = []
+                      for root, _, files in os.walk(album_path):
+                          for f in sorted(files):
+                              if f.lower().endswith(SUPPORTED_EXTS):
+                                  # Format path for HTML web fetching
+                                  rel_path = os.path.relpath(os.path.join(root, f), '.')
+                                  images.append(rel_path.replace('\\', '/'))
+                      if images:
+                          gallery[album_name] = images
 
-          if (fs.existsSync("Beyond Thirst project cover.png")) {
-            media.push({
-              src: "Beyond Thirst project cover.png",
-              name: "Beyond Thirst Cover Image",
-              album: "campaigns",
-              type: "image"
-            });
-          }
+          with open('gallery.json', 'w') as f:
+              json.dump(gallery, f, indent=2)
+          "
 
-          photoFiles.forEach(file => {
-            const ext = path.extname(file).toLowerCase();
-            if ([".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(ext)) {
-              const baseName = path.basename(file, ext).replace(/[-_]/g, " ");
-              const parts = file.split("/");
-              const albumName = parts.length > 2 ? parts[1].toLowerCase().replace(/\s+/g, "-") : "highlights";
-              media.push({
-                src: file,
-                name: baseName,
-                album: albumName,
-                type: "image"
-              });
-            }
-          });
-
-          videoFiles.forEach(file => {
-            const ext = path.extname(file).toLowerCase();
-            if ([".mp4", ".webm", ".mov"].includes(ext)) {
-              const baseName = path.basename(file, ext).replace(/[-_]/g, " ");
-              media.push({
-                src: file,
-                name: baseName,
-                album: "videos",
-                type: "video"
-              });
-            }
-          });
-
-          const albums = [
-            { id: "campaigns", title: "Community Campaigns", tag: "Campaigns", description: "Awareness drives and student pledges", cover: "Beyond Thirst project cover.png" },
-            { id: "project-highlights", title: "Project Highlights", tag: "Highlights", description: "Key moments and team action photos", cover: photoFiles[0] || "" },
-            { id: "videos", title: "Videos & Reels", tag: "Videos", description: "Documentaries and clips", cover: videoFiles[0] || "" }
-          ];
-
-          fs.writeFileSync("gallery-data.json", JSON.stringify({ albums, media }, null, 2));
-          '
-
-      - name: Commit and Push Updated JSON
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add gallery-data.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "auto: update gallery-data.json" && git push)
+      - name: Commit and Push Updated gallery.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "auto: update gallery.json with new albums/photos"
+          file_pattern: 'gallery.json'
