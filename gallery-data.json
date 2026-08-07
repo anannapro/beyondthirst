@@ -5,6 +5,12 @@
       "title": "Project Highlights",
       "cover": "Photos/Project Highlights/Postering for awareness 1.jpeg",
       "count": 21
+    },
+    {
+      "id": "water",
+      "title": "Water",
+      "cover": "Videos/Water/Untitled design.mp4",
+      "count": 1
     }
   ],
   "media": [
@@ -133,6 +139,12 @@
       "name": "Spreading Awareness Leaflets To Students",
       "album": "project-highlights",
       "type": "image"
+    },
+    {
+      "src": "Videos/Water/Untitled design.mp4",
+      "name": "Untitled Design",
+      "album": "water",
+      "type": "video"
     }
   ]
 }
