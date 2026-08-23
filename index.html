@@ -1410,67 +1410,6 @@
             opacity: 0.7;
         }
 
-        /* ── Messenger Floating Button ── */
-        .messenger-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #1877f2;
-            color: #fff;
-            padding: 14px 24px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            box-shadow: 0 8px 30px rgba(24, 119, 242, 0.4);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: pulseMessenger 2s infinite;
-        }
-        
-        .messenger-float:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 12px 40px rgba(24, 119, 242, 0.6);
-            color: #fff;
-        }
-        
-        .messenger-float i {
-            font-size: 28px;
-        }
-        
-        .messenger-float .badge {
-            background: #ef4444;
-            color: #fff;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 20px;
-            position: absolute;
-            top: -8px;
-            right: -8px;
-        }
-        
-        @keyframes pulseMessenger {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-        
-        .messenger-float .online-dot {
-            width: 12px;
-            height: 12px;
-            background: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulseDot 1.5s infinite;
-        }
-        
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(0.9); }
-        }
-
         /* ── responsive ── */
         @media (max-width: 1024px) {
             .team-grid {
@@ -1556,21 +1495,6 @@
             .team-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
-            }
-            /* Messenger float mobile */
-            .messenger-float {
-                padding: 12px 16px;
-                bottom: 16px;
-                right: 16px;
-            }
-            .messenger-float span:not(.online-dot):not(.badge) {
-                display: none;
-            }
-            .messenger-float .badge {
-                top: -4px;
-                right: -4px;
-                font-size: 8px;
-                padding: 1px 6px;
             }
         }
 
@@ -2108,15 +2032,16 @@
                     
                     <div style="background: var(--surface-white); border-radius: var(--radius-lg); padding: 30px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
                         <div style="display: flex; flex-direction: column; gap: 16px; align-items: center;">
-                            <!-- Facebook Messenger -->
-                            <a href="https://www.facebook.com/messages/t/1129631790242657" target="_blank" style="display: flex; align-items: center; gap: 16px; width: 100%; max-width: 450px; padding: 16px 20px; background: rgba(24, 119, 242, 0.08); border-radius: var(--radius-md); border-left: 4px solid #1877f2; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                            <!-- Live Chat - Now opens the chat plugin on the page -->
+                            <div style="display: flex; align-items: center; gap: 16px; width: 100%; max-width: 450px; padding: 16px 20px; background: rgba(24, 119, 242, 0.08); border-radius: var(--radius-md); border-left: 4px solid #1877f2; cursor: pointer;" onclick="openMessenger()">
                                 <div style="width: 50px; height: 50px; border-radius: 50%; background: #1877f2; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                                     <i class="fa-brands fa-facebook-messenger" style="color: #fff; font-size: 24px;"></i>
                                 </div>
                                 <div style="text-align: left; flex: 1;">
                                     <p style="font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;" data-en="Live Chat" data-bn="লাইভ চ্যাট">Live Chat</p>
                                     <p style="font-size: 16px; font-weight: 600; color: #1877f2;">
-                                        <span data-en="Chat with us on Messenger" data-bn="মেসেঞ্জারে আমাদের সাথে কথা বলুন">Chat with us on Messenger</span>
+                                        <i class="fa-solid fa-circle" style="color: #22c55e; font-size: 10px; margin-right: 6px;"></i>
+                                        <span data-en="Chat with us now!" data-bn="এখনই আমাদের সাথে কথা বলুন!">Chat with us now!</span>
                                     </p>
                                     <p style="font-size: 11px; color: var(--text-light); margin-top: 2px;">
                                         <i class="fa-regular fa-clock" style="margin-right: 4px;"></i>
@@ -2124,7 +2049,7 @@
                                     </p>
                                 </div>
                                 <i class="fa-solid fa-arrow-right" style="color: #1877f2; font-size: 18px;"></i>
-                            </a>
+                            </div>
                             
                             <!-- Email -->
                             <a href="mailto:beyondthirst26@gmail.com" style="display: flex; align-items: center; gap: 16px; width: 100%; max-width: 450px; padding: 16px 20px; background: rgba(2, 132, 199, 0.06); border-radius: var(--radius-md); border-left: 4px solid var(--primary-blue); text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
@@ -2173,13 +2098,59 @@
     <!-- ─── TOAST ─── -->
     <div class="toast" id="toast"><i class="fa-solid fa-circle-check" style="color:var(--accent-sky);font-size:20px;"></i> <span id="toastMsg">Done</span></div>
 
-    <!-- ─── FLOATING MESSENGER BUTTON ─── -->
-    <a href="https://www.facebook.com/messages/t/1129631790242657" target="_blank" class="messenger-float" aria-label="Chat with us on Messenger">
-        <i class="fa-brands fa-facebook-messenger"></i>
-        <span>Chat with us</span>
-        <span class="online-dot"></span>
-        <span class="badge">● Live</span>
-    </a>
+    <!-- ─── FACEBOOK MESSENGER CHAT PLUGIN ─── -->
+    <!-- Load Facebook SDK -->
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Function to open the chat plugin programmatically
+        function openMessenger() {
+            // Find the chat plugin iframe and trigger it
+            var chatbox = document.querySelector('.fb-customerchat');
+            if (chatbox) {
+                // Click the plugin to open it
+                var bubble = chatbox.querySelector('iframe');
+                if (bubble) {
+                    // Some Facebook versions use this method
+                    chatbox.setAttribute('minimized', 'false');
+                    // Trigger a click on the plugin
+                    var event = new Event('click');
+                    chatbox.dispatchEvent(event);
+                }
+            }
+            // Fallback: If plugin doesn't open, use the redirect link
+            setTimeout(function() {
+                var chatbox = document.querySelector('.fb-customerchat');
+                if (chatbox && chatbox.getAttribute('minimized') === 'true') {
+                    window.open('https://www.facebook.com/messages/t/1129631790242657', '_blank');
+                }
+            }, 1000);
+        }
+    </script>
+
+    <!-- Your Chat Plugin code -->
+    <div class="fb-customerchat"
+         attribution="biz_inbox"
+         page_id="61591584513349"
+         theme_color="#0284c7"
+         logged_in_greeting="Hi! 👋 How can we help you with water conservation today?"
+         logged_out_greeting="Hi! 👋 How can we help you with water conservation today?">
+    </div>
 
     <!-- ─── FOOTER ─── -->
     <footer>
