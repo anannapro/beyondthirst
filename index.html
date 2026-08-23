@@ -606,6 +606,147 @@
             line-height: 1.6;
         }
 
+        /* ── team section ── */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .team-card {
+            background: var(--surface-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue);
+        }
+
+        .team-img-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 100%;
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+            overflow: hidden;
+        }
+
+        .team-img-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #0f172a, #1e3a5f);
+            transition: var(--transition);
+        }
+
+        .team-card:hover .team-img-placeholder {
+            transform: scale(1.05);
+        }
+
+        .team-img-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .team-card:hover .team-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .team-social {
+            position: absolute;
+            bottom: 16px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .team-card:hover .team-social {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .team-social a {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark-blue);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 16px;
+            backdrop-filter: blur(4px);
+        }
+
+        .team-social a:hover {
+            background: var(--primary-blue);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+        }
+
+        .team-info {
+            padding: 22px 20px 26px;
+        }
+
+        .team-info h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        [data-theme="dark"] .team-info h3 {
+            color: var(--text-dark);
+        }
+
+        .team-role {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-blue);
+            background: rgba(2, 132, 199, 0.1);
+            padding: 3px 14px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .team-info p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+        }
+
         /* ── inspire page ── */
         .inspire-page-bg {
             background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 35%, #06b6d4 70%, #0f172a 100%);
@@ -1270,6 +1411,13 @@
         }
 
         /* ── responsive ── */
+        @media (max-width: 1024px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+        }
+
         @media (max-width: 900px) {
             .cards-container {
                 transform: translateY(-30px);
@@ -1344,7 +1492,33 @@
             .lightbox-nav-btn.next {
                 right: 10px;
             }
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
         }
+
+        @media (max-width: 600px) {
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+            .team-info h3 {
+                font-size: 16px;
+            }
+            .team-info p {
+                font-size: 12.5px;
+            }
+            .team-img-placeholder {
+                font-size: 50px;
+            }
+            .team-social a {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+        }
+
         @media (max-width: 520px) {
             .main-title {
                 font-size: 42px;
@@ -1363,6 +1537,14 @@
             }
             .gallery-grid {
                 columns: 1 100%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+                max-width: 320px;
+                margin: 0 auto;
             }
         }
     </style>
@@ -1751,12 +1933,89 @@
 
     <!-- ─── TEAM ─── -->
     <main id="page-team" class="page-view">
-        <div class="page-banner"><h1 data-en="Leadership Team" data-bn="নেতৃত্ব দল">Leadership Team</h1><p data-en="Students Leading the Way for Sustainable Action" data-bn="টেকসই পদক্ষেপে নেতৃত্বদানকারী শিক্ষার্থী">Students Leading the Way for Sustainable Action</p></div>
-        <div class="container"><div class="team-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;">
-            <div class="info-card" style="text-align:center;"><i class="fa-solid fa-user-gear" style="font-size:46px;"></i><h3 style="margin-top:14px;" data-en="Executive Lead" data-bn="নির্বাহী প্রধান">Executive Lead</h3><p style="font-size:14px;color:var(--primary-blue);font-weight:600;margin-bottom:10px;" data-en="Founder & Director" data-bn="প্রতিষ্ঠাতা ও পরিচালক">Founder & Director</p><p data-en="Leads overall campaign planning, partnerships, and institutional connections." data-bn="সামগ্রিক ক্যাম্পেইন পরিকল্পনা, অংশীদারিত্ব ও প্রাতিষ্ঠানিক সংযোগ পরিচালনা।">Leads overall campaign planning, partnerships, and institutional connections.</p></div>
-            <div class="info-card" style="text-align:center;"><i class="fa-solid fa-chart-line" style="font-size:46px;"></i><h3 style="margin-top:14px;" data-en="Research Lead" data-bn="গবেষণা প্রধান">Research Lead</h3><p style="font-size:14px;color:var(--primary-blue);font-weight:600;margin-bottom:10px;" data-en="Analytics & Data" data-bn="অ্যানালিটিক্স ও ডেটা">Analytics & Data</p><p data-en="Manages water usage tools, footprint estimates, and project metrics." data-bn="পানি ব্যবহার টুল, ফুটপ্রিন্ট অনুমান ও প্রকল্প মেট্রিক্স পরিচালনা।">Manages water usage tools, footprint estimates, and project metrics.</p></div>
-            <div class="info-card" style="text-align:center;"><i class="fa-solid fa-bullhorn" style="font-size:46px;"></i><h3 style="margin-top:14px;" data-en="Outreach Manager" data-bn="আউটরিচ ম্যানেজার">Outreach Manager</h3><p style="font-size:14px;color:var(--primary-blue);font-weight:600;margin-bottom:10px;" data-en="Community Coordinator" data-bn="কমিউনিটি কোঅর্ডিনেটর">Community Coordinator</p><p data-en="Coordinates student volunteers, workshops, and awareness initiatives." data-bn="শিক্ষার্থী স্বেচ্ছাসেবী, ওয়ার্কশপ ও সচেতনতা উদ্যোগ সমন্বয়।">Coordinates student volunteers, workshops, and awareness initiatives.</p></div>
-        </div></div>
+        <div class="page-banner">
+            <h1 data-en="Meet Our Team" data-bn="আমাদের দলের সাথে পরিচিত হোন">Meet Our Team</h1>
+            <p data-en="The passionate young minds driving Beyond Thirst forward" data-bn="যুব শক্তিতে বিয়ন্ড থার্স্টকে এগিয়ে নিয়ে যাওয়া উৎসাহী মন">The passionate young minds driving Beyond Thirst forward</p>
+        </div>
+        <div class="container">
+            <div class="team-grid">
+                <!-- Team Member 1 -->
+                <div class="team-card">
+                    <div class="team-img-wrapper">
+                        <div class="team-img-placeholder">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="team-social">
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3 data-en="Member Name" data-bn="সদস্যের নাম">Member Name</h3>
+                        <span class="team-role" data-en="Core Team" data-bn="মূল দল">Core Team</span>
+                        <p data-en="Short bio about the team member and their contribution to the project." data-bn="সদস্যের সংক্ষিপ্ত জীবনী এবং প্রকল্পে তাদের অবদান।">Short bio about the team member and their contribution to the project.</p>
+                    </div>
+                </div>
+
+                <!-- Team Member 2 -->
+                <div class="team-card">
+                    <div class="team-img-wrapper">
+                        <div class="team-img-placeholder">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="team-social">
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3 data-en="Member Name" data-bn="সদস্যের নাম">Member Name</h3>
+                        <span class="team-role" data-en="Core Team" data-bn="মূল দল">Core Team</span>
+                        <p data-en="Short bio about the team member and their contribution to the project." data-bn="সদস্যের সংক্ষিপ্ত জীবনী এবং প্রকল্পে তাদের অবদান।">Short bio about the team member and their contribution to the project.</p>
+                    </div>
+                </div>
+
+                <!-- Team Member 3 -->
+                <div class="team-card">
+                    <div class="team-img-wrapper">
+                        <div class="team-img-placeholder">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="team-social">
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3 data-en="Member Name" data-bn="সদস্যের নাম">Member Name</h3>
+                        <span class="team-role" data-en="Core Team" data-bn="মূল দল">Core Team</span>
+                        <p data-en="Short bio about the team member and their contribution to the project." data-bn="সদস্যের সংক্ষিপ্ত জীবনী এবং প্রকল্পে তাদের অবদান।">Short bio about the team member and their contribution to the project.</p>
+                    </div>
+                </div>
+
+                <!-- Team Member 4 -->
+                <div class="team-card">
+                    <div class="team-img-wrapper">
+                        <div class="team-img-placeholder">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="team-social">
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <h3 data-en="Member Name" data-bn="সদস্যের নাম">Member Name</h3>
+                        <span class="team-role" data-en="Core Team" data-bn="মূল দল">Core Team</span>
+                        <p data-en="Short bio about the team member and their contribution to the project." data-bn="সদস্যের সংক্ষিপ্ত জীবনী এবং প্রকল্পে তাদের অবদান।">Short bio about the team member and their contribution to the project.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- ─── CONTACT ─── -->
