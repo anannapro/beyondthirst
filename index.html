@@ -1410,6 +1410,67 @@
             opacity: 0.7;
         }
 
+        /* ── Messenger Floating Button ── */
+        .messenger-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #1877f2;
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 8px 30px rgba(24, 119, 242, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: pulseMessenger 2s infinite;
+        }
+        
+        .messenger-float:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 12px 40px rgba(24, 119, 242, 0.6);
+            color: #fff;
+        }
+        
+        .messenger-float i {
+            font-size: 28px;
+        }
+        
+        .messenger-float .badge {
+            background: #ef4444;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+        }
+        
+        @keyframes pulseMessenger {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        
+        .messenger-float .online-dot {
+            width: 12px;
+            height: 12px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulseDot 1.5s infinite;
+        }
+        
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.9); }
+        }
+
         /* ── responsive ── */
         @media (max-width: 1024px) {
             .team-grid {
@@ -1495,6 +1556,21 @@
             .team-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
+            }
+            /* Messenger float mobile */
+            .messenger-float {
+                padding: 12px 16px;
+                bottom: 16px;
+                right: 16px;
+            }
+            .messenger-float span:not(.online-dot):not(.badge) {
+                display: none;
+            }
+            .messenger-float .badge {
+                top: -4px;
+                right: -4px;
+                font-size: 8px;
+                padding: 1px 6px;
             }
         }
 
@@ -2018,52 +2094,70 @@
         </div>
     </main>
 
-
-<!-- ─── CONTACT ─── -->
-<main id="page-contact" class="page-view">
-    <div class="page-banner">
-        <h1 data-en="Contact Us" data-bn="যোগাযোগ করুন">Contact Us</h1>
-        <p data-en="Get in touch with us through email or visit our location" data-bn="ইমেইলের মাধ্যমে আমাদের সাথে যোগাযোগ করুন বা আমাদের অবস্থান দেখুন">Get in touch with us through email or visit our location</p>
-    </div>
-    <div class="container">
-        <div class="contact-box" style="grid-template-columns: 1fr; max-width: 700px; margin: 0 auto; text-align: center;">
-            <div>
-                <h3 style="color:var(--light-blue);font-size:28px;margin-bottom:20px;" data-en="Get in Touch" data-bn="যোগাযোগ করুন">Get in Touch</h3>
-                <p style="font-size:15px;color:var(--text-light);margin-bottom:30px;line-height:1.8;max-width:500px;margin-left:auto;margin-right:auto;" data-en="Whether you want to launch a Beyond Thirst group at your school or simply want to connect with us, reach out through our email or visit us at our location." data-bn="আপনি আপনার স্কুলে বিয়ন্ড থার্স্ট গ্রুপ চালু করতে চান বা আমাদের সাথে যোগাযোগ করতে চান, আমাদের ইমেইলের মাধ্যমে বা আমাদের অবস্থানে এসে যোগাযোগ করুন।">Whether you want to launch a Beyond Thirst group at your school or simply want to connect with us, reach out through our email or visit us at our location.</p>
-                
-                <div style="background: var(--surface-white); border-radius: var(--radius-lg); padding: 30px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
-                    <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
-                        <!-- Email -->
-                        <div style="display: flex; align-items: center; gap: 16px; width: 100%; max-width: 450px; padding: 16px 20px; background: rgba(2, 132, 199, 0.06); border-radius: var(--radius-md); border-left: 4px solid var(--primary-blue);">
-                            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <i class="fa-solid fa-envelope" style="color: #fff; font-size: 22px;"></i>
-                            </div>
-                            <div style="text-align: left;">
-                                <p style="font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;" data-en="Email" data-bn="ইমেইল">Email</p>
-                                <p style="font-size: 16px; font-weight: 600; color: var(--text-dark); word-break: break-all;">
-                                    <a href="mailto:beyondthirst26@gmail.com" style="color: var(--primary-blue); text-decoration: none; transition: var(--transition);">beyondthirst26@gmail.com</a>
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <!-- Location -->
-                        <div style="display: flex; align-items: center; gap: 16px; width: 100%; max-width: 450px; padding: 16px 20px; background: rgba(56, 189, 248, 0.06); border-radius: var(--radius-md); border-left: 4px solid var(--accent-sky);">
-                            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent-sky); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <i class="fa-solid fa-location-dot" style="color: #fff; font-size: 22px;"></i>
-                            </div>
-                            <div style="text-align: left;">
-                                <p style="font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;" data-en="Location" data-bn="অবস্থান">Location</p>
-                                <p style="font-size: 16px; font-weight: 600; color: var(--text-dark);">
-                                    <span data-en="Dhaka, Bangladesh" data-bn="ঢাকা, বাংলাদেশ">Dhaka, Bangladesh</span>
-                                </p>
+    <!-- ─── CONTACT ─── -->
+    <main id="page-contact" class="page-view">
+        <div class="page-banner">
+            <h1 data-en="Contact Us" data-bn="যোগাযোগ করুন">Contact Us</h1>
+            <p data-en="Get in touch with us through email, Facebook Messenger, or visit our location" data-bn="ইমেইল, ফেসবুক মেসেঞ্জার বা আমাদের অবস্থানের মাধ্যমে আমাদের সাথে যোগাযোগ করুন">Get in touch with us through email, Facebook Messenger, or visit our location</p>
+        </div>
+        <div class="container">
+            <div class="contact-box" style="grid-template-columns: 1fr; max-width: 700px; margin: 0 auto; text-align: center;">
+                <div>
+                    <h3 style="color:var(--dark-blue);font-size:28px;margin-bottom:20px;" data-en="Get in Touch" data-bn="যোগাযোগ করুন">Get in Touch</h3>
+                    <p style="font-size:15px;color:var(--text-light);margin-bottom:30px;line-height:1.8;max-width:500px;margin-left:auto;margin-right:auto;" data-en="Whether you want to launch a Beyond Thirst group at your school or simply want to connect with us, reach out through any of the channels below." data-bn="আপনি আপনার স্কুলে বিয়ন্ড থার্স্ট গ্রুপ চালু করতে চান বা আমাদের সাথে যোগাযোগ করতে চান, নিচের যেকোনো মাধ্যমে আমাদের সাথে যোগাযোগ করুন।">Whether you want to launch a Beyond Thirst group at your school or simply want to connect with us, reach out through any of the channels below.</p>
+                    
+                    <div style="background: var(--surface-white); border-radius: var(--radius-lg); padding: 30px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                        <div style="display: flex; flex-direction: column; gap: 16px; align-items: center;">
+                            <!-- Facebook Messenger -->
+                            <a href="https://www.facebook.com/messages/t/1129631790242657" target="_blank" style="display: flex; align-items: center; gap: 16px; width: 100%; max-width: 450px; padding: 16px 20px; background: rgba(24, 119, 242, 0.08); border-radius: var(--radius-md); border-left: 4px solid #1877f2; text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background: #1877f2; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="fa-brands fa-facebook-messenger" style="color: #fff; font-size: 24px;"></i>
+                                </div>
+                                <div style="text-align: left; flex: 1;">
+                                    <p style="font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;" data-en="Live Chat" data-bn="লাইভ চ্যাট">Live Chat</p>
+                                    <p style="font-size: 16px; font-weight: 600; color: #1877f2;">
+                                        <span data-en="Chat with us on Messenger" data-bn="মেসেঞ্জারে আমাদের সাথে কথা বলুন">Chat with us on Messenger</span>
+                                    </p>
+                                    <p style="font-size: 11px; color: var(--text-light); margin-top: 2px;">
+                                        <i class="fa-regular fa-clock" style="margin-right: 4px;"></i>
+                                        <span data-en="Messages are saved in Messenger" data-bn="মেসেঞ্জারে বার্তাগুলি সংরক্ষিত থাকে">Messages are saved in Messenger</span>
+                                    </p>
+                                </div>
+                                <i class="fa-solid fa-arrow-right" style="color: #1877f2; font-size: 18px;"></i>
+                            </a>
+                            
+                            <!-- Email -->
+                            <a href="mailto:beyondthirst26@gmail.com" style="display: flex; align-items: center; gap: 16px; width: 100%; max-width: 450px; padding: 16px 20px; background: rgba(2, 132, 199, 0.06); border-radius: var(--radius-md); border-left: 4px solid var(--primary-blue); text-decoration: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="fa-solid fa-envelope" style="color: #fff; font-size: 22px;"></i>
+                                </div>
+                                <div style="text-align: left; flex: 1;">
+                                    <p style="font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;" data-en="Email" data-bn="ইমেইল">Email</p>
+                                    <p style="font-size: 16px; font-weight: 600; color: var(--text-dark); word-break: break-all;">
+                                        beyondthirst26@gmail.com
+                                    </p>
+                                </div>
+                                <i class="fa-solid fa-arrow-right" style="color: var(--primary-blue); font-size: 18px;"></i>
+                            </a>
+                            
+                            <!-- Location -->
+                            <div style="display: flex; align-items: center; gap: 16px; width: 100%; max-width: 450px; padding: 16px 20px; background: rgba(56, 189, 248, 0.06); border-radius: var(--radius-md); border-left: 4px solid var(--accent-sky);">
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent-sky); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="fa-solid fa-location-dot" style="color: #fff; font-size: 22px;"></i>
+                                </div>
+                                <div style="text-align: left; flex: 1;">
+                                    <p style="font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;" data-en="Location" data-bn="অবস্থান">Location</p>
+                                    <p style="font-size: 16px; font-weight: 600; color: var(--text-dark);">
+                                        <span data-en="Dhaka, Bangladesh" data-bn="ঢাকা, বাংলাদেশ">Dhaka, Bangladesh</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
     <!-- ─── LIGHTBOX ─── -->
     <div class="lightbox-modal" id="lightboxModal">
@@ -2078,6 +2172,14 @@
 
     <!-- ─── TOAST ─── -->
     <div class="toast" id="toast"><i class="fa-solid fa-circle-check" style="color:var(--accent-sky);font-size:20px;"></i> <span id="toastMsg">Done</span></div>
+
+    <!-- ─── FLOATING MESSENGER BUTTON ─── -->
+    <a href="https://www.facebook.com/messages/t/1129631790242657" target="_blank" class="messenger-float" aria-label="Chat with us on Messenger">
+        <i class="fa-brands fa-facebook-messenger"></i>
+        <span>Chat with us</span>
+        <span class="online-dot"></span>
+        <span class="badge">● Live</span>
+    </a>
 
     <!-- ─── FOOTER ─── -->
     <footer>
