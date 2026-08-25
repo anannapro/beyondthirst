@@ -697,9 +697,30 @@
             padding: 20px;
             border: 1px solid rgba(255,255,255,0.08);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .widget-box::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: var(--radius-lg);
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(56,189,248,0.3), rgba(14,165,233,0.1), rgba(56,189,248,0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .widget-box:hover::before {
+            opacity: 1;
         }
         .widget-box:hover {
-            border-color: rgba(255,255,255,0.2);
+            border-color: rgba(56,189,248,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(2,132,199,0.15);
         }
         .widget-box h3 {
             font-size: 18px;
@@ -714,11 +735,25 @@
             border-radius: var(--radius-md);
             overflow: hidden;
             background: #0f172a;
+            position: relative;
         }
         .widget-iframe-wrapper iframe {
             display: block;
             min-height: 400px;
             width: 100%;
+        }
+        /* Facebook widget needs extra height to show full content */
+        .widget-iframe-wrapper.fb-widget iframe {
+            min-height: 520px;
+        }
+        .widget-box .widget-sub-text {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 12px;
+            text-align: center;
+        }
+        .widget-box .widget-sub-text i {
+            margin-right: 6px;
         }
 
         footer {
@@ -839,6 +874,7 @@
             .team-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .widgets-container { grid-template-columns: 1fr; gap: 24px; }
             .widget-iframe-wrapper iframe { min-height: 350px; }
+            .widget-iframe-wrapper.fb-widget iframe { min-height: 450px; }
         }
         @media (max-width: 600px) {
             .team-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -847,6 +883,7 @@
             .team-img-placeholder { font-size: 50px; }
             .team-social a { width: 32px; height: 32px; font-size: 14px; }
             .widget-iframe-wrapper iframe { min-height: 300px; }
+            .widget-iframe-wrapper.fb-widget iframe { min-height: 400px; }
         }
         @media (max-width: 520px) {
             .main-title { font-size: 42px; }
@@ -1414,25 +1451,25 @@
                 <div class="widget-iframe-wrapper">
                     <iframe src="https://discord.com/widget?id=1541201977063776368&theme=dark" 
                             width="100%" 
-                            height="400" 
+                            height="450" 
                             allowtransparency="true" 
                             frameborder="0" 
                             sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
                     </iframe>
                 </div>
-                <p style="font-size:13px;color:#94a3b8;margin-top:12px;text-align:center;">
+                <p class="widget-sub-text">
                     <i class="fa-regular fa-circle-check" style="color:#22c55e;"></i> 
-                    Join our community and help save water!
+                    Hangout with people who get it!
                 </p>
             </div>
 
             <!-- Facebook Widget -->
             <div class="widget-box">
                 <h3><i class="fa-brands fa-facebook" style="color:#1877f2;"></i> Follow Us on Facebook</h3>
-                <div class="widget-iframe-wrapper">
-                    <iframe src="https://www.facebook.com/plugins/page.php?href=https://www.facebook.com/profile.php?id=61591584513349&tabs=timeline&width=340&height=400&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" 
+                <div class="widget-iframe-wrapper fb-widget">
+                    <iframe src="https://www.facebook.com/plugins/page.php?href=https://www.facebook.com/profile.php?id=61591584513349&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" 
                             width="100%" 
-                            height="400" 
+                            height="500" 
                             style="border:none;overflow:hidden" 
                             scrolling="no" 
                             frameborder="0" 
@@ -1440,7 +1477,7 @@
                             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
                     </iframe>
                 </div>
-                <p style="font-size:13px;color:#94a3b8;margin-top:12px;text-align:center;">
+                <p class="widget-sub-text">
                     <i class="fa-regular fa-thumbs-up" style="color:#1877f2;"></i> 
                     Like and follow us for updates!
                 </p>
